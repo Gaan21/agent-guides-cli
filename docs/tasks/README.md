@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01 done; T02 implemented, CI passed, independent review pending (2026-10-17).
+Status: T01 done; T02 independently accepted, refreshed CI pending (2026-10-17).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -39,7 +39,7 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | ID | Task | Status | Dependencies / executor |
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
-| T02 | [Exact multi-source preparation](T02-preparation.md) | in_progress | Implemented and matrix passed; independent review required before closure. |
+| T02 | [Exact multi-source preparation](T02-preparation.md) | in_progress | Corrective review accepted; authorized upload/refreshed CI pending. |
 | T03 | [Native loading feasibility](T03-native-loading.md) | pending | T02; installed-client/consumer agent. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | pending | T01 + T02; consumer agent with private access. |
@@ -106,14 +106,16 @@ generated configuration, or a model's claim of compliance.
 > precise missing input rather than guessing. Finish by updating the task board
 > and completion record with evidence and the next handoff.
 
-Current next-agent assignment: **independently review T02**, not start T03/T05.
-Read T02's implementation record and `docs/preparation.md`. Compare working source,
-tests and exact retained artifacts with `.git/T02-identity.json` and the evidence
-identified in `.git/T02-results.md`; do not rerun capture or replace expectations.
-Local macOS Python 3.14/3.15 checks and T02's macOS/Linux Python 3.11/3.15 CI passed;
-read the linked run in T02's record. CI and implementation self-checks do not close
-the independent-review gate. T01's closure and T02 source were committed/pushed with
-session authorization. Future sessions must obtain their own publication authorization.
-After independent acceptance, mark T02 done and T03/T05 ready in board and headers;
-otherwise record the precise gap and retain T02 open. Preserve both task identities.
-No release, registry publication or consumer activation is authorized by this handoff.
+Corrective review evidence: `.git/T02-fix-start.json`, `.git/T02-fix-identity.json`,
+exact artifacts in `.git/T02-fix-artifacts/`, `.git/T02-fix-results.md` and
+`.git/T02-fix-independent-results.md`. The read-only `.git/t02_fix_review.py` checks
+the corrected candidate; never rerun capture scripts or replace expectations.
+Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
+one retained identity over the original exact source commits/bundles.
+
+Current assignment: complete the authorized corrective-source upload and refreshed
+macOS/Linux × Python 3.11/3.15 matrix. Independent corrective review accepted the
+retained candidate; fresh local source/distribution checks passed on macOS with
+Python 3.11/3.15. See T02's independent corrective-review record. Owner authorized
+staging/commit/push to `origin/develop` and a documentation-only closure upload
+after passing CI. Only then mark T02 done and T03/T05 ready together.

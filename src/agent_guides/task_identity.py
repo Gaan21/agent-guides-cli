@@ -11,7 +11,16 @@ def policy_names(project):
     # Native root policies only. Nested/indirect imports/configuration must be
     # supplied explicitly; do not claim exhaustive native loader discovery.
     return [name for name in ("AGENTS.md", "CLAUDE.md")
-            if (project / name).exists() or (project / name).is_symlink()]
+             if (project / name).exists() or (project / name).is_symlink()]
+
+
+def generated_path(path, project):
+    """Reserved names are case-independent; project aliases use filesystem identity."""
+    for node in (path, *path.parents):
+        if (node.name.casefold() in (".guidance", LOCK) and
+                node.parent.is_dir() and node.parent.samefile(project)):
+            return True
+    return False
 
 
 def hashes(project, names):
@@ -23,9 +32,10 @@ def hashes(project, names):
     result = {}
     for name in sorted(names):
         relative_name(name)
-        if name.split("/")[0] in (".guidance", "guidance.lock.json"):
+        path = checked_path(project / name)
+        if generated_path(path, project):
             raise GuidanceError("generated files cannot be independent policy/overlay inputs")
-        result[name] = digest(regular_bytes(project / name))
+        result[name] = digest(regular_bytes(path))
     return result
 
 
@@ -42,7 +52,7 @@ def capture(project, expected, policies=(), overlays=(), *, fixtures=None):
 def retain(path, value, project):
     """Exclusive output: never silently replace a role's expected identity."""
     path, project = checked_path(path), checked_path(project)
-    if path.is_relative_to(project / ".guidance") or path == project / "guidance.lock.json":
+    if generated_path(path, project):
         raise GuidanceError("retain expected task identity independently of generated storage")
     # Expected evidence is host-owned, explicitly located, and deliberately not
     # automatically copied into a portable lock or consumer instructions.

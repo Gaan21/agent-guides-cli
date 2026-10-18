@@ -75,8 +75,11 @@ def links(files):
         if re.search(r"(?i)<[a-z][^>]*\b(?:href|src)\s*=", text):
             raise GuidanceError("HTML navigation is outside the declared Markdown link subset")
         inline = list(re.finditer(r"!?\[[^\]\n]*\]\(\s*(<[^>\n]*>|[^\s)]+)(?:\s+['\"][^\n]*?['\"])?\s*\)", text))
-        starts = {match.start() for match in inline}
-        if any(match.start() not in starts for match in re.finditer(r"!?\[[^\]\n]*\]\(", text)):
+        # Account for every destination opener, including labels outside this
+        # subset (nested/escaped brackets). Reusing the label regex here would
+        # silently omit those same unsupported labels from the rejection check.
+        starts = {text.index("](", match.start(), match.end()) for match in inline}
+        if any(match.start() not in starts for match in re.finditer(r"\]\(", text)):
             raise GuidanceError("unsupported inline Markdown link syntax")
         targets = [match.group(1) for match in inline]
         targets += re.findall(r"(?m)^ {0,3}\[[^\]\n]+\]:\s*(<[^>\n]*>|\S+)", text)

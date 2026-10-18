@@ -70,6 +70,8 @@ fetched. Absolute, encoded escapes, backslashes, unknown schemes, case collision
 and ambiguous local query/percent forms fail. This is a conservative Markdown link
 subset, not a full HTML/Markdown interpreter; HTML `href`/`src` navigation and
 unsupported inline-link syntax fail. Keep bundle navigation in that subset.
+Nested/escaped-bracket labels and unmatched inline destination openers are rejected
+conservatively rather than leaving their targets unchecked, including in examples.
 Authored entry prose decides what to read, never the engine.
 
 Source/bundle IDs use lowercase letters, digits and hyphens (letter first, max 64).
@@ -101,6 +103,8 @@ arguments exit 2. Capture preparation's selection digest in host execution evide
 before role work; do not derive a review expectation from possibly altered generated
 files. Retain `HOST_TASK_RECORD` and its digest independently. `task-pin` creates
 exclusively and cannot overwrite evidence or place it in `.guidance`/the lock.
+These generated-storage names are reserved regardless of case; filesystem aliases
+of the project cannot bypass that exclusion. Policy/overlay inputs use the same rule.
 Both roles join the same record; neither resolves latest or repins drift.
 
 `guidance.lock.json` is the single portable selection: schema, exact sources,

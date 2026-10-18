@@ -52,6 +52,28 @@ class RejectionTests(GitFixture):
         with self.assertRaises(GuidanceError):
             bundles.declaration(canonical(dict(original, files=[f"f{i}" for i in range(513)])))
 
+    def test_nested_and_escaped_labels_cannot_hide_link_or_image_destinations(self):
+        for label in ("[outer [inner]]", r"[outer \] inner]"):
+            for prefix in ("", "!"):
+                for target in ("../../outside.md", "/absolute.png", "file:///tmp/private.md",
+                               "detail/topic.md"):
+                    text = f"{prefix}{label}({target})".encode()
+                    with self.subTest(text=text), self.assertRaisesRegex(GuidanceError, "unsupported inline"):
+                        bundles.links({"README.md": text, "detail/topic.md": b""})
+
+    def test_nested_label_rejection_preserves_published_selection(self):
+        self.result = self.prepare()
+        old = self.read_lock()
+        for text in (b"[outer [inner]](../../outside.md)\n",
+                     b"![outer [inner]](/absolute.png)\n",
+                     b"[outer [inner]](file:///tmp/private.md)\n"):
+            self.write("alpha", "one/README.md", text)
+            self.commit("alpha")
+            with self.subTest(text=text), self.assertRaisesRegex(GuidanceError, "unsupported inline"):
+                self.prepare()
+            self.assertEqual(self.read_lock(), old)
+            self.verify()
+
     def test_undeclared_missing_duplicate_id_and_oversized_blobs(self):
         self.result = self.prepare()
         original_lock = self.read_lock()

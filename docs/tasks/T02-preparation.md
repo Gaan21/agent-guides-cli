@@ -1,6 +1,6 @@
 # T02 — Exact multi-source preparation
 
-Status: in_progress (implemented; CI passed; independent review pending).
+Status: in_progress (corrective candidate independently accepted; refreshed CI pending).
 Depends on: T01 (done; independent review accepted).
 Executor: agent in the neutral tool repository.
 Read [handoff](README.md), scope, technical-plan sections 1–3 and phase-1 tests.
@@ -168,3 +168,176 @@ the independent-review gate remains. Actual publication and CI results follow.
   acceptance or exact findings. No new source resolution or expectation capture.
   Earlier local/pending-publication statements above are historical, superseded
   by this result. No releases, registry publication or consumer activation.
+
+### Independent review — 2026-10-17
+
+**Verdict: changes required; T02 remains open.** This subsequent reviewer inspected
+the source, tests, preparation contract and retained evidence independently of the
+implementation self-checks. T03/T05 remain `pending`.
+
+Closure blockers (reproduced with disposable synthetic Git fixtures):
+
+1. **Nested Markdown labels bypass local-target validation.** In
+   `src/agent_guides/bundles.py:77–80`, both the extraction and unsupported-syntax
+   checks assume labels contain no closing bracket. A link with label
+   `[outer [inner]]` and destination `../../outside.md` is accepted unchecked.
+   Full `prepare` accepts and publishes this changed bundle rather than rejecting
+   it and preserving the prior lock. Direct validation also accepts the nested
+   image label `![outer [inner]]` targeting `/absolute.png` and the nested link
+   label targeting a `file:` URL. Validate these targets or explicitly
+   reject unsupported nested-label syntax, with regression coverage for links and
+   images and for preservation of the existing selection on rejection.
+2. **Case aliases bypass independent-evidence placement.** In
+   `src/agent_guides/task_identity.py:44–46`, the generated-storage exclusion uses
+   lexical, case-sensitive path comparison. On the tested case-insensitive macOS
+   filesystem, `.GUIDANCE` and `.guidance` identify the same directory, yet
+   `retain(PROJECT/.GUIDANCE/review-task.json, ...)` succeeds inside generated
+   storage. Reject filesystem-equivalent reserved paths and test case aliases on
+   applicable filesystems, preserving exclusive creation and symlink rejection.
+
+Checks and evidence:
+
+```sh
+"$TOOLS315/bin/python" .git/t02_review.py
+"$TOOLS315/bin/python" -m unittest discover -s tests -p 'test_*.py' -v
+"$TOOLS315/bin/python" .git/t02_independent_review.py
+gh run view 39087489115 --repo Gaan21/agent-guides --json conclusion,headSha,jobs,url
+git diff --check
+```
+
+- Original 26 retained inputs match working source, HEAD and the CI-tested source;
+  exact wheel/sdist hashes and archived input bytes match. Both retained synthetic
+  project roots verify and join the same task; original T01 expected bytes match.
+  The read-only script also passed 28 local-link and length/privacy checks.
+- macOS 27.0.1 arm64 / Python 3.15.0: all **27 existing tests passed**. The two new
+  independent acceptance probes **both failed** because the required rejections
+  did not occur. Probes live in local Git metadata, leaving reviewed source/tests
+  and retained artifacts unchanged. Expanded commands/results are in
+  `.git/T02-independent-results.md`; original identity/results remain intact.
+- Rechecked GitHub: all four original macOS/Ubuntu × Python 3.11/3.15 CI jobs
+  succeeded on the retained implementation. Existing tests omit both reproduced
+  cases; passing CI therefore does not close these findings. No new distribution
+  rebuild or local Linux/3.11 run was needed to establish the blockers.
+- Changed public files: this completion record and `docs/tasks/README.md`. No
+  engine, source selection, expected identity, artifact or consumer changes.
+  No installed-client/model-compliance or stable-release approval claim follows.
+
+Next handoff: remediate both findings, including regression tests. Preserve original
+T01/T02 evidence; retain a separate corrective-task identity before implementation
+and new build artifacts for a subsequent independent review. Do not refresh the
+original expectations to match fixes. Original CI covers only the reviewed engine.
+Keep T02 `in_progress` and T03/T05 `pending` until independent acceptance. No staging,
+commit, push, release, registry publication or consumer activation was performed
+or authorized by this review.
+
+### Corrective implementation for independent re-review — 2026-10-17
+
+Both reported defects are corrected locally; **independent acceptance remains
+pending**. Earlier review findings above describe the original engine. T02 stays
+`in_progress`; T03/T05 stay `pending`.
+
+Changed files and behavior:
+
+- `src/agent_guides/bundles.py`: every inline destination opener must belong to a
+  recognized link/image. Unsupported nested/escaped-bracket labels fail explicitly
+  rather than hiding their targets from both extraction and rejection. Source
+  bytes remain untransformed; a rejected candidate leaves the prior selection intact.
+- `src/agent_guides/task_identity.py`: generated-storage names are reserved without
+  case distinctions, using filesystem project identity to handle aliased project
+  spelling. The same check protects retained records and policy/overlay inputs.
+  Exclusive output creation and ancestor/leaf symlink rejection remain in place.
+- `tests/test_rejection.py`, `tests/test_identity.py`: five new tests cover nested
+  and escaped labels, links/images, escaping/absolute/unsupported/safe targets under
+  unsupported labels, failed preparation preserving the lock/snapshot, reserved-name
+  case variants, project-root aliases, and symlink preservation of unowned evidence.
+  The filesystem-alias test skips on case-sensitive hosts; portable reserved-name
+  rejection is exercised everywhere. Existing shared-role/exclusive-output tests pass.
+- `docs/preparation.md` documents conservative syntax rejection and reserved case
+  variants. This record and the task board carry the revised handoff.
+
+Checks (`TOOLS315`/`TOOLS314` retain their earlier meanings):
+
+```sh
+"$TOOLS315/bin/python" -m unittest discover -s tests -p test_rejection.py -v
+"$TOOLS315/bin/python" -m unittest discover -s tests -p test_identity.py -v
+"$TOOLS315/bin/python" .git/t02_independent_review.py
+"$TOOLS315/bin/python" -m unittest discover -s tests -p 'test_*.py' -v
+"$TOOLS314/bin/python" -m unittest discover -s tests -p 'test_*.py' -v
+AGENT_GUIDES_ARTIFACT_DIR="$FIX_ARTIFACTS" "$TOOLS315/bin/python" tests/check_distribution.py -v
+"$TOOLS314/bin/python" tests/check_distribution.py -v
+"$TOOLS315/bin/python" .git/t02_fix_review.py
+git diff --check
+```
+
+- macOS 27.0.1 arm64 / Python 3.15.0 and 3.14.8: **32 source tests passed per
+  runtime**, plus 1 distribution unittest per runtime covering sdist, wheel from
+  sdist, exact resources/notices, clean installation, CLI help/version and all 32
+  installed-wheel tests outside checkout. The alias test ran, without skipping.
+  Targeted suites passed 12 rejection and 6 identity tests; the two original review
+  probes now pass. Backend: setuptools 84.0.0 / wheel 0.48.0.
+- Before edits, exclusively retained `.git/T02-fix-start.json` over the initial
+  source, policy, original exact source/bundle/selection/engine identity and empty
+  corrective overlays. After checks, exclusively retained the corrected candidate
+  in `.git/T02-fix-identity.json` and new exact artifacts in `.git/T02-fix-artifacts/`.
+  Expanded commands/hashes/locations are in `.git/T02-fix-results.md`.
+- A separate durable synthetic trial uses the original exact source commits and
+  bundle snapshots, with a new engine/selection identity. No branch tip was queried.
+  Both roles join one retained corrected task record on two roots offline. The
+  read-only verifier checks 26 corrected inputs, archived bytes, original evidence/
+  artifact integrity, shared roles, local links and length/privacy. Original
+  T01/T02 expectations, records, artifacts and trial snapshots were not replaced.
+- Development label remains `0.1.0.dev1`; engine byte identity changed. Old task
+  selections require their original engine. This is no stable-release approval.
+  Retained sdists precede this handoff-only update, with engine/tests/contract bytes
+  matching the corrected candidate. No consumer/native-loading checks were performed.
+
+Next handoff: independently inspect the corrected candidate against the retained
+identity and exact artifacts; never recapture expectations to fit drift. Refreshed
+Linux/Python 3.11 CI remains pending: original CI tests the old engine, and source
+upload needs explicit authorization. Close T02 only after independent acceptance
+and the refreshed matrix; then make T03/T05 ready. No staging, commit, push, release,
+registry publication, global configuration change or consumer activation performed.
+
+### Independent corrective review — 2026-10-17
+
+**Verdict: corrective candidate accepted; refreshed CI remains the closure gate.**
+The subsequent reviewer inspected both fixes, regression coverage, path primitives,
+the preparation contract and retained verifier before running checks. Both original
+findings are resolved: unsupported label destinations cannot evade the opener check;
+reserved storage names use case-independent names and actual project identity for
+retained evidence and policy/overlay inputs. No further blocking finding was found
+in the corrective diff. Exclusive creation, symlink rejection and preservation of
+the previous selection remain covered.
+
+Independent checks:
+
+```sh
+"$TOOLS315/bin/python" .git/t02_fix_review.py
+"$TOOLS315/bin/python" .git/t02_independent_review.py
+"$TOOLS315/bin/python" -m unittest discover -s tests -p 'test_*.py' -v
+"$REVIEW311/bin/python" -m unittest discover -s tests -p 'test_*.py' -v
+"$TOOLS315/bin/python" tests/check_distribution.py -v
+TMPDIR="$REAL_TMP" DYLD_LIBRARY_PATH="$PY311_LIB" "$REVIEW311/bin/python" tests/check_distribution.py -v
+git diff --check
+```
+
+- Read-only verification passed: 26 corrected inputs, exact retained wheel/sdist
+  bytes, original evidence/artifact integrity, unchanged exact source/bundle commits,
+  two offline roots joining one retained task, 28 local links and length/privacy.
+  Neither capture script was rerun and no expected identity was replaced.
+- macOS arm64 / Python 3.15.0 and 3.11.14: 32 source tests passed per runtime;
+  both original independent probes passed. Each runtime passed the distribution
+  unittest, including clean installation and 32 installed-wheel tests outside the
+  checkout. Case-alias tests ran without skips. Prior 3.14 evidence is preserved.
+- Initial 3.11 attempts exposed local environment setup issues: the uninstalled
+  interpreter could not import the package; its copied venv executable could not
+  locate libpython; the default temporary spelling traversed a system symlink.
+  A dedicated editable environment, process-local library path and canonical
+  temporary directory produced the passing result above, without source changes
+  or relaxing symlink validation. Exact expansions/results are retained in
+  `.git/T02-fix-independent-results.md`.
+- Docker daemon was unavailable. GitHub's latest existing successful run still
+  covered pre-fix source; Linux support for this candidate awaits refreshed CI.
+- Owner explicitly authorized staging/commit/push of T02 to `origin/develop`,
+  plus a documentation-only closure commit/push after passing CI. Upload results
+  follow. T02 remains open and T03/T05 pending until the refreshed matrix passes.

@@ -56,3 +56,32 @@ class TaskIdentityTests(GitFixture):
                 task_identity.retain(self.project / name, self.value, self.project)
         with self.assertRaises(GuidanceError):
             task_identity.capture(self.project, self.result["selection"], policies=["guidance.lock.json"], fixtures=self.fixtures)
+
+    def test_case_variants_of_generated_names_are_reserved_for_all_evidence(self):
+        names = (".GUIDANCE/task.json", ".Guidance/nested/task.json", "Guidance.Lock.Json")
+        for name in names:
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(GuidanceError, "independently of generated storage"):
+                    task_identity.retain(self.project / name, self.value, self.project)
+                for role in ("policies", "overlays"):
+                    with self.assertRaisesRegex(GuidanceError, "generated files cannot"):
+                        task_identity.capture(self.project, self.result["selection"],
+                                              fixtures=self.fixtures, **{role: [name]})
+
+    def test_filesystem_project_alias_cannot_hide_generated_storage(self):
+        alias = self.project.with_name(self.project.name.upper())
+        if not alias.exists() or not alias.samefile(self.project):
+            self.skipTest("requires case-insensitive project alias")
+        output = alias / ".GUIDANCE/review-task.json"
+        with self.assertRaisesRegex(GuidanceError, "independently of generated storage"):
+            task_identity.retain(output, self.value, self.project)
+        self.assertFalse((self.project / ".guidance/review-task.json").exists())
+
+    def test_evidence_symlink_rejection_preserves_unowned_bytes(self):
+        evidence = self.root / "evidence.json"
+        evidence.write_bytes(b"host-owned evidence\n")
+        alias = self.root / "alias.json"
+        alias.symlink_to(evidence)
+        with self.assertRaisesRegex(GuidanceError, "symlink rejected"):
+            task_identity.retain(alias, self.value, self.project)
+        self.assertEqual(evidence.read_bytes(), b"host-owned evidence\n")
