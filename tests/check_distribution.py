@@ -35,11 +35,14 @@ class DistributionTests(unittest.TestCase):
                     "LICENSE", "NOTICE", "README.md", "AGENTS.md", "pyproject.toml",
                     "MANIFEST.in", "docs/delivery-scope.md",
                     "docs/delivery-implementation-plan.md", "docs/tasks/README.md",
-                    "tests/test_cli.py", "tests/check_distribution.py",
+                    "docs/preparation.md", "tests/test_cli.py", "tests/check_distribution.py",
+                    "tests/fixtures.py", "tests/test_preparation.py", "tests/test_rejection.py",
+                    "tests/test_identity.py", "tests/test_commands.py",
                 }
                 required.update(str(p.relative_to(ROOT)) for p in (ROOT / "docs/tasks").glob("*.md"))
                 self.assertTrue(required <= names, required - names)
                 self.assertFalse(any("flutter_agent_guidelines" in n for n in names))
+                self.assertFalse(any(n.startswith((".git/", ".serena/")) for n in names))
                 for member in members:
                     self.assertFalse(member.issym() or member.islnk())
                     self.assertFalse(Path(member.name).is_absolute())
@@ -56,7 +59,10 @@ class DistributionTests(unittest.TestCase):
                 names = set(archive.namelist())
                 metadata, = (n.rsplit("/", 1)[0] for n in names if n.endswith("/METADATA"))
                 expected = {
-                    "agent_guides/__init__.py", "agent_guides/__main__.py", "agent_guides/cli.py",
+                    *(f"agent_guides/{name}.py" for name in (
+                        "__init__", "__main__", "cli", "integrity", "storage",
+                        "git_source", "bundles", "preparation", "task_identity",
+                    )),
                     *(f"{metadata}/{name}" for name in (
                         "METADATA", "WHEEL", "entry_points.txt", "top_level.txt", "RECORD",
                         "licenses/LICENSE", "licenses/NOTICE",
@@ -76,7 +82,8 @@ class DistributionTests(unittest.TestCase):
             run(str(environment / "bin/agent-guides"), "--help", cwd=work)
             run(str(environment / "bin/agent-guides"), "--version", cwd=work)
             # The tests come from the sdist; isolated Python imports only the installed wheel.
-            run(str(python), "-I", str(source / "tests/test_cli.py"), "-v", cwd=work)
+            run(str(python), "-I", "-m", "unittest", "discover", "-s",
+                str(source / "tests"), "-p", "test_*.py", "-v", cwd=work)
             retention = os.environ.get("AGENT_GUIDES_ARTIFACT_DIR")
             if retention:
                 destination = Path(retention)

@@ -10,4 +10,10 @@ Owner-authorized original guidance adapted from the maintainer's prior
 internal guidance. Public adaptations and original package tooling are
 provided under the Apache License, Version 2.0.
 
-No Flutter payload, third-party source or legacy runtime code is bundled.
+Audited Apache-2.0 primitives from flutter-agent-guidelines are adapted in
+integrity.py, storage.py and git_source.py: canonical hashing, path/regular-file
+checks, exact snapshot inventories, atomic writes and Git argument/environment/
+tree-mode checks. Modified for bounded neutral bundles, staged snapshots,
+separate exact acquisition and offline restore. No legacy runtime dependency
+or Flutter payload is bundled. No third-party tutorial/configuration/lint source
+is imported.

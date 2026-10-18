@@ -1,9 +1,11 @@
 # agent-guides
 
 Neutral Python tooling for preparing owner-selected, self-contained Markdown
-guidance from multiple Git repositories. This is a development scaffold:
-`agent-guides --help` and `agent-guides --version` are the available CLI paths.
-Preparation, native integration and lifecycle operations are future tasks.
+guidance from multiple Git repositories. Development commands `prepare`, `restore`
+and `verify` prepare exact local bytes without native integration. `task-pin` and
+`task-join` share independently retained host evidence between roles. See the
+[preparation contract](docs/preparation.md) for inputs, bounds and examples.
+Native connection and install/update/remove lifecycle operations are future tasks.
 
 Start with the [canonical task handoff](docs/tasks/README.md),
 [agreed scope](docs/delivery-scope.md) and
@@ -29,7 +31,7 @@ python3 -m venv .venv
 The distribution check builds an sdist, builds a wheel **from that sdist**,
 inspects inventories and notices, installs the wheel without dependencies in a
 fresh temporary tools environment, and exercises CLI and tests outside checkout.
-Build dependencies may require network access. Tests use synthetic CLI inputs;
+Build dependencies may require network access. Tests use synthetic Git/CLI fixtures;
 they do not execute consumer commands or alter global configuration.
 
 For a retained local trial, build and inspect the wheel with the same procedure,
@@ -46,6 +48,6 @@ do not establish model compliance. No guidance is installed by this scaffold.
 Licensed under [Apache-2.0](LICENSE); see [NOTICE](NOTICE).
 The handoff and packaging approach originate in
 [flutter-agent-guidelines](https://github.com/Gaan21/flutter-agent-guidelines).
-No runtime primitives or third-party tutorials/configuration/lint sources have
-been copied into the executable. Any future audited code reuse must retain its
-required license and provenance.
+Small audited Apache-2.0 identity/path/snapshot/Git primitives are adapted with
+provenance in `NOTICE`; the old runtime is not a dependency. Third-party tutorials,
+configurations and lint sources are not imported.

@@ -22,14 +22,14 @@ class CliTests(unittest.TestCase):
                     )
 
     def test_unimplemented_operations_fail(self):
-        for operation in ("install", "update", "restore", "verify", "status", "remove"):
+        for operation in ("install", "update", "status", "remove"):
             with self.subTest(operation=operation):
                 result = subprocess.run(
                     [sys.executable, "-I", "-m", "agent_guides", operation],
                     capture_output=True, text=True,
                 )
                 self.assertEqual(result.returncode, 2)
-                self.assertIn("unrecognized arguments", result.stderr)
+                self.assertIn("invalid choice", result.stderr)
 
 
 if __name__ == "__main__":
