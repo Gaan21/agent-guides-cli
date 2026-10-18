@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01 implemented, independent review pending; T02 pending (2026-10-17).
+Status: T01 done after independent review; T02 ready (2026-10-17).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -38,8 +38,8 @@ T01 establishes the scaffold only; preparation and integration are not implement
 
 | ID | Task | Status | Dependencies / executor |
 | --- | --- | --- | --- |
-| T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | in_progress | Implementation verified; next agent performs independent review. |
-| T02 | [Exact multi-source preparation](T02-preparation.md) | pending | T01 independent review and closure required. |
+| T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
+| T02 | [Exact multi-source preparation](T02-preparation.md) | ready | T01 closed; next implementation assignment in this repository. |
 | T03 | [Native loading feasibility](T03-native-loading.md) | pending | T02; installed-client/consumer agent. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | pending | T01 + T02; consumer agent with private access. |
@@ -106,10 +106,11 @@ generated configuration, or a model's claim of compliance.
 > precise missing input rather than guessing. Finish by updating the task board
 > and completion record with evidence and the next handoff.
 
-Current next-agent assignment: independently review T01 before implementing T02.
-Use the existing retained identity and artifacts, not newly captured expectations;
-local evidence is identified in T01's record. Compare the committed implementation
-and checks to T01 acceptance, record findings and any missing inputs. If accepted,
-mark T01 `done` and T02 `ready` in both headers and this board. Otherwise retain
-T01 open with the precise blocker. The implementation agent's self-checks do not
-substitute for this independent review.
+Current next-agent assignment: implement **T02 — exact multi-source preparation**.
+T01 passed independent review; read its acceptance record and T02's instructions.
+T02 is ready but has not started. Retain a new T02 expected identity once for its
+implementation/review, independently of generated files; preserve the existing
+T01 identity and artifacts. Use disposable synthetic Git sources for the acceptance
+fixtures. Native connection and consumer activation are outside T02. No staging,
+commits, pushes, releases or registry publication are authorized by this handoff;
+obtain explicit session authorization for any such action.

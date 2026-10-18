@@ -1,6 +1,6 @@
 # T02 — Exact multi-source preparation
 
-Status: pending. Depends on: T01 independent review and closure.
+Status: ready (not started). Depends on: T01 (done; independent review accepted).
 Executor: agent in the neutral tool repository.
 Read [handoff](README.md), scope, technical-plan sections 1–3 and phase-1 tests.
 
