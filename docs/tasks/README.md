@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01/T02 done; T03/T05 ready (2026-10-17).
+Status: T01/T02 done; T03 in_progress; T05 ready (2026-10-17).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -40,7 +40,7 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
 | T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
-| T03 | [Native loading feasibility](T03-native-loading.md) | ready | T02 done; installed-client/consumer agent with authorized access. |
+| T03 | [Native loading feasibility](T03-native-loading.md) | in_progress | Claude gap resolved through native approval and bounded read access; remaining matrix/review pending. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
@@ -113,8 +113,10 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current next-agent assignment: **T03 native loading feasibility**, with actual
-installed-client access and authorized disposable fixtures. T05 is also ready for
+Current next-agent assignment: **review the corrected Claude candidate and finish
+the T03 acceptance matrix**, retaining original/corrective evidence and exact
+selection. Installed-client access and
+authorized disposable fixtures are required. T05 is also ready for
 a consumer agent with private access and may proceed in a separate owned workspace.
 Read the selected task's inputs before work; readiness does not authorize repository
 creation, content publication or consumer activation. T04 still depends on T03.
@@ -123,3 +125,12 @@ T02 closed after independent corrective acceptance and the refreshed four-job
 macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and linked CI.
 Corrective source and closure documentation were authorized for upload to
 `origin/develop` in this session. Future publication requires its own authorization.
+
+T03's original Claude subdirectory gap is resolved: native external-import approval
+restores initial entries, and a separately pinned exact-selection read allowance
+permits unattended topic reads. Actual attachments, TUI context and compaction were
+checked on Claude Code 2.1.302. See the
+[corrective T03 record](T03-native-loading.md#native-approval-and-read-access-correction--2026-10-17)
+and [tested prerequisites](../native-loading.md). OpenCode 1.19.3 initial-context
+proof and the remaining matrix/review are pending. T04 must not promise a supported
+connection from this partial acceptance.
