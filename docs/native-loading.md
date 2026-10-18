@@ -112,11 +112,72 @@ short marked block per native file. No delivery plugin, hook or global Markdown
 glob was added. T04 remains pending until a native strategy meets the contract and
 is accepted. Linux installed-client checks remain unavailable in this session.
 
+## OpenCode 2.0.32 — bounded diagnostic trial
+
+Tested on macOS 27.0.1 arm64. V2 is distributed separately from the V1 Homebrew
+formula: upstream documents `anomalyco/tap/opencode-v2`. The trial used the official
+versioned standalone binary, with its archive SHA-256 matched against the official
+formula, isolated home/XDG directories and `run --standalone`.
+
+The unchanged navigation-only bridge still omits prepared entry content initially.
+A separately retained candidate adds exact short-entry paths to native `instructions`
+arrays in root and selected-folder `opencode.json` files:
+
+- Initial root requests contain the root entry; subdirectory starts contain the root
+  and applicable-folder entries, byte-for-byte, without topics or sibling entries.
+  Existing native policy files and prepared snapshots remain unchanged.
+- This establishes a native first-turn entry route for those launch locations.
+  It does not establish dynamic scope entry loading when working from the root.
+- **The edit-first gap remains:** the real V2 `patch` tool successfully adds files
+  in both scopes. Neither the initial request nor the request after the patch has
+  their folder policies. Subsequent real reads deliver each folder's `AGENTS.md`.
+- Those reads do **not** load the short entries declared in the folders' configuration
+  files. Folder startup configuration is not an on-demand per-edit configuration.
+
+Eight client invocations used a loopback diagnostic provider. Its fixed responses
+and scripted tool calls observe the installed loader and real tool timing without
+upstream inference or credentials. They do not prove configured-provider equivalence
+or model compliance. V2 TUI, resume/compaction, native guard rejection and Linux
+acceptance were not exercised. V1 observations are not inherited as V2 passes.
+
+**T03 remains blocked; T04 remains pending.** Configured short entries improve startup
+delivery but do not satisfy mixed-scope/edit-first acceptance. Use the retained
+[V2 task record](tasks/T03-native-loading.md#opencode-2032-diagnostic-continuation--2026-10-18)
+for review and next prerequisites.
+
+### Installed-V2 recheck and inline-entry candidate
+
+The currently installed Homebrew-linked executable was queried independently:
+**2.0.32**, byte-identical to the earlier official standalone binary. Inspection of
+its embedded implementation separates ambient/configured startup instructions from
+the `read` tool's discovery of nested `AGENTS.md`. The GPT `patch` tool does not call
+that discovery, even when it internally reads an existing target.
+
+New fixtures retest configured entries and a native inline-entry candidate: keep
+the root configured entry and add short entry bytes to the applicable folder's
+`AGENTS.md`, without topics. Scoped file reads and directory listings then deliver
+the folder policy and entry together. **A first root-started mixed-folder patch
+still succeeds without them**, and they remain absent on the next request.
+An explicit directory-read-first control loads them before a later patch, but does
+not meet automatic edit-first acceptance. Inline relative topic links also require
+a retained base-path transformation before that route could be used.
+
+Three new diagnostic invocations pass their retained identity joins; an earlier
+sample-edit attempt is preserved and excluded after its policy identity changed.
+All use scripted loopback responses, not remote inference. No OAuth equivalence,
+model compliance or complete V2/platform acceptance is claimed. See the
+[installed-V2 record](tasks/T03-native-loading.md#installed-v2-mechanism-and-new-candidates--2026-10-18).
+The missing prerequisite is native target-scoped policy/entry delivery before the
+first mutation, not another startup index. **T03 stays blocked; T04 stays pending.**
+
 ## Upstream references
 
 - [Claude instruction imports and loading](https://code.claude.com/docs/en/memory)
 - [Claude file permission syntax](https://code.claude.com/docs/en/permissions)
 - [OpenCode rule loading and file references](https://opencode.ai/docs/rules/)
+- [OpenCode V2 installation](https://opencode.ai/v2/docs)
+- [OpenCode V2 native instructions](https://opencode.ai/v2/docs/instructions)
+- [Official V2 Homebrew formula](https://github.com/anomalyco/homebrew-tap/blob/master/opencode-v2.rb)
 
 Upstream documentation explains the mechanism; the installed-version trial is the
 evidence for observations above. Neither establishes model compliance or complete

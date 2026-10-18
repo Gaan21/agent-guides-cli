@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01/T02 done; T03 blocked; T04 pending; T05 ready (2026-10-17).
+Status: T01/T02 done; T03 blocked; T04 pending; T05 ready (2026-10-18).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -40,7 +40,7 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
 | T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
-| T03 | [Native loading feasibility](T03-native-loading.md) | blocked | Claude correction independently reviewed; OpenCode entry-content and edit-first scope gaps confirmed. |
+| T03 | [Native loading feasibility](T03-native-loading.md) | blocked | Installed V2 rechecked: configured startup and inline read-triggered entries work; root-started edit-first delivery still fails. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
@@ -113,9 +113,11 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current next-agent assignment: **review the supplemental T03 matrix and resolve
-the bounded OpenCode feasibility gaps**, retaining all original/corrective identities
-and evidence. See the [independent review and matrix](T03-native-loading.md#independent-review-and-supplemental-matrix--2026-10-17).
+Current next-agent assignment: **review the installed-V2 mechanism/trials and retain
+bounded infeasibility unless a native edit-triggered route becomes available**, keeping
+all original/corrective identities and evidence. See the
+[V2 continuation](T03-native-loading.md#opencode-2032-diagnostic-continuation--2026-10-18)
+and preceding independent matrix.
 Installed-client access and authorized disposable fixtures are required. T05 is also ready for
 a consumer agent with private access and may proceed in a separate owned workspace.
 Read the selected task's inputs before work; readiness does not authorize repository
@@ -144,3 +146,24 @@ in `.git/T03-r3-evidence/`; use read-only `.git/t03_r3_verify.py` and the privat
 `.git/T03-r3-results.md`. The verifier checks the old seals against archived handoff
 bytes, rather than replacing expectations after documentation changes. Do not rerun
 arrangement/capture scripts. **T04 remains pending until T03 acceptance.**
+
+OpenCode **2.0.32** was subsequently tested with an official checksum-matched
+standalone binary. Native configured `instructions` deliver exact short entries at
+root/two subdirectory starts, but do not supply folder policies before a first
+root-started `patch`, nor folder-configured entries during later scoped reads.
+Eight local-provider diagnostic invocations establish loader/tool timing only;
+configured-model behavior and the remaining V2/client/platform matrix are pending.
+Evidence and durable replicas: `.git/T03-v2-evidence/`; read-only review:
+`.git/t03_v2_verify.py`. Historical temporary roots are unavailable, so the original
+full verifier fails; archived seals and bounded observations were checked separately
+without rewriting expectations. The V2 diagnostic still does **not** accept T03.
+
+Installed-client continuation confirmed the actual Homebrew-linked binary reports
+**2.0.32** and matches the earlier standalone binary byte-for-byte. New fixtures
+confirm that inline short entries in folder `AGENTS.md` load on scoped reads or
+directory listings, not on first `patch`. Embedded-code inspection explains the
+separate startup/configured and read-discovery routes. See the
+[installed-V2 record](T03-native-loading.md#installed-v2-mechanism-and-new-candidates--2026-10-18).
+New read-only review: `.git/t03_installed_verify.py`; original V2 seals remain
+unchanged and their public handoff bytes are archived independently before edits.
+T01/T02 stay done, T03 blocked, T04 pending, T05 ready. No integration proceeds.

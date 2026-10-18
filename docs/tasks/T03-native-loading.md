@@ -302,3 +302,155 @@ Exercise the pending worktree-specific Claude prerequisites and Linux clients be
 claiming those cases supported. **T04 stays pending until T03 acceptance; T05 stays
 independently ready.** No staging, commit, push, publication or consumer migration
 was performed.
+
+## OpenCode 2.0.32 diagnostic continuation — 2026-10-18
+
+**Verdict: T03 blocked; T04 pending.** Owner requested continuation and testing the
+new OpenCode generation. The official changelog and V2 installation documentation
+identify **2.0.32**; V1's GitHub latest release and installed Homebrew formula still
+identify **1.19.3**. V2 uses the separate `anomalyco/tap/opencode-v2` formula.
+
+Installed-client arrangement:
+
+- Downloaded the official versioned macOS arm64 standalone archive and matched its
+  SHA-256 against the official formula before execution. The binary reports
+  `opencode v2.0.32`. Platform: macOS **27.0.1 arm64**, Python **3.15.0**.
+- Used disposable exact-byte replicas of the original archived fixture, isolated
+  home/config/data/cache/state directories and `run --standalone`. Original source,
+  engine, selection, policy expectations and all three historical seals are retained.
+- The historical full verifier cannot rerun successfully: its original temporary
+  roots no longer exist. Its failure is recorded, not repaired by replacing old
+  paths or expectations. A new read-only review verifies all historical artifact
+  inventories against archived handoffs, joins the original archived task and
+  rechecks the key retained entry/edit-first, fresh-Claude-read and compaction records.
+  This is bounded archival review, not a successful rerun of all historical joins.
+- The new native candidate adds only exact short-entry `instructions` arrays in
+  root/mobile/web configuration files. Its changed policy identity was retained
+  independently before calls; source/engine/selection remain the original ones.
+  Native files, source snapshots and protected bytes remain unchanged.
+
+Observed request/tool matrix, separate from inference:
+
+| Criterion | Navigation-only baseline | Native configured-entry candidate |
+| --- | --- | --- |
+| Root initial context | Root native directive, no entry content. | Root native policy plus exact root entry content. |
+| Two subdirectory starts | Root/applicable-folder directives, no entry content. | Root/applicable-folder policies plus both exact entries; no topics or sibling entry. |
+| First root-started mixed-scope edit | Actual `patch` succeeds before either folder policy is delivered. | Same failure; only the root entry was initially loaded. |
+| Subsequent scoped reads | Each real `read` delivers the corresponding folder policy. | Same; folder configuration does not dynamically deliver its configured short entry. |
+
+Eight invocations exited 0. A separately retained loopback provider supplied fixed
+responses; the edit trials programmatically requested `patch`, then two `read`
+calls. Captured requests show no folder policy even on the model request **after**
+the successful patch; policies first appear after their corresponding reads.
+This establishes actual installed-client composition and tool timing for the local
+diagnostic arrangement, not configured OAuth equivalence, upstream inference or
+model compliance. V2 native guard rejection, TUI, resume/compaction and Linux trials
+remain unexercised; earlier V1 passes do not certify V2.
+
+Evidence and checks:
+
+- `.git/T03-v2-evidence/` retains original handoff bytes, source references, schema,
+  binary identity, original/candidate task joins, pre-call diagnostic identities,
+  commands, complete requests, outputs and durable replicas outside temporary storage.
+- Read-only `.git/t03_v2_verify.py` checks the archived historical inventories,
+  bounded historical observations, exact native startup entries, negative timing
+  observations and both archived task identities. Capture/arrangement scripts are
+  one-time evidence, not review commands. Exact invocations stay in
+  `.git/T03-v2-results.md`; the new artifact inventory is retained independently.
+
+```sh
+python3 .git/t03_v2_verify.py
+PYTHONPATH=src python3 -m unittest discover -s tests -p test_identity.py -v
+git diff --check
+```
+
+The read-only V2 verifier passes its bounded positive/negative observations and
+retained identities, with final verdict **not accepted**. Python 3.15.0: **6 identity
+tests passed**; `git diff --check` passed. Public changes are this record, the task
+index and tested-prerequisite documentation; engine/package code is unchanged.
+
+Next gate: review this V2 evidence and either establish a native strategy covering
+root-started mixed-scope/edit-first delivery or retain the bounded infeasibility
+decision. The tested configured-entry route resolves launch-time content only.
+Pending Claude worktree approval/access and Linux prerequisites remain as above.
+T05 is independently ready with private access; T04 still awaits T03 acceptance.
+
+## Installed V2 mechanism and new candidates — 2026-10-18
+
+**Verdict: bounded infeasibility remains; T03 blocked, T04 pending.** Queried the
+actual executable rather than assuming the previous trial's version. The current
+Homebrew-linked installation reports **2.0.32** and its binary SHA-256 equals the
+previous official standalone binary. Exact path, resolved path, digest and commands
+are retained privately. This is installed-version evidence, not release approval.
+
+Review and mechanism:
+
+- Ran the unchanged `.git/t03_v2_verify.py` before public edits: all bounded checks
+  and its sealed inventory passed, final verdict **not accepted**. Historical missing
+  temporary roots were not rebuilt; capture scripts were not rerun.
+- Retained offset/digest-checked extracts from the actual executable. Its native
+  config-instruction mechanism assembles ambient `AGENTS.md` and configured paths
+  using the session Location. The read tool separately discovers `AGENTS.md` between
+  a file/directory target and that Location; session history deduplicates these files.
+  That discovery does not evaluate descendant configuration or parse Markdown imports.
+- The exposed GPT editing tool is `patch`. Its implementation resolves targets,
+  checks native edit permissions and mutates files without invoking that instruction
+  discovery. Internal filesystem reads during patch preparation are not `read` tool
+  discovery. Current V2 instruction/config/permission documentation corroborates the
+  separate mechanisms; executable inspection and requests establish this version's
+  bounded behavior, not universal impossibility in future clients.
+
+New native candidates, separate from all original fixtures and identities:
+
+| Candidate / control | Actual request and tool result |
+| --- | --- |
+| Exact configured entries, root-started first patch | Both scratch files created. Root entry only before/after patch; folder policies arrive after respective sample reads, without configured folder entries. |
+| Root configured entry plus short entry bytes inline in each folder `AGENTS.md` | Same successful first patch without either folder policy/entry. Later scoped reads deliver policy and inline short entry together, without explicit instruction reads. |
+| Same inline candidate, directory-read-first control | Each directory listing delivers its applicable policy/entry, before the later patch; no sibling entry before that sibling's listing. This is a diagnostic control, **not** automatic edit-first acceptance. |
+
+Three accepted diagnostic invocations exited 0. Source/engine/selection are the
+original ones. Each candidate has an independently retained pre-call task, binary,
+observer, overlay, environment and exact planned calls. Native product instructions,
+snapshots and protected bytes remain unchanged in the passing integrity joins.
+The inline candidate adds short entry bytes only, not topics. Its relative topic
+links would still require an explicit, separately recorded base-path transformation;
+that was not implemented or accepted, because the edit-first blocker already persists.
+
+An earlier exploratory invocation also edited a sample included in retained policy.
+Its post-call identity join failed as expected for that mutation. The full attempt,
+original identity and observer remain retained and **excluded** from the three
+passing joins; no expectation was rewritten. Subsequent new fixtures only add
+scratch files outside the retained policy inventory.
+
+```sh
+command -v opencode
+opencode --version
+opencode run --help
+python3 .git/t03_v2_verify.py
+python3 .git/t03_installed_verify.py
+PYTHONPATH=src python3 -m unittest discover -s tests -p test_identity.py -v
+git diff --check
+```
+
+The new verifier passes archived original V2 seals, binary extracts, all three
+candidate joins and positive/negative request observations. Python **3.15.0**:
+**6 identity tests passed**; `git diff --check` passed. Commands, original handoff
+bytes and new evidence are in `.git/T03-v2-installed-evidence/`; exact orchestration
+and the independent new inventory are recorded in `.git/T03-v2-installed-results.md`.
+After these public edits, review the old seal against its archived handoff using
+the new verifier; the original verifier is unchanged and still expects old live docs.
+
+All four client calls used scripted loopback responses: real native tool execution
+and model-request composition only, **not OAuth equivalence or remote-model
+compliance**. No configured remote model trial was needed to reject these routes.
+V2 TUI/resume/compaction, permission rejection, Linux and Claude worktree-specific
+acceptance remain pending. No enforcement claim follows from a loader observation.
+
+What is missing: native target-scoped delivery of the applicable product policy and
+short entry before a first root-started mutation, including multi-folder patches.
+Startup paths, inline text discovered only by reads, advisory indexes and static
+permissions do not supply that mechanism. Reopen with a concrete native client
+capability/version and retain a new candidate identity; do not begin T04 or replace
+the contract with model-directed reads, hooks/plugins or globally loaded scopes.
+T05 remains independently ready. No staging, commits, pushes, publication, global
+configuration/credential changes or consumer activation occurred.
