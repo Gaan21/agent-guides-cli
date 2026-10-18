@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01/T02 done; T03 blocked; T04 pending; T05 ready (2026-10-18).
+Status: T01/T02 done; T03 in_progress; T04 pending; T05 ready; T08 pending (2026-10-18).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -8,12 +8,16 @@ This is a durable handoff, not a release or consumer activation instruction.
 
 1. The working repository's maintainer instructions and current Git status/diff.
 2. [Agreed scope](../delivery-scope.md): product decisions; do not reopen them.
-3. [Technical proposal](../delivery-implementation-plan.md): reuse map and mechanics;
+3. [ADR 0001](../decisions/0001-selective-guidance-reading.md): current selective-reading
+   decision, alternatives, evidence limits and reconsideration criteria.
+4. [Technical proposal](../delivery-implementation-plan.md): reuse map and mechanics;
    schema/path/CLI details may be simplified with evidence.
-4. The selected task below and completion records of its dependencies.
+5. The selected task below and completion records of its dependencies.
 
-These three documents have different jobs: scope is the agreement, technical plan
+The core documents have different jobs: scope is the agreement, technical plan
 is a design reference, this index owns order/status. Task files define acceptance.
+Decision records explain why a direction was chosen; they do not replace the board
+or turn bounded experimental results into task acceptance.
 Existing package usage docs describe live implementations, not the replacement.
 
 ## Closed decisions at a glance
@@ -29,6 +33,8 @@ Existing package usage docs describe live implementations, not the replacement.
 - Select both bundles in one project connection; no extra architecture profile.
 - No delivery hooks/daemon, leases, mandatory end/rebaseline, AI retrieval,
   per-content executable environments, or per-consumer wrappers/probes.
+- Root-started work: native short entry, model-selected relevant topics/dependencies,
+  reuse while in context. No all-topic/per-patch reads or absolute editing gate.
 
 ## Task board
 
@@ -40,13 +46,16 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
 | T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
-| T03 | [Native loading feasibility](T03-native-loading.md) | blocked | Installed V2 rechecked: configured startup and inline read-triggered entries work; root-started edit-first delivery still fails. |
+| T03 | [Native loading feasibility](T03-native-loading.md) | in_progress | Root-index subagent trial independently reviewed; broader selective behavior and two-client acceptance remain pending. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
+| T08 | [Lightweight selective-reading observation](T08-lightweight-observation.md) | pending | T03 acceptance + authorized T06 clone pilot; client/consumer agent and reviewer. Not a T04/T06/T07 dependency. |
 
 After T02, T05 can run alongside T03/T04 in separate repositories/owned files.
+T08 may run alongside the authorized T06 pilot and later authorized ordinary use;
+its number does not require waiting for T07 or introduce an observation release gate.
 Do not assign concurrent agents the same task or shared mutable selection.
 Use independent implementation/review against one retained task identity.
 
@@ -98,8 +107,9 @@ generated configuration, or a model's claim of compliance.
 ## Prompt for the next agent
 
 > Read the working repository's maintainer instructions, inspect status/diff,
-> then read docs/tasks/README.md and its agreed-scope link. Execute the first
-> ready task whose execution inputs and permissions are available. Read only the
+> then read docs/tasks/README.md, its agreed-scope link and ADR 0001. Continue T03
+> using T03-selective-reading.md's next-agent execution order. T05 may proceed in
+> a separately owned workspace with private access. Read only the
 > relevant technical-plan sections and dependency results. Preserve existing work
 > and content. Do not reopen closed decisions, activate a consumer, publish or
 > perform Git publication actions without authorization. If blocked, record the
@@ -113,11 +123,12 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current next-agent assignment: **review the installed-V2 mechanism/trials and retain
-bounded infeasibility unless a native edit-triggered route becomes available**, keeping
-all original/corrective identities and evidence. See the
-[V2 continuation](T03-native-loading.md#opencode-2032-diagnostic-continuation--2026-10-18)
-and preceding independent matrix.
+Current next-agent assignment: **continue T03's minimal root-entry route**, using
+the [ordered next steps](T03-selective-reading.md#next-agent-execution-order).
+The four-subagent trial already passed independent bounded review. Next test fresh
+root startup, selective dependencies/reuse/layer changes and context loss in both
+installed clients. Retain all identities/failures and missing-platform limits; do
+not restart the strict automatic-injection search or add skills/monitoring by default.
 Installed-client access and authorized disposable fixtures are required. T05 is also ready for
 a consumer agent with private access and may proceed in a separate owned workspace.
 Read the selected task's inputs before work; readiness does not authorize repository
@@ -127,6 +138,11 @@ T02 closed after independent corrective acceptance and the refreshed four-job
 macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and linked CI.
 Corrective source and closure documentation were authorized for upload to
 `origin/develop` in this session. Future publication requires its own authorization.
+
+## Historical evidence summaries
+
+The verdicts below describe their original trial criteria and dates; the current
+board, ADR 0001 and selective-reading continuation govern the next assignment.
 
 T03's Claude correction passed independent integrity/loading review, with one
 reporting correction: the original post-compaction turn restored prior read context
@@ -167,3 +183,31 @@ separate startup/configured and read-discovery routes. See the
 New read-only review: `.git/t03_installed_verify.py`; original V2 seals remain
 unchanged and their public handoff bytes are archived independently before edits.
 T01/T02 stay done, T03 blocked, T04 pending, T05 ready. No integration proceeds.
+
+Subsequent owner clarification authorizes model-selected relevant guide reading
+before applicable edits, with reuse while content remains in context; absolute
+enforcement is not required. This supersedes the hard-gate blocker as the current
+decision criterion, not its historical observations. T03 is **in_progress** for the
+[selective-reading trial](T03-selective-reading.md); T04 remains pending acceptance.
+
+## Decision/task alignment handoff — 2026-10-18
+
+Owner authorized documenting the decision, aligning future tasks and adding T08's
+bounded observation plan, plus commit/push of the documentation. ADR 0001 records
+problem, alternatives, selected simple route, evidence limits and escalation criteria;
+it is a basis for a possible public narrative, not authorization to post externally.
+T04 separates host verification from behavior; T05 clarifies authored relevance;
+T06 samples selective reading and reuse; T07 limits advertised guarantees. No engine,
+monitor, factory integration, consumer activation or new release gate was implemented.
+
+Checks: `python3 .git/t03_handoff_verify.py`, six identity unittests on Python 3.15.0,
+and `git diff --check` passed. The pre-edit selective verifier passed unchanged;
+its sealed handoff bytes were archived before these edits, not rebaselined. New
+read-only handoff review: `.git/t03_handoff_verify.py`; execution/archive record:
+`.git/T03-decision-results.md`. Original source Git objects and the pending
+Claude/context-loss/TUI/Linux acceptance checks were not recreated or claimed passed.
+
+Evidence under `.git/` is local-only and is not uploaded with source. On this
+checkout, use the new read-only review for archived expectations; on a fresh clone,
+obtain authorized evidence or retain a new trial before claiming prior checks.
+T03 stays in_progress; T04 pending; T05 ready; T08 pending. Continue T03, not T04/T08.

@@ -28,6 +28,10 @@ without losing, weakening or accidentally publishing any existing guidance.
 3. Prepare complete bundles with short entries, authored reading conditions,
    preserved detail links/notices and explicit inventory. No extra profile
    activation or custom dependency machinery.
+   State when each topic applies, its scope and required dependencies, and useful
+   non-applicability boundaries. Keep the initial entry concise: no full-topic
+   duplication or instruction to read every topic/per-patch. Preserve always-on
+   requirements and dependency modality; selection is not permission to weaken rules.
 4. Check public output for private paths, product APIs and product-specific rules.
    Publish no private classification report or logs in the common/tool repositories.
 5. Verify every inventoried requirement has a destination and every required local
@@ -40,6 +44,10 @@ uncertain cases are retained privately. Common and WorkTracker bundles pass T02'
 schema/link/inventory verification. Review confirms conditions/modality, exceptions,
 offline durable-local acceptance and attribution remain intact. Changing delivery
 does not install/change executable lints or refactor the product.
+Review a few representative tasks against authored applicability: relevant topics
+and required dependencies should be discoverable without unrelated blanket reads.
+Use [ADR 0001](../decisions/0001-selective-guidance-reading.md); this task prepares
+content, not a runtime selector or a guarantee of future model behavior.
 
 The old payload is not deleted or the live consumer switched here. Agree any later
 retirement with T06 after validated migration; preserve rollback source/evidence.

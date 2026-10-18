@@ -1,7 +1,10 @@
 # T03 — Native loading feasibility
 
-Status: blocked. Depends on: T02 (done). Executor: authorized installed-client agent.
+Status: in_progress. Depends on: T02 (done). Executor: authorized installed-client agent.
 Read [handoff](README.md), scope context behavior and technical-plan section 4.
+Current direction: [ADR 0001](../decisions/0001-selective-guidance-reading.md) and
+[the selective-reading continuation](T03-selective-reading.md). Historical strict
+automatic-loader verdicts below do not override that prospective decision.
 
 ## Goal
 
@@ -21,8 +24,9 @@ global changes or model/credential use outside authorized access.
   recall. Record client versions, entry bytes and no duplicate old adapter block.
 - Only short entries load initially. Topic reading instructions stay authored
   beside guides; detailed local links work without loading every document globally.
-- Root and two folder bindings, root/subdirectory launches, mixed-scope work,
-  relative paths, native ancestor precedence and existing import chains.
+- Root-started work across two folder bindings, relevant topic/dependency selection,
+  reuse and layer changes, relative paths, native local authority and import chains.
+  Retain earlier subdirectory-launch observations without requiring that daily workflow.
 - Local exceptions remain authoritative. Resume, compaction and interactive TUI;
   record when folder documents reload and any limitations of the native mechanism.
 - Preserve unrelated guards. Inventory actual editing tools, including
@@ -30,10 +34,18 @@ global changes or model/credential use outside authorized access.
 
 ## Acceptance / stop condition
 
+Owner clarification (2026-10-18): root-started work should use model-selected,
+relevant guide reads before applicable edits, reusing content still in context.
+Hard edit prevention, all-topic loading and repeated per-patch reads are not
+requirements. The earlier strict automatic-loading trials remain historical
+evidence, not a rejection of this newly authorized behavioral route. See the
+[selective-reading continuation](T03-selective-reading.md) for the current trial.
+
 Specify one tested connection strategy per client, ownership surface and exact
-loading observations. If automatic directory scope or first-turn entry delivery
-cannot be established, stop with a bounded gap report before T04 promises support.
-A root index describing directory scope is not proof of native scoped loading.
+loading observations. Establish native short-entry delivery separately from
+model-selected topic reading; do not label an index as automatic scoped loading.
+If the tested connection cannot establish the agreed selective behavior, stop with
+a bounded gap report before T04 promises support.
 No fallback daemon, injection plugin, hooks or global all-Markdown glob.
 
 Keep reusable fixture logic in the tool tests. Consumer evidence is a one-time
@@ -44,10 +56,10 @@ private and distinguish host integrity from observed loading and compliance.
 
 T04 is ready only when a feasible strategy and its limits are reviewed. Unavailable
 TUI/client checks remain pending where not exercised, not simulated as passes.
-The original Claude subdirectory-start gap is resolved by native approval and bounded
-read access. Independent review and supplemental trials below confirm OpenCode
-initial-entry/edit-first gaps; no two-client strategy is accepted. See the
-[tested prerequisites](../native-loading.md). T04 remains pending until acceptance.
+The historical Claude approval correction and OpenCode automatic-loading gaps are
+retained below; no complete two-client strategy is accepted. Follow the current
+[selective-reading execution order](T03-selective-reading.md#next-agent-execution-order)
+and [tested prerequisites](../native-loading.md). T04 remains pending until acceptance.
 
 ## Bounded feasibility record — 2026-10-17
 
@@ -454,3 +466,11 @@ capability/version and retain a new candidate identity; do not begin T04 or repl
 the contract with model-directed reads, hooks/plugins or globally loaded scopes.
 T05 remains independently ready. No staging, commits, pushes, publication, global
 configuration/credential changes or consumer activation occurred.
+
+## Selective-reading continuation — 2026-10-18
+
+The owner explicitly accepts less than absolute model compliance and prioritizes
+relevant, non-repeated reading over a hard editing gate. A root index with ordinary
+topic links is being tested before introducing native skills or other machinery.
+See [the trial and limits](T03-selective-reading.md). T03 returns to **in_progress**;
+this does not accept the whole matrix or start T04. Original failures/seals remain.

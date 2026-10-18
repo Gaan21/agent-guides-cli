@@ -1,7 +1,20 @@
 # Native loading: tested prerequisites
 
-Status: T03 blocked on the current OpenCode candidate; no accepted two-client
+Status: T03 in progress after owner clarification; no accepted two-client
 connection or implemented install command. See the [task record](tasks/T03-native-loading.md).
+
+## Current direction: selective reading, not an editing gate
+
+The owner clarified that agents should choose relevant guidance before applicable
+edits and reuse it while available in context. Loading every topic, rereading before
+each patch or enforcing an absolute read-before-edit guarantee is not desired.
+Native short-entry delivery and actual model-selected reads are separate checks.
+The historical automatic-loader gaps below remain valid, but are not by themselves
+a rejection of a simple root index with selective topic reading. See the
+[new behavioral trial](tasks/T03-selective-reading.md); full T03 acceptance is pending.
+The rationale is [ADR 0001](decisions/0001-selective-guidance-reading.md). Later
+[lightweight observation](tasks/T08-lightweight-observation.md) uses authorized
+existing traces, not an always-on monitor or a mandatory installation component.
 
 ## Claude Code 2.1.302
 

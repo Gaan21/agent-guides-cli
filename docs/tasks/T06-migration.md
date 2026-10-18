@@ -21,11 +21,21 @@ live project only under explicit authorization with a tested rollback path.
   before removal, complete prepared offline use and recovery to the old selection.
 - Observe first-turn entry, no duplicate delivery, detail links, local authority,
   two scopes, resume, compaction and interactive TUI in both clients.
+- Start ordinary tasks at root. Observe model-selected relevant topics and explicit
+  dependencies before applicable edits, reuse on subsequent changes, and newly
+  relevant reads after a layer switch or context loss. Compare against expected
+  applicability retained before trace review; include a task with an irrelevant
+  neighboring guide. Do not force all-topic or repeated per-patch reads.
+- Separate host integrity, native delivery, successful content reads and reviewed
+  application. Record late/omitted reads, unnecessary reading and unknowns honestly;
+  no claim of perfect enforcement or inferred population success rate.
 - Verify the consumer correction for the earlier `apply_patch` guard gap separately
   with its owner; reuse its acceptance evidence and check for relevant regressions.
   Preserving plugin bytes or a passing smoke command is not full guard acceptance.
 - Check T05's complete requirement coverage in effective delivery, not just bundle
   presence. No guide disappears through migration or selection changes.
+  Every rule must remain available in its proper scope; each task need not load
+  every guide. Preserve authored dependencies and local exceptions.
 - Before live change, identify old installed/legacy adapters and ignored state;
   prepare version-appropriate disconnection and full rollback instructions. Do not
   edit a live old snapshot or remove its only working tools environment.
@@ -39,4 +49,8 @@ If only the clone trial is authorized/completed, report that milestone and keep
 live migration pending. Failed guard, TUI or delivery checks must remain visible.
 Public records contain a sanitized outcome only; all consumer logs, rules and
 coverage maps stay in private evidence. Mark T07 ready only after required
-acceptance and migration review. Completion evidence: pending.
+acceptance and migration review. [T08](T08-lightweight-observation.md) may start with
+an authorized clone pilot and reuse existing traces, but is not a new completion
+dependency. Concrete delivery/behavior failures still require owner/reviewer
+disposition; observation is not permission to ignore them or activate live capture.
+Completion evidence: pending.

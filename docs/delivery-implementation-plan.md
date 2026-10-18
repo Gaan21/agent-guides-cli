@@ -1,6 +1,7 @@
 # Shared guidance delivery: implementation plan
 
-Status: technical proposal aligned with owner decisions, 2026-10-17; no replacement implemented.
+Status: technical proposal, selective-reading direction clarified 2026-10-18;
+preparation exists, permanent native connection/lifecycle integration is pending.
 [Delivery scope](delivery-scope.md) is the authority for agreed requirements.
 Use the [handoff/task index](tasks/README.md) for execution order and progress.
 Names, schemas and paths below are proposals, not available commands. Existing
@@ -215,45 +216,49 @@ the scoped integration spike rather than add an ad hoc parser or reserialize it.
 
 ## 4. Native entry and directory-scope strategy
 
-Preferred candidate: short owned blocks in root and selected-directory native
-instruction files, pointing at the prepared authored entries. Claude uses
-`CLAUDE.md` with local imports where supported; OpenCode uses `AGENTS.md` with a
-short explicit local navigation directive. The directive only connects the entry;
-topic-specific reading conditions come from content. Keep existing instructions,
-exceptions and native import chains visible; do not add an OpenCode global glob
-over every Markdown file or duplicate the same entry via two loaders.
+Follow [ADR 0001](decisions/0001-selective-guidance-reading.md): routine sessions
+start at the root with a natively delivered short entry, and models select relevant
+local topics/dependencies before applicable edits. Reuse content still in context;
+read new topics when work changes, or recover content after context loss. No hard
+editing gate, all-topic startup load or per-patch reread is required.
 
-Root entry lists scoped bundle names/locations, not scoped rule bodies. Each
-directory bridge connects only the bundles bound to that directory.
-Both bridges may target the same immutable content; generated import paths must
-resolve from the native file's actual location. Nested-worktree boundaries need
-explicit handling. Where existing files already load the target or each other,
-inventory/deduplicate before adding a second route.
+Use the smallest T03-accepted registration per installed client. Claude native
+imports and OpenCode configured `instructions` are tested startup routes, not
+evidence that descendant configuration loads on edits. A bare navigation directive
+does not prove short-entry body delivery. Native skills are a possible later
+comparison only if observed gaps justify them. Permanent integration remains pending.
 
-This is a candidate, not proven native support. Existing hooks/plugins and
-Rulesync generation tests do not validate this replacement. Before promising it,
-run a bounded spike using two neutral scopes and installed client versions:
+The root entry names scoped bundles/paths and authored applicability, not every
+scoped rule body. Keep native root/folder policies, local exceptions and import
+chains visible; do not promote scope by listing a bundle at root. Relative paths
+must resolve from the actual containing entry, with any transformation retained
+separately from immutable source bytes. Inventory existing routes before adding
+another; avoid duplicate injection and respect nested-worktree boundaries.
 
-- Verify native root discovery from root/subdirectory, import-relative paths,
-  nested instruction timing on file reads/edits, ancestor precedence, mixed-scope
-  work and nested worktrees. Confirm bridges stay short and detail stays on demand.
-- Check existing `AGENTS.md`/`CLAUDE.md` chains, local exceptions and duplicate
-  injection; record effective project/user configuration without changing globals.
-- Test new session, resumed session and compaction in both clients, including
-  interactive TUI. Retain client versions and observed loading evidence.
-- If folder loading fails, evaluate one narrow native alternative: Claude's
-  path-scoped rules or an installed-version-supported OpenCode directory entry.
-  Do not substitute a root all-rules glob. If no native mechanism satisfies the
-  scope contract, report the gap before integration; a manual scoped index is
-  advisory and does not meet automatic folder-loading acceptance by itself.
+Before promising a connection, finish bounded T03 checks in actual installed clients:
 
-No hooks/plugins, injected runtime or per-consumer probes are introduced as a
-fallback. The shared tool owns mechanical host checks; the consumer agent supplies
-one acceptance record, not a maintained consumer-specific verifier.
+- Observe short-entry content at fresh root startup; exclude full topics and
+  sibling rule bodies. Historical subdirectory trials remain evidence, not the
+  required routine launch workflow.
+- Observe native folder-policy timing separately from voluntary topic reads. Use
+  mixed-scope tasks, explicit dependencies and a layer switch; record guide reads
+  before relevant edits, irrelevant reads and reuse without per-patch repetition.
+- Preserve local authority, import-relative links, scoped bindings and existing
+  guards. Test resume, context loss/compaction and interactive TUI; record client
+  and model versions and unavailable checks rather than infer support.
+- Retain misses and unknowns as well as successes. If behavior is insufficient,
+  report a bounded gap for owner/reviewer review. Neither a short index alone nor
+  passing host tests proves model compliance; automatic pre-edit folder loading is
+  not the acceptance requirement. Do not silently invent a percentage threshold.
+
+No delivery hooks/plugins, injected runtime or per-consumer probes are a fallback.
+The shared tool owns mechanical host checks. [T08](tasks/T08-lightweight-observation.md)
+reviews a small authorized sample of existing traces alongside a T06 clone pilot
+and later authorized use; no daemon, global capture or extra installation stage.
 
 Host verification establishes availability, integrity and registration only.
-Installed-client observation establishes actual entry/detail loading for those
-versions; neither establishes future behavioral compliance or guard coverage.
+Client traces establish observed delivery/reading; reviewing changes separately
+establishes bounded application. Neither proves future compliance or guard coverage.
 After any connection/selection change, restart/reload affected clients once and
 use fresh task evidence. Already-open contexts retain old instructions; restoring
 files cannot retract them. Prepared content remains usable without network or
@@ -298,9 +303,12 @@ Changes to existing usage documentation wait for an explicit migration release.
 | --- | --- | --- |
 | 0 — this design | Reuse map, proposed records, transaction model, client spike and bounded owner decisions. Local links and diff hygiene checked. | Here; design only. |
 | 1 — first implementation session | Minimal bundle validation plus prepare/restore/verify through a proposed non-activating CLI path; two synthetic Git sources, several bundles from one source, exact commits, one portable lock, immutable cache and independent expected digest. Install whole self-contained bundles and preserve local detail links. Restore offline to a second temporary root after source branches move; tamper/escape failures leave existing selection untouched. No native connection or cross-bundle features yet. | Repository agent; next authorized session. |
-| 2 — native feasibility | Shared minimal fixtures and acceptance matrix for both clients; root/two scopes, local authority, relative detail, no duplication, restart/resume/compaction and TUI. Select one supported bridge mechanism per client or stop with evidence. Can run independently after record/layout stabilization. | Consumer agent with installed clients; no private content needed. |
+| 2 — native feasibility | Minimal fixtures for both clients; native short-entry root startup, relevant topic/dependency reads, reuse, layer changes, two scoped bindings, local authority, relative links, resume/compaction and TUI. Review observed behavior and limits; select one connection per client or report the gap. | Agent with installed clients; no private content needed for neutral trials. |
 | 3 — complete lifecycle | Journaled install/update/remove and restore connection using phase-2 mechanisms. Fault injection at every publication step; idempotent recovery, preserved user edits, old-version retention and engine/content compatibility checks. One operation includes connection and verification. | Repository tests here later; installed-client confirmation by consumer agent. |
 | 4 — explicit migration | Separate reviewed common/project bundles, owner-selected private source, approved legacy disconnection plan, full measured lifecycle and rollout/rollback record. Old guard `apply_patch` coverage fixed/tested independently by its owner. | Consumer agent and owner; never automatic. |
+
+T08 is a bounded observation follow-up alongside an authorized phase-4 clone pilot;
+it does not add a prerequisite to phases 2/3 or a continuous-monitoring release gate.
 
 Required `unittest` evidence in phases 1/3:
 

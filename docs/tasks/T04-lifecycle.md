@@ -1,7 +1,8 @@
 # T04 — Complete lifecycle and recovery
 
 Status: pending. Depends on: T02 + T03. Executor: neutral tool agent.
-Read [handoff](README.md), technical-plan sections 3–4 and T03 evidence.
+Read [handoff](README.md), technical-plan sections 3–4, T03 evidence and
+[ADR 0001](../decisions/0001-selective-guidance-reading.md).
 
 ## Goal
 
@@ -25,6 +26,11 @@ the tested native mechanisms, without a consumer-owned wrapper or probe.
   Modified owned material needs explicit resolution. No silent cache deletion.
 - Verification is offline comparison against retained expected identity, not an
   implicit repair, source refresh or policy rebaseline.
+- Connect the T03-accepted short-entry route for root-started work; leave topic
+  relevance/dependencies authored beside the content. Do not add a selector engine,
+  mandatory per-patch reads, all-topic injection or behavioral enforcement to `verify`.
+- Keep strict integrity/ownership checks separate from observed client delivery,
+  voluntary topic reads and application. Host success cannot certify model compliance.
 - Report restart/reload needs. No live snapshot rewrite or hot-context guarantees.
 
 ## Acceptance
@@ -37,6 +43,9 @@ Prove preservation of user bytes, not only equivalent parsed settings.
 
 Run distribution/clean-install checks and macOS/Linux tests for supported behavior.
 Repeat installed-client checks when the implementation changes T03's mechanism.
+Confirm the installed root entry supports relevant topic reads and reuse under
+T03's accepted limits, without duplicating folder/root delivery. Do not require a
+monitoring service or ongoing read audit to install or use the package.
 Measure every required setup/update/restore/removal step, including initial Python/
 Git/tool acquisition. A wrapper hiding many required configurations is not success.
 
@@ -44,4 +53,6 @@ Git/tool acquisition. A wrapper hiding many required configurations is not succe
 
 Record one documented usage path and tested commands. Mark T06 ready only after
 T05 also passes. Do not migrate existing consumers in this task.
+Keep [T08 observation](T08-lightweight-observation.md) out of lifecycle dependencies;
+record instrumentation gaps rather than implementing unapproved capture machinery.
 Completion evidence: pending.

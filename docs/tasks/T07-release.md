@@ -23,6 +23,13 @@ without equating readiness with authorization to publish.
   and accidental old-runtime resources. Verify the release matches tested bytes.
 - Keep release attestations outside source and preserve independent review inputs.
   A development wheel does not satisfy stable-release artifact task approval.
+- Describe guarantees accurately: preparation/registration integrity is distinct
+  from native entry delivery, observed selective reads and model application.
+  Publish tested versions/limits, not guaranteed compliance or automatic pre-edit
+  topic loading. Reading/reusing relevant content does not require all-topic loads.
+- Keep [T08](T08-lightweight-observation.md) lightweight and non-gating; no ongoing
+  monitoring, consumer probe or numerical success-rate target is a release prerequisite.
+  Known regressions affecting advertised behavior still need explicit disposition.
 
 ## Publication boundary
 

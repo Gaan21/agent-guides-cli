@@ -1,8 +1,10 @@
 # agent-guides: agreed delivery scope
 
-Status: owner decisions consolidated, 2026-10-17. Direction selected: Git
+Status: owner decisions consolidated 2026-10-17, reading behavior clarified
+2026-10-18. Direction selected: Git
 acquisition and native Claude Code/OpenCode loading with `agent-guides`.
-The replacement is not implemented. Current installation and migration commands
+Permanent native connection/lifecycle integration is not implemented; non-activating
+preparation exists. Current installation and migration commands
 remain documented in [legacy installed mode](https://github.com/Gaan21/flutter-agent-guidelines/blob/develop/docs/installed-mode.md).
 Execution starts at the [agent handoff and task index](tasks/README.md).
 
@@ -142,6 +144,16 @@ content; this example does not claim a web bundle exists.
 This is indexed, on-demand reading. Automatic semantic retrieval, model-driven
 summarization and a running context-selection server are not part of this proposal.
 Test actual client loading and topic discovery separately from behavioral compliance.
+
+Owner clarification, 2026-10-18: routine work starts at the project root. Agents
+select relevant guides and explicit dependencies before applicable edits, reuse
+content still available in context, and consult new topics when the work changes.
+Do not load every topic or require rereading before every patch to chase absolute
+compliance. Context loss or changed guidance may justify another read. Preserve
+native local authority; this does not promise automatic pre-edit folder injection.
+See [ADR 0001](decisions/0001-selective-guidance-reading.md). Optional lightweight
+review of existing authorized traces is planned in [T08](tasks/T08-lightweight-observation.md),
+not a monitoring runtime or an additional required consumer setup step.
 
 ## Integrity and lifecycle boundaries
 
