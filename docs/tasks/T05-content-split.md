@@ -1,6 +1,6 @@
 # T05 — Lossless common/private content split
 
-Status: pending. Depends on: T01 + T02. Executor: consumer agent with private access.
+Status: ready. Depends on: T01 + T02 (done). Executor: consumer agent with private access.
 Read [handoff](README.md), scope architecture/preservation requirements and bundle
 schema accepted in T02. May run alongside T03/T04 in separate owned workspaces.
 

@@ -1,6 +1,6 @@
 # T03 — Native loading feasibility
 
-Status: pending. Depends on: T02. Executor: authorized installed-client agent.
+Status: ready. Depends on: T02 (done). Executor: authorized installed-client agent.
 Read [handoff](README.md), scope context behavior and technical-plan section 4.
 
 ## Goal

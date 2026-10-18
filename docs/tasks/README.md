@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01 done; T02 independently accepted, refreshed CI pending (2026-10-17).
+Status: T01/T02 done; T03/T05 ready (2026-10-17).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -39,10 +39,10 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | ID | Task | Status | Dependencies / executor |
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
-| T02 | [Exact multi-source preparation](T02-preparation.md) | in_progress | Corrective review accepted; authorized upload/refreshed CI pending. |
-| T03 | [Native loading feasibility](T03-native-loading.md) | pending | T02; installed-client/consumer agent. |
+| T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
+| T03 | [Native loading feasibility](T03-native-loading.md) | ready | T02 done; installed-client/consumer agent with authorized access. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
-| T05 | [Lossless common/private content split](T05-content-split.md) | pending | T01 + T02; consumer agent with private access. |
+| T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
 
@@ -113,9 +113,13 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current assignment: complete the authorized corrective-source upload and refreshed
-macOS/Linux × Python 3.11/3.15 matrix. Independent corrective review accepted the
-retained candidate; fresh local source/distribution checks passed on macOS with
-Python 3.11/3.15. See T02's independent corrective-review record. Owner authorized
-staging/commit/push to `origin/develop` and a documentation-only closure upload
-after passing CI. Only then mark T02 done and T03/T05 ready together.
+Current next-agent assignment: **T03 native loading feasibility**, with actual
+installed-client access and authorized disposable fixtures. T05 is also ready for
+a consumer agent with private access and may proceed in a separate owned workspace.
+Read the selected task's inputs before work; readiness does not authorize repository
+creation, content publication or consumer activation. T04 still depends on T03.
+
+T02 closed after independent corrective acceptance and the refreshed four-job
+macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and linked CI.
+Corrective source and closure documentation were authorized for upload to
+`origin/develop` in this session. Future publication requires its own authorization.

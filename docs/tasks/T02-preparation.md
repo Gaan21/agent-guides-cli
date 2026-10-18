@@ -1,6 +1,6 @@
 # T02 — Exact multi-source preparation
 
-Status: in_progress (corrective candidate independently accepted; refreshed CI pending).
+Status: done (independent corrective review accepted; refreshed CI matrix passed).
 Depends on: T01 (done; independent review accepted).
 Executor: agent in the neutral tool repository.
 Read [handoff](README.md), scope, technical-plan sections 1–3 and phase-1 tests.
@@ -341,3 +341,31 @@ git diff --check
 - Owner explicitly authorized staging/commit/push of T02 to `origin/develop`,
   plus a documentation-only closure commit/push after passing CI. Upload results
   follow. T02 remains open and T03/T05 pending until the refreshed matrix passes.
+
+### Final closure — 2026-10-17
+
+**T02 accepted and done.** This result supersedes the historical pending gates
+above. Independent corrective acceptance and the refreshed platform/runtime matrix
+both cover the retained corrective engine, tests and preparation contract.
+
+- Authorized corrective-source commit uploaded to `origin/develop`; exact execution
+  revision is retained in `.git/T02-fix-independent-results.md`. The seven intended
+  corrective/test/contract/handoff files were included; Git-local evidence and
+  `.serena/` were excluded. Retained candidate/original identities remain unchanged.
+- [Corrective CI run](https://github.com/Gaan21/agent-guides/actions/runs/39097112478)
+  **passed all four jobs**: macOS Python 3.11.9/3.15.0 and Ubuntu Python
+  3.11.17/3.15.0. Each ran the 32-test source suite and the distribution unittest
+  (sdist, wheel from sdist, exact resources/notices, clean install, CLI help/version
+  and the 32-test installed-wheel suite outside checkout). Ubuntu appropriately
+  skipped the one case-insensitive-filesystem alias test in each suite; macOS ran
+  it. Portable reserved-name rejection passed on both platforms.
+- Observed with `gh run watch 39097112478 --repo Gaan21/agent-guides --exit-status
+  --interval 10`, followed after the local watch timeout by `gh run view 39097112478
+  --repo Gaan21/agent-guides --json conclusion,headSha,jobs,url` and log inspection.
+  Final conclusion and every job/required step were `success`.
+- Closure changes only task documentation: this record, board and T03/T05 headers.
+  Engine/build/tests/contract bytes remain those independently reviewed and tested.
+  `git diff --check` and retained-candidate/local-link/length/privacy checks pass.
+- **Next ready tasks: T03 and T05**, with their task-specific access prerequisites.
+  T04 remains pending T03. Native client loading, behavioral compliance, real private
+  content migration and stable release approval remain later task acceptance work.
