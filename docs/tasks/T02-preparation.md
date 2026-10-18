@@ -1,6 +1,6 @@
 # T02 — Exact multi-source preparation
 
-Status: in_progress (implemented; independent review and matrix pending).
+Status: in_progress (implemented; CI passed; independent review pending).
 Depends on: T01 (done; independent review accepted).
 Executor: agent in the neutral tool repository.
 Read [handoff](README.md), scope, technical-plan sections 1–3 and phase-1 tests.
@@ -145,3 +145,26 @@ git diff --check
 After the local implementation record, the owner explicitly authorized T02 staging,
 commit and push to `develop` to exercise CI. This authorizes source upload only;
 the independent-review gate remains. Actual publication and CI results follow.
+
+### Source publication and CI result — 2026-10-17
+
+- Authorized T02 source committed and pushed to `origin/develop`; exact commit and
+  publication checks are retained in `.git/T02-results.md`. Only the 20 intended
+  implementation/test/contract/handoff files were staged; local identity/evidence
+  and `.serena/` were excluded. Retained expected identity was not changed.
+- [T02 CI run](https://github.com/Gaan21/agent-guides/actions/runs/39087489115)
+  passed all four macOS/Ubuntu × Python 3.11/3.15 jobs. Each ran 27 source tests,
+  the distribution unittest (sdist then wheel from sdist, resources/notices,
+  clean install), CLI help/version and 27 installed-wheel tests outside checkout.
+  This supplies the previously pending Linux/minimum-Python implementation checks,
+  distinct from T01 CI and local macOS checks.
+- Observed with `gh run watch 39087489115 --repo Gaan21/agent-guides --exit-status
+  --interval 10` (exit 0). The run retains exact source/runtime details and logs.
+  A documentation-only follow-up records results without changing tested engine,
+  build, tests, policy or retained artifact identity.
+- **Remaining closure gate: independent T02 review.** T02 stays `in_progress`;
+  T03/T05 stay `pending`. The next reviewer compares the same expected identity,
+  artifacts and actual implementation against Acceptance / Handoff, then records
+  acceptance or exact findings. No new source resolution or expectation capture.
+  Earlier local/pending-publication statements above are historical, superseded
+  by this result. No releases, registry publication or consumer activation.

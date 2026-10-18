@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01 done; T02 implemented, independent review and matrix pending (2026-10-17).
+Status: T01 done; T02 implemented, CI passed, independent review pending (2026-10-17).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -39,7 +39,7 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | ID | Task | Status | Dependencies / executor |
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
-| T02 | [Exact multi-source preparation](T02-preparation.md) | in_progress | Implemented locally; independent review and Linux/minimum-Python checks pending. |
+| T02 | [Exact multi-source preparation](T02-preparation.md) | in_progress | Implemented and matrix passed; independent review required before closure. |
 | T03 | [Native loading feasibility](T03-native-loading.md) | pending | T02; installed-client/consumer agent. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | pending | T01 + T02; consumer agent with private access. |
@@ -110,11 +110,10 @@ Current next-agent assignment: **independently review T02**, not start T03/T05.
 Read T02's implementation record and `docs/preparation.md`. Compare working source,
 tests and exact retained artifacts with `.git/T02-identity.json` and the evidence
 identified in `.git/T02-results.md`; do not rerun capture or replace expectations.
-Local macOS Python 3.14/3.15 checks passed; Linux and Python 3.11 checks for the new
-implementation remain pending. The prior T01 matrix does not cover T02.
-T01's closure was committed/pushed with session authorization. The owner subsequently
-authorized T02 staging/commit/push in this session to run its CI; results follow in
-T02's record. Future sessions must obtain their own publication authorization.
+Local macOS Python 3.14/3.15 checks and T02's macOS/Linux Python 3.11/3.15 CI passed;
+read the linked run in T02's record. CI and implementation self-checks do not close
+the independent-review gate. T01's closure and T02 source were committed/pushed with
+session authorization. Future sessions must obtain their own publication authorization.
 After independent acceptance, mark T02 done and T03/T05 ready in board and headers;
 otherwise record the precise gap and retain T02 open. Preserve both task identities.
 No release, registry publication or consumer activation is authorized by this handoff.
