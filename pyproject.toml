@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-guides"
+version = "0.1.0.dev0"
+description = "Neutral Git-sourced guidance preparation tooling"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/Gaan21/agent-guides"
+
+[project.scripts]
+agent-guides = "agent_guides.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
+
+[tool.setuptools]
+include-package-data = false
