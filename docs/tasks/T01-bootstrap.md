@@ -118,11 +118,13 @@ git diff --check
 
 ### Limits and next handoff
 
-- Independent review remains the T01 closure gate. Linux execution is pending:
+- Independent review remains the T01 closure gate. At the local trial Linux
+  execution was pending:
   `docker info --format '{{.OSType}}'` failed because the local daemon socket was
   unavailable. The checked-in Ubuntu CI job is the identified validation path,
   not evidence of a Linux pass. Python 3.11 was unavailable locally; minimum-version
-  validation also remains pending in CI. Windows is deferred.
+  validation was also pending in CI. Subsequent CI results are recorded below.
+  Windows is deferred.
 - No installed-client versions or native-loading behavior tested; those belong to
   T03. No tamper/path/selection guarantees claimed before T02 implements them.
 - Owner subsequently authorized commits and pushes for both the scaffold and
@@ -146,3 +148,21 @@ Public source is to be uploaded on `develop`, matching the remote default branch
 Publication results and exact commits/check runs are retained in local execution
 evidence and reported to the owner. Git history identifies source commits without
 embedding internal execution pins in this public record.
+
+### Source publication and CI result — 2026-10-17
+
+- Authorized commits pushed to `origin/develop` in both `agent-guides` (scaffold,
+  handoff and closure correction) and `flutter-agent-guidelines` (forwarding docs).
+  Both working trees were clean and local heads matched remote-tracking heads.
+- The [bootstrap CI run](https://github.com/Gaan21/agent-guides/actions/runs/39082879572)
+  passed all four jobs: Ubuntu/macOS runners, each with Python 3.11 and 3.15.
+  Each job installed the package, ran CLI unittests, built sdist then wheel from
+  sdist, inspected resources/notices and exercised a clean wheel installation.
+  This supplies the previously pending Linux/minimum-Python scaffold checks;
+  it does not establish client loading or later lifecycle support.
+- Observed with `gh run watch 39082879572 --repo Gaan21/agent-guides --exit-status
+  --interval 10` (exit 0). The linked run retains exact tested commit, runtime
+  versions and logs; local execution evidence retains publication commit IDs.
+- Next agent still performs independent T01 review against the retained identity.
+  CI success is test evidence, not that review. T01 remains `in_progress` and T02
+  remains `pending` until the reviewer records acceptance.
