@@ -1,6 +1,6 @@
 # T03 — Native loading feasibility
 
-Status: in_progress. Depends on: T02 (done). Executor: authorized installed-client agent.
+Status: blocked. Depends on: T02 (done). Executor: authorized installed-client agent.
 Read [handoff](README.md), scope context behavior and technical-plan section 4.
 
 ## Goal
@@ -44,9 +44,10 @@ private and distinguish host integrity from observed loading and compliance.
 
 T04 is ready only when a feasible strategy and its limits are reviewed. Unavailable
 TUI/client checks remain pending where not exercised, not simulated as passes.
-The original subdirectory-start gap is resolved by native approval and bounded read
-access; remaining matrix checks and independent acceptance are pending. See the
-[tested prerequisites](../native-loading.md) and the corrective record below.
+The original Claude subdirectory-start gap is resolved by native approval and bounded
+read access. Independent review and supplemental trials below confirm OpenCode
+initial-entry/edit-first gaps; no two-client strategy is accepted. See the
+[tested prerequisites](../native-loading.md). T04 remains pending until acceptance.
 
 ## Bounded feasibility record — 2026-10-17
 
@@ -182,8 +183,9 @@ Evidence and verification:
   topic reads, bounded read rejection and an actual native `compact_boundary`.
 - Resumed the corrected subdirectory session in the interactive TUI, ran `/context`
   and `/compact`, then resumed noninteractively. The transcript confirms applicable
-  entries reattach after compaction; subsequent scoped sample/topic reads succeed.
-  Compaction also restores prior read context. A model's report of extra policy
+  entries reattach after compaction. Independent review found that the original
+  continuation restored sample/topic results without new reads; the supplemental
+  turn below supplies fresh-read evidence. A model's report of extra policy
   reads is not by itself evidence of new model-initiated reads; inspect tool calls
   and restored-context records separately.
 - An initial web topic test chose the root sample instead of the requested scoped
@@ -210,3 +212,93 @@ coverage, conflicting local authority and nested-worktree checks. Linux installe
 client acceptance remains pending. The generic fixture's scoped-read timing is not
 proof of coverage for every edit tool. **T04 remains pending**, and T05 independently
 ready. This correction authorizes no consumer activation or publication.
+
+## Independent review and supplemental matrix — 2026-10-17
+
+**Verdict: T03 blocked; T04 pending until acceptance.** The Claude import/read-access
+correction is independently verified, with a corrected post-compaction claim.
+The OpenCode navigation candidate does not meet the agreed entry/scope contract.
+These are feasibility findings, not a completed integration or consumer activation.
+
+Review and retained identity:
+
+- Ran the unchanged read-only `.git/t03_r2_verify.py` before public edits; it passed.
+  Independently inspected initial attachments, native request records, tool results,
+  permission rejections, TUI context and the real `compact_boundary`.
+- Found no new `Read` calls after that retained compaction boundary: the client
+  restored prior read results and the model described them as new reads. Initial
+  reattachment and compaction remain proven. A new continuation of the **same**
+  session now contains three actual successful `Read` calls: scoped sample and
+  both linked topics, with no explicit policy/entry reads.
+- Kept original/corrective seals, task expectations, engine, exact source commits,
+  bundle snapshots and selection unchanged. New evidence is in `.git/T03-r3-evidence/`;
+  corrective public handoff bytes were archived before documentation changes.
+  `.git/t03_r3_verify.py` checks both historical seals against those archives and
+  verifies all current task joins without recapturing expectations.
+- Added `tests/native_matrix.py` for disposable exact-byte replicas and an explicitly
+  conflicting local-policy variant. That variant has its own retained policy task;
+  source/engine/selection match the original. A real nested, unborn Git worktree
+  joins the original task; it required no staging or source commit. Diagnostic
+  provider/telemetry settings and one exact-file CLI allowance were retained before
+  their calls, independently of prepared files. No snapshot was edited.
+
+Installed versions remain Claude Code **2.1.302** / `claude-opus-5-5`, OpenCode
+**1.19.3** / `openai/gpt-6.1-sol`, on macOS **27.0.1 arm64**. No Linux client was available.
+
+| Criterion | Claude Code | OpenCode |
+| --- | --- | --- |
+| Root and two subdirectory starts | Corrected root/folder entries and local imports attach initially after native approval; topics/sibling entry absent. | Installed-client loopback requests contain root/applicable-folder `AGENTS.md`, once each; prepared entry **content absent**. Configured OAuth request's full initial system context remains unobserved. |
+| Relative entry/topic navigation | Existing imports and successful scoped sample/two-topic reads independently verified. | Configured-model root/mixed/mobile/web trials explicitly read the applicable entries and relative topics successfully. |
+| Mixed-scope automatic loading | Existing read-triggered nested attachments retained; conflicting-policy trial attaches both folders and their local imports. | Fresh sample reads attach both folder reminders without explicit native-file reads. This is read-triggered loading. |
+| First editing tool timing | With an exact-file native `Edit` allowance, first `Write` succeeds, then folder attachments arrive before the next `Read`. No before-write enforcement claim. | First `apply_patch` successfully adds files in both scopes with **no folder attachment**; only later reads attach scope policies. **Fail.** |
+| Native authority / precedence | Root/mobile/web conflicting local values attach and the observed reply preserves each nearest exception. | Conflicting values delivered in native root/folder policies; observed reply applies nearest-folder exceptions. Behavioral evidence, not guaranteed enforcement. |
+| Resume / compaction / TUI | Corrected TUI/context/boundary retained; new same-session continuation proves fresh topic reads. | Actual TUI `/compact` produces native compaction and summary records. Same-session sample reads reattach folder policies; ordinary prior resume deduplicates them. |
+| Existing guards / editing inventory | Actual `Edit` and `Write` protected-file rejections; exposed tools restricted to Read/Edit/Write. Initial no-op Edit fails input validation, not a guard pass. | Actual `apply_patch` rejected by existing native `edit` deny rule; protected bytes unchanged. It is the exposed editing tool in these runs. |
+| Import chains / duplicates | Existing local `@` chains and one owned block preserved. | `AGENTS.md` selected instead of stacking `CLAUDE.md`; prepared files are explicit reads, not `@` imports. Native blocks unchanged, no duplicate routes. |
+| Nested-worktree boundary | Root imports attach inside the new worktree, excluding parent policies. Subdirectory start again needs external-import approval; that worktree's interactive approval/access trial remains pending. | Root/two subdirectory request captures exclude parent-worktree policies; configured-model mixed reads use policies inside the worktree. |
+| Platform / independent acceptance | macOS observations reviewed as above; Linux client trial unavailable. | macOS supplemental evidence retained for review; Linux client trial unavailable. No complete two-client acceptance. |
+
+Observation limits and exclusions:
+
+- OpenCode's configured-auth telemetry omitted system instructions; `/context` was
+  not an installed TUI command. Those exploratory attempts are retained, not counted
+  as initial-context passes. Loopback request capture uses the real installed loader
+  with a separately recorded local provider and fixed response: it proves request
+  composition for that diagnostic arrangement, **not upstream inference or OAuth
+  request equivalence**. Real configured-model trials establish the tool observations.
+- Large CLI exports truncated stdout; retained native session API responses establish
+  compaction/summary records. The partial exports remain available, not repaired or
+  substituted in place. Post-compaction OpenCode made a topic-path typo; its explicit
+  corrected read passed with the same selection.
+- Claude's first default-policy scratch write was denied. A `Write(path)` allowance
+  was also unsupported; the installed native `Edit(path)` permission family allowed
+  the exact scratch write. These are permission-arrangement findings, separate from
+  loader timing. No global settings, trust storage, hooks or delivery plugins were
+  edited. Synthetic guard observations do not accept a consumer's guard correction;
+  that independent consumer verification remains T06's responsibility.
+
+Checks (full argv, prompts, cwd, results and identities retained privately):
+
+```sh
+"$TOOLS315/bin/python" .git/t03_r2_verify.py
+"$TOOLS315/bin/python" .git/t03_r3_verify.py
+"$TOOLS315/bin/python" -m unittest discover -s tests -p test_identity.py -v
+git diff --check
+```
+
+The read-only supplemental verifier passes integrity, archived evidence and all
+stated positive/negative observations; its final verdict is **not accepted**.
+Targeted identity checks: **6 passed each** on available Python **3.11.14, 3.14.8
+and 3.15.0** environments (18 executions); `git diff --check` passed.
+Public changes: this record, task index, tested-prerequisite documentation and the
+shared replica helper. Exact check outputs and supplemental artifact inventory stay
+in local Git metadata. Source and native bridge bytes remain unchanged.
+
+Next gate: independently review the supplemental matrix, then establish a native
+OpenCode strategy that delivers initial authored entries and covers edit-first
+directory work, or retain the bounded infeasibility decision. No advisory index,
+hook/plugin injection or global all-topic glob substitutes for these criteria.
+Exercise the pending worktree-specific Claude prerequisites and Linux clients before
+claiming those cases supported. **T04 stays pending until T03 acceptance; T05 stays
+independently ready.** No staging, commit, push, publication or consumer migration
+was performed.

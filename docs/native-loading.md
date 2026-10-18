@@ -1,7 +1,7 @@
 # Native loading: tested prerequisites
 
-Status: T03 candidate evidence, not an implemented install command or full client
-acceptance. See the [task record](tasks/T03-native-loading.md) for remaining gates.
+Status: T03 blocked on the current OpenCode candidate; no accepted two-client
+connection or implemented install command. See the [task record](tasks/T03-native-loading.md).
 
 ## Claude Code 2.1.302
 
@@ -58,16 +58,59 @@ to T04 and is not implemented by this spike.
 
 After connection changes, use a new session or the required native reload/restart.
 Do not assume an existing session retracts already delivered instructions. The
-tested resumed, compacted subdirectory session reattached the applicable entries;
-native attachment records and explicit topic reads were checked separately.
+tested resumed, compacted subdirectory session reattached the applicable entries.
+Its original continuation restored earlier read results without fresh tool calls;
+the independent review caught that distinction. A supplemental continuation of the
+same session issued three new successful sample/topic `Read` calls.
+
+### Write timing and worktree limits
+
+A first-write trial with a narrowly retained native `Edit` allowance for one scratch
+file delivered folder instructions **after** `Write` completed and before the next
+`Read`. This is native loading, not prevention of a first edit without folder rules.
+`Edit(path)` is the relevant file-mutation permission family, including `Write`;
+the fixture's redundant `Write(path)` rule was diagnosed as unsupported syntax.
+Actual protected-file `Edit` and `Write` calls were rejected by native settings.
+
+A real nested Git worktree loaded its own root imports and excluded parent-worktree
+policies. Starting in its subdirectory again omitted external imports before native
+approval. Approval from the earlier disposable repository is not evidence of approval
+for this worktree; its interactive approval/access acceptance remains pending.
 
 ## OpenCode 1.19.3
 
-The tested candidate uses short root/folder `AGENTS.md` navigation directives.
-Scoped read responses visibly attach folder `AGENTS.md` files. Referenced prepared
-entries and topics are explicit tool reads, not automatic `@` imports. Initial
-context proof and the remaining OpenCode acceptance matrix are still pending;
-these Claude results do not close them.
+The current root/folder `AGENTS.md` navigation candidate **fails T03 acceptance**:
+
+- Loopback capture of requests produced by the installed client shows root-only
+  native instructions at a root start and root plus applicable-folder instructions
+  at subdirectory starts. These contain the owned navigation directive, **not the
+  prepared entry's contents**. Topics and sibling scope rules stay out initially.
+- This capture uses an explicitly retained local diagnostic provider and a fixed
+  response, without upstream inference. It establishes loader/request composition
+  for that arrangement, not model compliance or the exact OAuth request. Configured
+  model sessions independently exercise explicit entry/topic reads and scoped loading.
+  OAuth telemetry/export alone did not expose the full initial system instructions.
+- Scoped `Read` responses attach the folder `AGENTS.md`; prepared entries/topics
+  are later explicit reads. Existing `CLAUDE.md` imports are not a second OpenCode
+  delivery route when `AGENTS.md` is present. Preserve the files and local authority.
+- **Edit-first gap:** an initial `apply_patch` adding files in both scopes succeeded
+  without folder reminders. Only subsequent `Read` calls attached those policies.
+  A root index or a model-directed read-before-edit convention is not proof of
+  automatic native edit-triggered scope delivery.
+- Actual TUI `/compact` and same-session continuation were exercised. Folder policies
+  reattached on subsequent sample reads; ordinary pre-compaction resume had deduplicated
+  them. A model path typo was corrected without modifying the selection.
+- Conflicting root/folder local exceptions remained effective in observed replies.
+  Native `edit` denial rejected an actual `apply_patch` call against a protected file.
+  The exposed editing tool was `apply_patch`; this is synthetic tool coverage, not
+  acceptance of a consumer's pre-existing guards or every patch operation.
+- Root/two subdirectory request captures and configured-model scoped reads respected
+  a real nested-worktree boundary. No parent-worktree policy was attached in captures.
+
+The client owns discovery, read reminders and permissions; the candidate owns one
+short marked block per native file. No delivery plugin, hook or global Markdown
+glob was added. T04 remains pending until a native strategy meets the contract and
+is accepted. Linux installed-client checks remain unavailable in this session.
 
 ## Upstream references
 

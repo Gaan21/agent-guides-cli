@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01/T02 done; T03 in_progress; T05 ready (2026-10-17).
+Status: T01/T02 done; T03 blocked; T04 pending; T05 ready (2026-10-17).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -40,7 +40,7 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
 | T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
-| T03 | [Native loading feasibility](T03-native-loading.md) | in_progress | Claude gap resolved through native approval and bounded read access; remaining matrix/review pending. |
+| T03 | [Native loading feasibility](T03-native-loading.md) | blocked | Claude correction independently reviewed; OpenCode entry-content and edit-first scope gaps confirmed. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
@@ -113,10 +113,10 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current next-agent assignment: **review the corrected Claude candidate and finish
-the T03 acceptance matrix**, retaining original/corrective evidence and exact
-selection. Installed-client access and
-authorized disposable fixtures are required. T05 is also ready for
+Current next-agent assignment: **review the supplemental T03 matrix and resolve
+the bounded OpenCode feasibility gaps**, retaining all original/corrective identities
+and evidence. See the [independent review and matrix](T03-native-loading.md#independent-review-and-supplemental-matrix--2026-10-17).
+Installed-client access and authorized disposable fixtures are required. T05 is also ready for
 a consumer agent with private access and may proceed in a separate owned workspace.
 Read the selected task's inputs before work; readiness does not authorize repository
 creation, content publication or consumer activation. T04 still depends on T03.
@@ -126,11 +126,21 @@ macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and link
 Corrective source and closure documentation were authorized for upload to
 `origin/develop` in this session. Future publication requires its own authorization.
 
-T03's original Claude subdirectory gap is resolved: native external-import approval
-restores initial entries, and a separately pinned exact-selection read allowance
-permits unattended topic reads. Actual attachments, TUI context and compaction were
-checked on Claude Code 2.1.302. See the
-[corrective T03 record](T03-native-loading.md#native-approval-and-read-access-correction--2026-10-17)
-and [tested prerequisites](../native-loading.md). OpenCode 1.19.3 initial-context
-proof and the remaining matrix/review are pending. T04 must not promise a supported
-connection from this partial acceptance.
+T03's Claude correction passed independent integrity/loading review, with one
+reporting correction: the original post-compaction turn restored prior read context
+but issued no fresh reads. A supplemental turn now proves three fresh successful
+reads in that same session. Original expectations were preserved.
+
+OpenCode 1.19.3's installed loader was observed through local request capture:
+initial context contains native navigation directives, not prepared entry contents.
+Configured-model trials also show `apply_patch` succeeds before folder policies
+arrive; subsequent reads attach them. TUI compaction/resume, local conflicts,
+synthetic guard rejection and nested-worktree boundaries were exercised. These
+results do not satisfy T03's connection contract. Linux clients and Claude's
+worktree-specific external-import approval remain pending.
+
+Supplemental evidence, archived corrective handoff bytes and exact invocations are
+in `.git/T03-r3-evidence/`; use read-only `.git/t03_r3_verify.py` and the private
+`.git/T03-r3-results.md`. The verifier checks the old seals against archived handoff
+bytes, rather than replacing expectations after documentation changes. Do not rerun
+arrangement/capture scripts. **T04 remains pending until T03 acceptance.**
