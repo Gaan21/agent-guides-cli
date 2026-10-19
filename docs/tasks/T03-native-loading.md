@@ -1,6 +1,9 @@
 # T03 — Native loading feasibility
 
-Status: in_progress. Depends on: T02 (done). Executor: authorized installed-client agent.
+Status: done, owner accepted 2026-10-19. Depends on: T02 (done).
+Completion: [accepted routes, limitations, evidence and T04 handoff](T03-acceptance.md).
+The experimental records below retain their original criteria and dates; their
+historical queues/statuses do not override the accepted root-started workflow.
 Read [handoff](README.md), scope context behavior and technical-plan section 4.
 Current direction: [ADR 0001](../decisions/0001-selective-guidance-reading.md) and
 [the selective-reading continuation](T03-selective-reading.md). Historical strict
@@ -474,3 +477,8 @@ relevant, non-repeated reading over a hard editing gate. A root index with ordin
 topic links is being tested before introducing native skills or other machinery.
 See [the trial and limits](T03-selective-reading.md). T03 returns to **in_progress**;
 this does not accept the whole matrix or start T04. Original failures/seals remain.
+
+Fresh root-started Claude Code 2.1.303/OpenCode V2 2.0.32 results, native TUI
+compaction and remaining acceptance limits: [2026-10-19 continuation](T03-root-startup.md).
+Subsequent [remaining checks](T03-remaining-checks.md) close exact-source-object and
+explicit-settings worktree gaps; Linux infrastructure and owner acceptance remain.

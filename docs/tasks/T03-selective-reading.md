@@ -1,7 +1,9 @@
 # T03 continuation — selective reading
 
-Status: in_progress, 2026-10-18. Parent: [T03](T03-native-loading.md).
-T04 remains pending; this is not a released integration or consumer activation.
+Status: historical trial record. Parent [T03](T03-native-loading.md) accepted 2026-10-19.
+See [closure and T04 handoff](T03-acceptance.md); this is not a released integration.
+Update 2026-10-19: [fresh root-started two-client trial](T03-root-startup.md)
+extends the subagent evidence below; the later closure records owner acceptance.
 
 ## Owner-confirmed target
 
@@ -110,6 +112,15 @@ ambiguous dependency, mixed simultaneous layers, Claude Code or Linux behavioral
 trial is included. Do not claim a population success rate or complete T03 acceptance.
 
 ## Next-agent execution order
+
+Historical T03 trial order only. **Continue T04** using the
+[accepted handoff](T03-acceptance.md#next-agent-execution-order), not this queue.
+
+Steps 3–4 now have fresh bounded macOS results in the
+[installed-client continuation](T03-root-startup.md). Review those before rerunning
+trials. The [remaining-check continuation](T03-remaining-checks.md) subsequently
+checks cached source objects and worktree prerequisites; Linux and final acceptance
+remain pending.
 
 1. Read ADR 0001, the task board and the independently reviewed records above. Check
    actual installed client versions again; do not assume prior versions are current.

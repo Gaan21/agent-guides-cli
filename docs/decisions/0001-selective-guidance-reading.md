@@ -1,6 +1,6 @@
 # ADR 0001 — Selective guidance reading before stronger enforcement
 
-Date: 2026-10-18. Status: accepted direction; connection acceptance still pending.
+Date: 2026-10-18. Status: accepted direction; bounded T03 feasibility accepted 2026-10-19.
 Owner authorized this approach and lightweight observation. See the
 [task board](../tasks/README.md) and [trial](../tasks/T03-selective-reading.md).
 
@@ -45,6 +45,9 @@ authorized by this decision.
 
 ## Evidence and confidence
 
+The following is the initial decision's evidence, not the final acceptance matrix.
+Later macOS/Linux checks and owner acceptance are recorded in [T03 closure](../tasks/T03-acceptance.md).
+
 Four small OpenCode subagent conversations used a real configured model. Each read
 the screen guide before screen edits, reused it on a second turn, consulted the
 repository guide when work changed layer, and did not read the viewmodel guide.
@@ -73,7 +76,8 @@ candidate identity. No arbitrary percentage or new enforcement system is approve
 
 ## Consequences and public narrative
 
-T03 remains in progress; T04 still needs accepted feasibility. Lifecycle integrity,
+T03 is owner-accepted for project/worktree-root starts; [T04 is ready](../tasks/T04-lifecycle.md).
+See [connection acceptance and retained limits](../tasks/T03-acceptance.md). Lifecycle integrity,
 source pinning, content preservation, security guards and publication permissions
 are unchanged. Observation can begin with an authorized T06 clone pilot and later
 ordinary use; it is not a new prerequisite blocking lifecycle work or publication.

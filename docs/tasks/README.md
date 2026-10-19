@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01/T02 done; T03 in_progress; T04 pending; T05 ready; T08 pending (2026-10-18).
+Status: T01/T02/T03 done; T04 ready; T05 ready; T08 pending (2026-10-19).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -46,8 +46,8 @@ T01 establishes the scaffold; T02 adds non-activating preparation. Integration i
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
 | T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
-| T03 | [Native loading feasibility](T03-native-loading.md) | in_progress | Root-index subagent trial independently reviewed; broader selective behavior and two-client acceptance remain pending. |
-| T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | pending | T02 + T03; tool agent, then client confirmation. |
+| T03 | [Native loading feasibility](T03-native-loading.md) | done | Independent bounded macOS/Linux reviews and owner acceptance; root-start conditions in the acceptance record. |
+| T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | ready | T02 + T03 done; neutral tool agent, then installed-client confirmation. Not started. |
 | T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
@@ -107,8 +107,8 @@ generated configuration, or a model's claim of compliance.
 ## Prompt for the next agent
 
 > Read the working repository's maintainer instructions, inspect status/diff,
-> then read docs/tasks/README.md, its agreed-scope link and ADR 0001. Continue T03
-> using T03-selective-reading.md's next-agent execution order. T05 may proceed in
+> then read docs/tasks/README.md, its agreed-scope link and ADR 0001. T03 is accepted;
+> continue T04 using T03-acceptance.md's next-agent execution order. T05 may proceed in
 > a separately owned workspace with private access. Read only the
 > relevant technical-plan sections and dependency results. Preserve existing work
 > and content. Do not reopen closed decisions, activate a consumer, publish or
@@ -123,16 +123,17 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current next-agent assignment: **continue T03's minimal root-entry route**, using
-the [ordered next steps](T03-selective-reading.md#next-agent-execution-order).
-The four-subagent trial already passed independent bounded review. Next test fresh
-root startup, selective dependencies/reuse/layer changes and context loss in both
-installed clients. Retain all identities/failures and missing-platform limits; do
-not restart the strict automatic-injection search or add skills/monitoring by default.
-Installed-client access and authorized disposable fixtures are required. T05 is also ready for
-a consumer agent with private access and may proceed in a separate owned workspace.
-Read the selected task's inputs before work; readiness does not authorize repository
-creation, content publication or consumer activation. T04 still depends on T03.
+Current next-agent assignment: **T04 — complete lifecycle and recovery**, using
+the [accepted T03 strategy and ordered handoff](T03-acceptance.md#next-agent-execution-order).
+Routine sessions start at the project or selected-worktree root. Claude imports the
+short index; OpenCode uses native `instructions`, with an explicitly host-controlled
+route when project discovery is disabled. The managed Linux candidate depends on
+correct `PWD`; production launcher binding/registration is not yet applied or verified.
+Preserve isolation, existing guards and all retained failures. Do not reopen strict
+automatic injection, subdirectory startup or Linux Claude TUI as feasibility gates.
+T05 remains independently ready with private access in a separate owned workspace.
+T08 still requires an authorized T06 pilot. Task readiness does not authorize live
+managed configuration changes, source publication, migration or consumer activation.
 
 T02 closed after independent corrective acceptance and the refreshed four-job
 macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and linked CI.
@@ -211,3 +212,43 @@ Evidence under `.git/` is local-only and is not uploaded with source. On this
 checkout, use the new read-only review for archived expectations; on a fresh clone,
 obtain authorized evidence or retain a new trial before claiming prior checks.
 T03 stays in_progress; T04 pending; T05 ready; T08 pending. Continue T03, not T04/T08.
+
+The preceding status is historical. The owner-accepted closure below supersedes
+those execution queues, without changing their failed/pending observations.
+
+## Fresh installed-client continuation — 2026-10-19
+
+[Root-started trial](T03-root-startup.md): both real configured models read the
+screen guide and its dependency before editing, reuse topics, switch to repository
+and web guidance, and apply the native web exception. Both native TUIs compacted;
+subsequent mobile work made fresh dependency reads. Initial entry observation and
+synthetic guard rejection are recorded separately from remote-model compliance.
+Read-only review: `.git/t03_root_verify.py`; exact evidence/failed attempts remain
+in `.git/T03-root-evidence/`. Six identity tests pass on Python 3.15.0. No engine
+change or activation. Independent read-only review supports bounded macOS
+feasibility; `.git/T03-root-independent-results.md` retains its findings. Owner
+decision and the recorded limits still prevent claiming full acceptance or starting T04.
+
+Remaining-check continuation: [exact cached Git objects and a real linked worktree](T03-remaining-checks.md)
+now have independent bounded acceptance. Original source directories were not
+recreated. Claude's worktree-subdirectory topic access requires the tested native
+`--settings` overlay; the first automatic-discovery failure remains retained. Linux
+clients are still pending because no running Linux environment/model access was
+available. Read-only review: `.git/t03_finish_verify.py`. T03 is not marked done.
+Python 3.15.0 clean-distribution checks and all 32 installed-wheel unittests pass;
+these are host/package checks, not Linux installed-client acceptance.
+
+## T03 completion and T04 handoff — 2026-10-19
+
+Owner accepted closing T03 for **root-started** project/worktree sessions after
+independent macOS and Linux reviews. Linux's corrected OpenCode V2 native-index
+candidate passes both root cases while preserving disabled project configuration;
+the earlier manual-discovery and invalid-worktree results remain failed/invalid.
+Claude Linux TUI/subdirectory limits are explicitly outside this accepted workflow.
+
+Read [T03 acceptance](T03-acceptance.md) for routes, versions, exact check references,
+private evidence locations, guard limitations and the next-agent execution order.
+No permanent integration, production configuration, consumer activation or release
+was performed. Documentation commit/push is explicitly authorized for this closure;
+future publication and production actions require their own authorization.
+**T03 done; T04 ready, not started; T05 ready; T06/T07/T08 pending.**

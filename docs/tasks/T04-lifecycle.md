@@ -1,8 +1,10 @@
 # T04 — Complete lifecycle and recovery
 
-Status: pending. Depends on: T02 + T03. Executor: neutral tool agent.
+Status: ready. Depends on: T02 + T03 (done). Executor: neutral tool agent.
 Read [handoff](README.md), technical-plan sections 3–4, T03 evidence and
 [ADR 0001](../decisions/0001-selective-guidance-reading.md).
+T03's [acceptance and next-agent order](T03-acceptance.md) govern the connection;
+do not resume superseded feasibility queues. T04 is ready, not implemented.
 
 ## Goal
 
@@ -32,6 +34,23 @@ the tested native mechanisms, without a consumer-owned wrapper or probe.
 - Keep strict integrity/ownership checks separate from observed client delivery,
   voluntary topic reads and application. Host success cannot certify model compliance.
 - Report restart/reload needs. No live snapshot rewrite or hot-context guarantees.
+
+## Accepted connection prerequisites from T03
+
+- Start at the project/selected-worktree root, not a subdirectory. Retain/check the
+  root identity separately from environment strings; `cwd` and `PWD` must agree.
+- Claude imports the short index natively. Preserve existing root/folder policies;
+  never bypass host-managed permissions or fabricate external-import approval.
+- OpenCode V2 uses native `instructions`. The tested managed-host route keeps
+  `OPENCODE_DISABLE_PROJECT_CONFIG=1` and supplies a host-controlled read-only
+  `OPENCODE_CONFIG` with `instructions: ["{env:PWD}/AGENTS.md"]`. A fixed parent path
+  fails worktree isolation; stale/missing `PWD` can silently select the wrong index.
+- Define owned registration/merge/rollback and report operator prerequisites when
+  host configuration is not writable or not authorized. Do not change live managed
+  settings, add consumer launchers or broaden access as an implicit install step.
+- Native entry arrival, selected-topic behavior and guard enforcement are different
+  checks. No terminal-protection claim follows from a run that never offered that
+  tool. Consumer guard verification and authorized activation remain separate.
 
 ## Acceptance
 

@@ -2,6 +2,8 @@
 
 Status: technical proposal, selective-reading direction clarified 2026-10-18;
 preparation exists, permanent native connection/lifecycle integration is pending.
+T03 now has [owner-accepted root-start feasibility](tasks/T03-acceptance.md),
+2026-10-19; [T04](tasks/T04-lifecycle.md) is the next ready implementation task.
 [Delivery scope](delivery-scope.md) is the authority for agreed requirements.
 Use the [handoff/task index](tasks/README.md) for execution order and progress.
 Names, schemas and paths below are proposals, not available commands. Existing
@@ -235,7 +237,9 @@ must resolve from the actual containing entry, with any transformation retained
 separately from immutable source bytes. Inventory existing routes before adding
 another; avoid duplicate injection and respect nested-worktree boundaries.
 
-Before promising a connection, finish bounded T03 checks in actual installed clients:
+T03's bounded installed-client checks below are now owner-accepted for root-started
+work; retain their limits in T04 and repeat affected checks when integration changes
+the mechanism. Do not advertise subdirectory startup or Linux Claude TUI support:
 
 - Observe short-entry content at fresh root startup; exclude full topics and
   sibling rule bodies. Historical subdirectory trials remain evidence, not the

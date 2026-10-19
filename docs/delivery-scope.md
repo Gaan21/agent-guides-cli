@@ -3,6 +3,8 @@
 Status: owner decisions consolidated 2026-10-17, reading behavior clarified
 2026-10-18. Direction selected: Git
 acquisition and native Claude Code/OpenCode loading with `agent-guides`.
+T03 feasibility was owner-accepted 2026-10-19 for project/worktree-root starts;
+see [accepted connection and limits](tasks/T03-acceptance.md). T04 is ready.
 Permanent native connection/lifecycle integration is not implemented; non-activating
 preparation exists. Current installation and migration commands
 remain documented in [legacy installed mode](https://github.com/Gaan21/flutter-agent-guidelines/blob/develop/docs/installed-mode.md).
@@ -154,6 +156,13 @@ native local authority; this does not promise automatic pre-edit folder injectio
 See [ADR 0001](decisions/0001-selective-guidance-reading.md). Optional lightweight
 review of existing authorized traces is planned in [T08](tasks/T08-lightweight-observation.md),
 not a monitoring runtime or an additional required consumer setup step.
+
+Acceptance clarification, 2026-10-19: a selected worktree's root is also a valid
+start. The host must bind `cwd`/`PWD` and the native short entry to that same root.
+Subdirectory startup and the unavailable Linux Claude TUI are outside the accepted
+workflow, not new implementation gates. Managed-host registration and actual
+production-launcher binding remain unimplemented and need explicit authorization;
+the accepted prototype does not activate or reconfigure a consumer.
 
 ## Integrity and lifecycle boundaries
 

@@ -1,7 +1,7 @@
 # Native loading: tested prerequisites
 
-Status: T03 in progress after owner clarification; no accepted two-client
-connection or implemented install command. See the [task record](tasks/T03-native-loading.md).
+Status: T03 feasibility accepted by owner, 2026-10-19; T04 ready, not implemented.
+See [accepted routes, limits and lifecycle handoff](tasks/T03-acceptance.md).
 
 ## Current direction: selective reading, not an editing gate
 
@@ -11,10 +11,54 @@ each patch or enforcing an absolute read-before-edit guarantee is not desired.
 Native short-entry delivery and actual model-selected reads are separate checks.
 The historical automatic-loader gaps below remain valid, but are not by themselves
 a rejection of a simple root index with selective topic reading. See the
-[new behavioral trial](tasks/T03-selective-reading.md); full T03 acceptance is pending.
+[behavioral trial](tasks/T03-selective-reading.md); root-started feasibility is accepted.
 The rationale is [ADR 0001](decisions/0001-selective-guidance-reading.md). Later
 [lightweight observation](tasks/T08-lightweight-observation.md) uses authorized
 existing traces, not an always-on monitor or a mandatory installation component.
+
+## Accepted root-started workflow — 2026-10-19
+
+Always start at the project or selected-worktree root, with matching trusted `cwd`
+and `PWD`. Claude imports the short index; OpenCode V2 uses native `instructions`.
+For a managed host with project discovery disabled, a host-controlled read-only
+config passed through `OPENCODE_CONFIG` with
+`instructions: ["{env:PWD}/AGENTS.md"]` is the tested candidate. It preserves
+`OPENCODE_DISABLE_PROJECT_CONFIG=1`; a fixed parent-checkout path does not preserve
+worktree isolation. Production binding/registration remains unapplied/unverified.
+
+Installed macOS and Linux trials and independent reviews support bounded feasibility
+with Claude Code 2.1.303 and OpenCode V2 2.0.32. OpenCode initial-request capture is
+local diagnostic evidence; real-provider delivery is inferred from model behavior.
+Subdirectory startup and the failing Linux Claude TUI are not accepted workflows;
+Linux Claude compacted through native print-mode `/compact`. Terminal protections
+are not established by the final candidate. No guidance-enforcement guarantee,
+consumer activation or lifecycle installation follows from this acceptance.
+
+The sections below are historical trial records. Their pending/blocked statuses do
+not override [T03 closure](tasks/T03-acceptance.md) or the task board.
+
+## Fresh root-started clients — 2026-10-19
+
+Claude Code **2.1.303** (latest official changelog entry when checked) and actual
+Homebrew **OpenCode V2 2.0.32** completed the new synthetic selective-reading trial
+on macOS arm64: required dependency reads, topic reuse, repository/web changes,
+native local exception and TUI compaction followed by fresh mobile guide reads.
+Claude imports a short root index; V2 registers that index with `instructions`.
+OpenCode initial-request capture and native `patch` guard rejection use a separate
+local diagnostic, not proof of remote OAuth request equivalence. Consumer guards,
+Linux/worktree limits and owner acceptance remain pending. See the
+[full bounded record](tasks/T03-root-startup.md); no lifecycle integration exists.
+The older sections below retain their historical criteria and observations.
+
+Follow-up [source/worktree checks](tasks/T03-remaining-checks.md) compare all three
+prepared bundles with exact commits found in retained Git caches and exercise a new
+real linked worktree in Claude 2.1.303. Worktree-specific native import approval works,
+but subdirectory starts did not discover the worktree-root read-access settings.
+A separately retained native `--settings` overlay with the same exact-selection read
+allowance and existing denies permits topic reads in both scopes; unrelated root
+reads and protected writes remain denied. This is an explicit launch prerequisite,
+not a fix for automatic discovery. Linux clients still need an available environment
+and authorized model access. Full T03 acceptance remains pending.
 
 ## Claude Code 2.1.302
 
