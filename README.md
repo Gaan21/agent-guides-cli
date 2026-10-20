@@ -1,4 +1,4 @@
-# agent-guides
+# agent-guides-cli
 
 Neutral Python tooling for preparing owner-selected, self-contained Markdown
 guidance from multiple Git repositories. Development `prepare` and prepared-only

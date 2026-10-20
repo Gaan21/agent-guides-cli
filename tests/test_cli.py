@@ -11,21 +11,21 @@ class CliTests(unittest.TestCase):
         for args in (["--help"], ["--version"], []):
             with self.subTest(args=args):
                 result = subprocess.run(
-                    [sys.executable, "-I", "-m", "agent_guides", *args],
+                    [sys.executable, "-I", "-m", "agent_guides_cli", *args],
                     capture_output=True, text=True, check=True,
                 )
-                self.assertIn("agent-guides", result.stdout)
+                self.assertIn("agent-guides-cli", result.stdout)
                 self.assertFalse(result.stderr)
                 if args == ["--version"]:
                     self.assertEqual(
-                        result.stdout.strip(), f"agent-guides {version('agent-guides')}"
+                        result.stdout.strip(), f"agent-guides-cli {version('agent-guides-cli')}"
                     )
 
     def test_lifecycle_operations_require_explicit_inputs(self):
         for operation in ("install", "update", "status", "remove", "recover"):
             with self.subTest(operation=operation):
                 result = subprocess.run(
-                    [sys.executable, "-I", "-m", "agent_guides", operation],
+                    [sys.executable, "-I", "-m", "agent_guides_cli", operation],
                     capture_output=True, text=True,
                 )
                 self.assertEqual(result.returncode, 2)

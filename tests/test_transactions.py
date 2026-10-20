@@ -3,8 +3,8 @@
 import os
 from unittest.mock import patch
 
-from agent_guides import lifecycle, native, transactions as tx
-from agent_guides.integrity import GuidanceError, canonical, digest
+from agent_guides_cli import lifecycle, native, transactions as tx
+from agent_guides_cli.integrity import GuidanceError, canonical, digest
 from fixtures import GitFixture
 
 PROJECT_SURFACES = (native.ENTRY, native.CLAUDE, native.CONFIG, native.STATE, "guidance.lock.json")

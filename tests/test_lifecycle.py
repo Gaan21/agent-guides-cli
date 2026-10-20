@@ -3,9 +3,9 @@
 import os
 from unittest.mock import patch
 
-from agent_guides import git_source, lifecycle, native, preparation, task_identity
-from agent_guides.integrity import GuidanceError, canonical, digest, parse_json
-from agent_guides.storage import locked
+from agent_guides_cli import git_source, lifecycle, native, preparation, task_identity
+from agent_guides_cli.integrity import GuidanceError, canonical, digest, parse_json
+from agent_guides_cli.storage import locked
 from fixtures import GitFixture
 
 

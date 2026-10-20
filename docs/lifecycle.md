@@ -57,15 +57,15 @@ not prove future production-launcher binding or installed-client loading. See th
 Examples require an approved request/root; they are not consumer activation approval:
 
 ```sh
-agent-guides install --project PROJECT --request request.json \
+agent-guides-cli install --project PROJECT --request request.json \
   --client claude --client opencode
-agent-guides status --project PROJECT --expected SELECTION_SHA256
-agent-guides verify --project PROJECT --expected SELECTION_SHA256
-agent-guides update --project PROJECT --expected SELECTION_SHA256
-agent-guides restore --project PROJECT --lock saved-guidance.lock.json \
+agent-guides-cli status --project PROJECT --expected SELECTION_SHA256
+agent-guides-cli verify --project PROJECT --expected SELECTION_SHA256
+agent-guides-cli update --project PROJECT --expected SELECTION_SHA256
+agent-guides-cli restore --project PROJECT --lock saved-guidance.lock.json \
   --expected SAVED_SELECTION_SHA256 --current CURRENT_SELECTION_SHA256
-agent-guides remove --project PROJECT --expected SELECTION_SHA256
-agent-guides recover --project PROJECT
+agent-guides-cli remove --project PROJECT --expected SELECTION_SHA256
+agent-guides-cli recover --project PROJECT
 ```
 
 Install/update/restore accept `--cache CACHE`, default `PROJECT/.guidance/cache`.

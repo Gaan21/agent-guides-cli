@@ -12,13 +12,13 @@ from . import lifecycle, preparation, task_identity
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="agent-guides",
+        prog="agent-guides-cli",
         description=(
             "Neutral guidance preparation and explicit project-local native connection."
         ),
     )
     parser.add_argument(
-        "--version", action="version", version=f"%(prog)s {version('agent-guides')}"
+        "--version", action="version", version=f"%(prog)s {version('agent-guides-cli')}"
     )
     commands = parser.add_subparsers(dest="command")
     prepare = commands.add_parser("prepare", help="resolve approved sources once and prepare bundles")
@@ -93,6 +93,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             result = task_identity.join(args.project, regular_bytes(args.identity), args.expected_task)
         print(canonical(result).decode(), end="")
     except (GuidanceError, OSError) as error:
-        print(f"agent-guides: {error}", file=sys.stderr)
+        print(f"agent-guides-cli: {error}", file=sys.stderr)
         return 1
     return 0

@@ -5,8 +5,8 @@ import io
 import json
 from unittest.mock import patch
 
-from agent_guides import cli, git_source
-from agent_guides.integrity import canonical
+from agent_guides_cli import cli, git_source
+from agent_guides_cli.integrity import canonical
 from fixtures import GitFixture
 
 

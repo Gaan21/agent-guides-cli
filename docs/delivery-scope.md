@@ -1,8 +1,10 @@
-# agent-guides: agreed delivery scope
+# agent-guides-cli: agreed delivery scope
 
 Status: owner decisions consolidated 2026-10-17, reading behavior clarified
 2026-10-18. Direction selected: Git
-acquisition and native Claude Code/OpenCode loading with `agent-guides`.
+acquisition and native Claude Code/OpenCode loading with `agent-guides-cli`.
+[ADR 0003](decisions/0003-tool-and-guides-repositories.md) renamed the tool and
+placed common guidance in the separate public `agent-guides` repository.
 T03 feasibility was owner-accepted 2026-10-19 for project/worktree-root starts;
 see [accepted connection and limits](tasks/T03-acceptance.md). T04's neutral lifecycle
 is [accepted](tasks/T04-acceptance.md), with owned project/managed routes and bounded
@@ -38,7 +40,8 @@ that an agent consults every relevant document or follows every instruction.
 - Build a neutral, stack-agnostic executable package from the start, rather than
   extending the Flutter-named distribution or deferring extraction. Reuse reviewed
   primitives where useful without requiring the legacy Flutter runtime. Package
-  name is `agent-guides`, in a new public repository of its own. Check name
+  name is `agent-guides-cli` ([ADR 0003](decisions/0003-tool-and-guides-repositories.md)),
+  in a public repository of its own. Check name
   availability before scaffolding; do not silently substitute another name.
 - Distribute a Python package through PyPI and versioned releases. Development
   wheels/exact Git trials precede stable publication; a standalone executable is
@@ -89,6 +92,8 @@ technology detection are not selected features.
 
 ### Architecture organization — owner-selected
 
+Common guidance lives in the public `agent-guides` repository, one bundle per
+stack or topic ([ADR 0003](decisions/0003-tool-and-guides-repositories.md)).
 Keep common guidance separate from a specific bundle named **WorkTracker
 architecture**. The project's initial connection includes both; routine startup
 and updates preserve that selection without requiring another profile activation.

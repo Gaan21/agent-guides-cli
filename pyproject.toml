@@ -3,7 +3,7 @@ requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "agent-guides"
+name = "agent-guides-cli"
 version = "0.1.0.dev1"
 description = "Neutral Git-sourced guidance preparation tooling"
 readme = "README.md"
@@ -13,10 +13,10 @@ license-files = ["LICENSE", "NOTICE"]
 dependencies = []
 
 [project.urls]
-Repository = "https://github.com/Gaan21/agent-guides"
+Repository = "https://github.com/Gaan21/agent-guides-cli"
 
 [project.scripts]
-agent-guides = "agent_guides.cli:main"
+agent-guides-cli = "agent_guides_cli.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

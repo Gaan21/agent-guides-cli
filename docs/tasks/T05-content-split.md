@@ -6,13 +6,14 @@ schema accepted in T02. May run alongside T03/T04 in separate owned workspaces.
 
 ## Goal
 
-Prepare common guidance and the private `worktracker-architecture-guides` bundle
-without losing, weakening or accidentally publishing any existing guidance.
+Prepare the common Flutter bundle in the public `agent-guides` guides repository
+and the private `worktracker-architecture-guides` bundle without losing, weakening or accidentally publishing any existing guidance.
 
 ## Inputs and boundaries
 
 - Owner-selected Git account/workspace/access and explicit authorization before
-  creating the new private repository or publishing anything to either source.
+  creating either repository or publishing anything to either source. Placement:
+  [ADR 0003](../decisions/0003-tool-and-guides-repositories.md).
 - Actual common payload, selected existing architecture profile, WorkTracker's
   root/folder instructions, exceptions and referenced contracts, at recorded inputs.
 - Keep originals and the current functioning connection. Do not change active

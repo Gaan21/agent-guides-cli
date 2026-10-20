@@ -51,7 +51,7 @@ separate from implementation permission. Completion evidence follows.
 ### Delivery and authorization
 
 - Owner confirmed `Gaan21`, the sibling `agent-guides` workspace and creation of
-  both local and public repositories. Created <https://github.com/Gaan21/agent-guides>
+  both local and public repositories. Created <https://github.com/Gaan21/agent-guides-cli>
   with local `origin`; public visibility confirmed by GitHub API. At bootstrap the
   remote was empty (size 0); staging, commits and pushes were not yet authorized.
   No releases, PyPI publication or consumer activation were performed. Default
@@ -154,13 +154,13 @@ embedding internal execution pins in this public record.
 - Authorized commits pushed to `origin/develop` in both `agent-guides` (scaffold,
   handoff and closure correction) and `flutter-agent-guidelines` (forwarding docs).
   Both working trees were clean and local heads matched remote-tracking heads.
-- The [bootstrap CI run](https://github.com/Gaan21/agent-guides/actions/runs/39082879572)
+- The [bootstrap CI run](https://github.com/Gaan21/agent-guides-cli/actions/runs/39082879572)
   passed all four jobs: Ubuntu/macOS runners, each with Python 3.11 and 3.15.
   Each job installed the package, ran CLI unittests, built sdist then wheel from
   sdist, inspected resources/notices and exercised a clean wheel installation.
   This supplies the previously pending Linux/minimum-Python scaffold checks;
   it does not establish client loading or later lifecycle support.
-- Observed with `gh run watch 39082879572 --repo Gaan21/agent-guides --exit-status
+- Observed with `gh run watch 39082879572 --repo Gaan21/agent-guides-cli --exit-status
   --interval 10` (exit 0). The linked run retains exact tested commit, runtime
   versions and logs; local execution evidence retains publication commit IDs.
 - Next agent still performs independent T01 review against the retained identity.
@@ -210,7 +210,7 @@ python3 .git/t01_review.py
 "$TOOLS315/bin/python" .git/t01_independent_review.py
 "$TOOLS315/bin/python" -m unittest discover -s tests -p 'test_*.py' -v
 "$TOOLS315/bin/python" tests/check_distribution.py -v
-gh run view 39082879572 --repo Gaan21/agent-guides --json conclusion,headSha,jobs,url
+gh run view 39082879572 --repo Gaan21/agent-guides-cli --json conclusion,headSha,jobs,url
 git diff --check
 ```
 

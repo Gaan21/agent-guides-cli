@@ -10,7 +10,7 @@ without equating readiness with authorization to publish.
 
 ## Readiness
 
-- Confirm `agent-guides` availability/ownership, public repository identity,
+- Confirm `agent-guides-cli` availability/ownership, public repository identity,
   license, notices, engine/content version separation and supported bundle schema.
 - Build sdist, then wheel from sdist, inspect exact resources and install/run tests
   outside checkout. Record exact artifacts/digests and supported Python versions.

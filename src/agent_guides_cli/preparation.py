@@ -15,7 +15,7 @@ LOCK = "guidance.lock.json"
 def engine_identity():
     root = Path(__file__).parent
     files = {p.name: digest(regular_bytes(p)) for p in sorted(root.glob("*.py"))}
-    return {"version": version("agent-guides"), "digest": digest(canonical(files))}
+    return {"version": version("agent-guides-cli"), "digest": digest(canonical(files))}
 
 
 def request(value, fixtures=None):

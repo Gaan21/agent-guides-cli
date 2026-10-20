@@ -17,8 +17,8 @@ ROOT_CONFIG = "opencode.json"
 AGENTS = "AGENTS.md"
 STATE = ".guidance/connection.json"
 CLAUDE = "CLAUDE.md"
-BEGIN = b"<!-- agent-guides:begin -->"
-END = b"<!-- agent-guides:end -->"
+BEGIN = b"<!-- agent-guides-cli:begin -->"
+END = b"<!-- agent-guides-cli:end -->"
 IMPORT = b"@./.guidance/entry.md"
 
 
@@ -179,7 +179,7 @@ def inspect(project, selected, *, owned=()):
         if path.exists() or path.is_symlink():
             raw = regular_bytes(path).lower()
             if any(token in raw for token in (b"flutter-agent-guidelines", b"flutter_agent_guidelines",
-                                               b"agent-guides:begin", b".guidance/entry.md")):
+                                               b"agent-guides-cli:begin", b".guidance/entry.md")):
                 # Owned surfaces are separately validated against the retained lock.
                 if name not in (CLAUDE, *owned):
                     raise GuidanceError(f"competing guidance registration: {name}")

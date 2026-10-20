@@ -7,8 +7,8 @@ import json
 import os
 from unittest.mock import patch
 
-from agent_guides import cli, git_source, host, lifecycle, native, transactions as tx
-from agent_guides.integrity import GuidanceError, canonical, parse_json
+from agent_guides_cli import cli, git_source, host, lifecycle, native, transactions as tx
+from agent_guides_cli.integrity import GuidanceError, canonical, parse_json
 from fixtures import GitFixture
 
 

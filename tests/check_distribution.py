@@ -21,7 +21,7 @@ def run(*args, cwd):
 
 class DistributionTests(unittest.TestCase):
     def test_clean_distribution(self):
-        with tempfile.TemporaryDirectory(prefix="agent-guides-dist-") as temporary:
+        with tempfile.TemporaryDirectory(prefix="agent-guides-cli-dist-") as temporary:
             work = Path(temporary)
             artifacts = work / "artifacts"
             run(sys.executable, "-m", "build", "--sdist", "--outdir",
@@ -61,7 +61,7 @@ class DistributionTests(unittest.TestCase):
                 names = set(archive.namelist())
                 metadata, = (n.rsplit("/", 1)[0] for n in names if n.endswith("/METADATA"))
                 expected = {
-                    *(f"agent_guides/{name}.py" for name in (
+                    *(f"agent_guides_cli/{name}.py" for name in (
                         "__init__", "__main__", "cli", "integrity", "storage",
                         "git_source", "bundles", "preparation", "task_identity",
                         "native", "transactions", "lifecycle", "host",
@@ -82,12 +82,12 @@ class DistributionTests(unittest.TestCase):
             venv.EnvBuilder(with_pip=True).create(environment)
             python = environment / "bin/python"
             run(str(python), "-I", "-m", "pip", "install", "--no-deps", str(wheel), cwd=work)
-            run(str(environment / "bin/agent-guides"), "--help", cwd=work)
-            run(str(environment / "bin/agent-guides"), "--version", cwd=work)
+            run(str(environment / "bin/agent-guides-cli"), "--help", cwd=work)
+            run(str(environment / "bin/agent-guides-cli"), "--version", cwd=work)
             # The tests come from the sdist; isolated Python imports only the installed wheel.
             run(str(python), "-I", "-m", "unittest", "discover", "-s",
                 str(source / "tests"), "-p", "test_*.py", "-v", cwd=work)
-            retention = os.environ.get("AGENT_GUIDES_ARTIFACT_DIR")
+            retention = os.environ.get("AGENT_GUIDES_CLI_ARTIFACT_DIR")
             if retention:
                 destination = Path(retention)
                 self.assertTrue(destination.is_dir(), "Create the artifact directory explicitly first")

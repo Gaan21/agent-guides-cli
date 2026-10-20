@@ -152,13 +152,13 @@ the independent-review gate remains. Actual publication and CI results follow.
   publication checks are retained in `.git/T02-results.md`. Only the 20 intended
   implementation/test/contract/handoff files were staged; local identity/evidence
   and `.serena/` were excluded. Retained expected identity was not changed.
-- [T02 CI run](https://github.com/Gaan21/agent-guides/actions/runs/39087489115)
+- [T02 CI run](https://github.com/Gaan21/agent-guides-cli/actions/runs/39087489115)
   passed all four macOS/Ubuntu × Python 3.11/3.15 jobs. Each ran 27 source tests,
   the distribution unittest (sdist then wheel from sdist, resources/notices,
   clean install), CLI help/version and 27 installed-wheel tests outside checkout.
   This supplies the previously pending Linux/minimum-Python implementation checks,
   distinct from T01 CI and local macOS checks.
-- Observed with `gh run watch 39087489115 --repo Gaan21/agent-guides --exit-status
+- Observed with `gh run watch 39087489115 --repo Gaan21/agent-guides-cli --exit-status
   --interval 10` (exit 0). The run retains exact source/runtime details and logs.
   A documentation-only follow-up records results without changing tested engine,
   build, tests, policy or retained artifact identity.
@@ -201,7 +201,7 @@ Checks and evidence:
 "$TOOLS315/bin/python" .git/t02_review.py
 "$TOOLS315/bin/python" -m unittest discover -s tests -p 'test_*.py' -v
 "$TOOLS315/bin/python" .git/t02_independent_review.py
-gh run view 39087489115 --repo Gaan21/agent-guides --json conclusion,headSha,jobs,url
+gh run view 39087489115 --repo Gaan21/agent-guides-cli --json conclusion,headSha,jobs,url
 git diff --check
 ```
 
@@ -352,16 +352,16 @@ both cover the retained corrective engine, tests and preparation contract.
   revision is retained in `.git/T02-fix-independent-results.md`. The seven intended
   corrective/test/contract/handoff files were included; Git-local evidence and
   `.serena/` were excluded. Retained candidate/original identities remain unchanged.
-- [Corrective CI run](https://github.com/Gaan21/agent-guides/actions/runs/39097112478)
+- [Corrective CI run](https://github.com/Gaan21/agent-guides-cli/actions/runs/39097112478)
   **passed all four jobs**: macOS Python 3.11.9/3.15.0 and Ubuntu Python
   3.11.17/3.15.0. Each ran the 32-test source suite and the distribution unittest
   (sdist, wheel from sdist, exact resources/notices, clean install, CLI help/version
   and the 32-test installed-wheel suite outside checkout). Ubuntu appropriately
   skipped the one case-insensitive-filesystem alias test in each suite; macOS ran
   it. Portable reserved-name rejection passed on both platforms.
-- Observed with `gh run watch 39097112478 --repo Gaan21/agent-guides --exit-status
+- Observed with `gh run watch 39097112478 --repo Gaan21/agent-guides-cli --exit-status
   --interval 10`, followed after the local watch timeout by `gh run view 39097112478
-  --repo Gaan21/agent-guides --json conclusion,headSha,jobs,url` and log inspection.
+  --repo Gaan21/agent-guides-cli --json conclusion,headSha,jobs,url` and log inspection.
   Final conclusion and every job/required step were `success`.
 - Closure changes only task documentation: this record, board and T03/T05 headers.
   Engine/build/tests/contract bytes remain those independently reviewed and tested.

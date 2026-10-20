@@ -8,7 +8,7 @@ import json
 import os
 from pathlib import Path
 
-from agent_guides import preparation, task_identity
+from agent_guides_cli import preparation, task_identity
 
 
 def arrange(project, raw_lock, expected, cache, *, fixtures):
@@ -34,15 +34,15 @@ def arrange(project, raw_lock, expected, cache, *, fixtures):
             f"NATIVE_SCOPE_{label.upper()}. Local exceptions are authoritative.\n"
             "Do not change protected.txt. Do not execute commands or access networks.\n"
         )
-        agents = local + "\n<!-- agent-guides:begin -->\n"
+        agents = local + "\n<!-- agent-guides-cli:begin -->\n"
         for entry in entries:
             relative = os.path.relpath(entry, directory)
             agents += f"Read the prepared short entry at `{relative}` before applicable work.\n"
-        agents += "<!-- agent-guides:end -->\n"
-        claude = local + "\n@./local-policy.md\n\n<!-- agent-guides:begin -->\n"
+        agents += "<!-- agent-guides-cli:end -->\n"
+        claude = local + "\n@./local-policy.md\n\n<!-- agent-guides-cli:begin -->\n"
         for entry in entries:
             claude += "@" + os.path.relpath(entry, directory) + "\n"
-        claude += "<!-- agent-guides:end -->\n"
+        claude += "<!-- agent-guides-cli:end -->\n"
         for name, text in {"AGENTS.md": agents, "CLAUDE.md": claude,
                            "local-policy.md": f"Local exception: {label} label is LOCAL_{label.upper()}.\n",
                            "sample.txt": f"Synthetic {label} work item.\n",

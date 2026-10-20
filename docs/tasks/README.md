@@ -1,7 +1,7 @@
-# agent-guides: start here
+# agent-guides-cli: start here
 
 Status: T01/T02/T03/T04 done; T05 ready; T06/T07/T08 pending (2026-10-20).
-Canonical board in Gaan21/agent-guides.
+Canonical board in Gaan21/agent-guides-cli.
 This is a durable handoff, not a release or consumer activation instruction.
 
 ## Read first
@@ -22,8 +22,9 @@ Existing package usage docs describe live implementations, not the replacement.
 
 ## Closed decisions at a glance
 
-- New public repository and neutral Python package: `agent-guides` (availability
-  unverified). Stable distribution: PyPI and releases; macOS/Linux targets.
+- Public tool repository and neutral Python package: `agent-guides-cli`; common
+  guidance in one public `agent-guides` catalog, one bundle per stack/topic
+  ([ADR 0003](../decisions/0003-tool-and-guides-repositories.md)). Stable distribution: PyPI and releases; macOS/Linux targets.
 - Multiple Git sources; latest approved `develop` resolved once per source on
   install/update, exact recorded selection on restore. Git-only v1.
 - Self-contained Markdown bundles: short authored entry, local detail, inventory
@@ -88,7 +89,7 @@ Relevant private task instructions may be linked/copied as a handoff, but detail
 WorkTracker content/evidence belongs only in the private repository.
 
 T01 transfer completed: this checkout is the authoritative handoff. Public remote:
-<https://github.com/Gaan21/agent-guides>. Owner subsequently authorized committing
+<https://github.com/Gaan21/agent-guides-cli> (renamed by ADR 0003). Owner subsequently authorized committing
 and pushing the scaffold and legacy forwarding changes. Source upload is separate
 from releases, registry publication and consumer activation.
 The approved checkout is the sibling `agent-guides` directory of the legacy
@@ -289,3 +290,12 @@ Preserve every requirement and keep detailed classification evidence private; un
 classification stays in WorkTracker. Do not start T06 migration until T05 passes.
 T07/T08 remain pending. This task's commit/push authorization is not permission for
 future source publication, private-repository creation, release or consumer activation.
+
+## Tool/guides repository split — 2026-10-20
+
+The owner renamed the tool to `agent-guides-cli` and placed all common guidance in a
+new public `agent-guides` catalog; WorkTracker architecture stays private
+([ADR 0003](../decisions/0003-tool-and-guides-repositories.md)). Code, tests,
+packaging and usage docs use the new name; package and distribution checks pass.
+T05 now prepares the Flutter bundle in `agent-guides` plus the private bundle.
+Earlier records keep the names they executed. Client trials were not repeated.

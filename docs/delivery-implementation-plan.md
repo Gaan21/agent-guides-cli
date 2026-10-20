@@ -277,7 +277,7 @@ Owner-selected: a separate neutral package from the beginning, rather than an
 extension of the Flutter-named distribution or a later extraction. Budget its own
 metadata, CLI, wheel/sdist resources and clean installation in the first slice.
 Reuse audited primitives without importing legacy runtime/content assumptions.
-The owner selected a Python package named `agent-guides`, a new public repository
+The owner selected a Python package named `agent-guides-cli` (ADR 0003), a public repository
 of its own, and PyPI plus versioned releases for distribution. Git provides
 acquisition; prefer stdlib mechanics where practical. Check name availability.
 Repository owner/local workspace and creation authorization are execution inputs,
@@ -352,7 +352,7 @@ named `worktracker-architecture-guides`, preserving all guidance and assigning
 ambiguous rules to WorkTracker. Its owner/URL/access/creation authorization and
 reviewed extraction are migration prerequisites, not phase-1 blockers.
 
-The executable decision is settled: `agent-guides`, a neutral Python package in
+The executable decision is settled: `agent-guides-cli`, a neutral Python package in
 its own new public repository, distributed via PyPI/releases, targeting macOS and
 Linux. Only availability, owner/workspace/access and action authorization remain
 to be checked. Do not reopen these product choices as implementation preferences.

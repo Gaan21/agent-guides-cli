@@ -90,13 +90,13 @@ Bounds: 16 sources, 64 bindings; 512 inventory entries including reserved metada
 ## Commands and independently retained expectations
 
 ```sh
-agent-guides prepare --project PROJECT --request request.json --cache CACHE
-agent-guides verify --project PROJECT --expected SELECTION_SHA256
-agent-guides restore --project OTHER_PROJECT --lock saved-guidance.lock.json \
+agent-guides-cli prepare --project PROJECT --request request.json --cache CACHE
+agent-guides-cli verify --project PROJECT --expected SELECTION_SHA256
+agent-guides-cli restore --project OTHER_PROJECT --lock saved-guidance.lock.json \
   --expected SELECTION_SHA256 --cache CACHE
-agent-guides task-pin --project PROJECT --expected SELECTION_SHA256 \
+agent-guides-cli task-pin --project PROJECT --expected SELECTION_SHA256 \
   --output HOST_TASK_RECORD --policy extra-policy.md --overlay exceptions.md
-agent-guides task-join --project PROJECT --identity HOST_TASK_RECORD \
+agent-guides-cli task-join --project PROJECT --identity HOST_TASK_RECORD \
   --expected-task HOST_TASK_SHA256
 ```
 

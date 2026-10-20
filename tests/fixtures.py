@@ -4,13 +4,13 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from agent_guides import git_source, preparation
-from agent_guides.integrity import canonical
+from agent_guides_cli import git_source, preparation
+from agent_guides_cli.integrity import canonical
 
 
 class GitFixture(unittest.TestCase):
     def setUp(self):
-        self.temporary = tempfile.TemporaryDirectory(prefix="agent-guides-test-")
+        self.temporary = tempfile.TemporaryDirectory(prefix="agent-guides-cli-test-")
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name).resolve()
         self.project = self.root / "project"

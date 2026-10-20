@@ -2,8 +2,8 @@
 
 from unittest.mock import patch
 
-from agent_guides import preparation, task_identity
-from agent_guides.integrity import GuidanceError, canonical, digest
+from agent_guides_cli import preparation, task_identity
+from agent_guides_cli.integrity import GuidanceError, canonical, digest
 from fixtures import GitFixture
 
 

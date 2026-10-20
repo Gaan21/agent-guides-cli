@@ -6,10 +6,10 @@ from pathlib import Path
 import shutil
 from unittest.mock import patch
 
-from agent_guides import git_source, preparation
-from agent_guides.integrity import GuidanceError, canonical
-from agent_guides.storage import locked
-from agent_guides import storage
+from agent_guides_cli import git_source, preparation
+from agent_guides_cli.integrity import GuidanceError, canonical
+from agent_guides_cli.storage import locked
+from agent_guides_cli import storage
 from fixtures import GitFixture
 
 

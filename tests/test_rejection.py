@@ -4,8 +4,8 @@ import json
 import os
 from unittest.mock import patch
 
-from agent_guides import bundles, git_source, preparation
-from agent_guides.integrity import (GuidanceError, MAX_FILE, canonical, digest,
+from agent_guides_cli import bundles, git_source, preparation
+from agent_guides_cli.integrity import (GuidanceError, MAX_FILE, canonical, digest,
                                     parse_json)
 from fixtures import GitFixture
 
