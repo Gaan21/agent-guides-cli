@@ -1,9 +1,11 @@
 # Exact preparation (development)
 
 This is the T02 non-activating slice, not a stable published release. It prepares
-whole bundles and records directory bindings; it does not register native entries,
-load client instructions, run source commands or activate a consumer. Install,
-update, status and remove lifecycle commands are not implemented.
+whole bundles and records directory bindings; `prepare` does not register native
+entries, load client instructions, run source commands or activate a consumer.
+The separate [development lifecycle](lifecycle.md) adds owned project and managed
+connection routes. A connected selection lock makes CLI `restore` dispatch to that
+lifecycle; only prepared-only lock restoration is non-activating.
 
 ## Prerequisites and inputs
 

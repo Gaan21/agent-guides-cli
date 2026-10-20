@@ -63,3 +63,41 @@ class CommandTests(GitFixture):
         self.assertEqual(code, 1)
         self.assertEqual(output, "")
         self.assertIn("invalid JSON", errors)
+
+    def test_complete_lifecycle_cli_and_connected_restore_dispatch(self):
+        for source in self.request["sources"]:
+            source["url"] = f"https://example.invalid/{source['id']}.git"
+        request = self.root / "install-request.json"
+        request.write_bytes(canonical(self.request))
+        project = ["--project", str(self.project)]
+        with patch.dict("os.environ", {"OPENCODE_DISABLE_PROJECT_CONFIG": ""}), \
+                patch.object(git_source, "locator", side_effect=lambda s, _: str(self.fixtures[s["id"]])):
+            code, output, errors = self.invoke("install", *project, "--request", str(request),
+                                               "--client", "claude", "--client", "opencode",
+                                               "--cache", str(self.cache))
+            self.assertEqual((code, errors), (0, ""))
+            first = json.loads(output)["selection"]
+            retained = self.root / "old-lock.json"
+            retained.write_bytes((self.project / "guidance.lock.json").read_bytes())
+            self.write("alpha", "one/NOTICE", b"Changed source notice.\n")
+            self.commit("alpha")
+            code, output, errors = self.invoke("update", *project, "--expected", first, "--cache", str(self.cache))
+            self.assertEqual((code, errors), (0, ""))
+            updated = json.loads(output)["selection"]
+            self.assertNotEqual(updated, first)
+            for operation in ("status", "verify"):
+                code, output, errors = self.invoke(operation, *project, "--expected", updated)
+                self.assertEqual((code, errors), (0, ""))
+                self.assertEqual(json.loads(output)["status"], "installed")
+            with patch.object(git_source, "git", side_effect=AssertionError("offline")):
+                code, output, errors = self.invoke("restore", *project, "--lock", str(retained),
+                                                   "--expected", first, "--current", updated,
+                                                   "--cache", str(self.cache))
+            self.assertEqual((code, errors), (0, ""))
+            self.assertEqual(json.loads(output)["selection"], first)
+            code, output, errors = self.invoke("remove", *project, "--expected", first)
+            self.assertEqual((code, errors), (0, ""))
+            self.assertEqual(json.loads(output)["status"], "removed")
+            code, output, errors = self.invoke("recover", *project)
+            self.assertEqual((code, errors), (0, ""))
+            self.assertFalse(json.loads(output)["recovered"])

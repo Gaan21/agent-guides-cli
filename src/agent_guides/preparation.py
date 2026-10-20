@@ -49,7 +49,7 @@ def request(value, fixtures=None):
 
 
 def validate_lock(value, fixtures=None):
-    fields(value, ("schema", "sources", "bundles", "engine"))
+    fields(value, ("schema", "sources", "bundles", "engine"), ("connection",))
     if type(value["schema"]) is not int or value["schema"] != 1:
         raise GuidanceError("unsupported selection schema")
     if value["engine"] != engine_identity():
@@ -71,6 +71,13 @@ def validate_lock(value, fixtures=None):
         ids[item["id"]] = key
         simplified_bundles.append({k: item[k] for k in ("source", "path", "binding")})
     request({"schema": 1, "sources": simplified_sources, "bundles": simplified_bundles}, fixtures)
+    if "connection" in value:
+        from .native import validate_connection
+        validate_connection(value["connection"])
+        sources = {s["id"]: s for s in value["sources"]}
+        for name, revision in value["connection"]["revisions"].items():
+            if name not in sources or sources[name]["commit"] != revision:
+                raise GuidanceError("exact-revision policy differs from recorded source")
     return value
 
 
@@ -112,51 +119,75 @@ def lock_preimage(project, fixtures):
     return raw
 
 
-def publish(project, value, cache, preimage):
-    """Only one portable lock is replaced, after complete candidate verification."""
+def content_lock(value):
+    return {k: v for k, v in value.items() if k != "connection"}
+
+
+def stage(project, value, cache):
+    """Retain immutable content without publishing the portable lock."""
     files = selection_files(value, cache / "bundles")
     identity = digest(canonical(value))
     snapshots = checked_path(project / ".guidance/selections")
-    stored = write_snapshot(snapshots, files, {"selection": value})
+    stored = write_snapshot(snapshots, files, {"selection": content_lock(value)})
+    return {"selection": identity, "snapshot": stored}
+
+
+def publish(project, value, cache, preimage):
+    """Only one portable lock is replaced, after complete candidate verification."""
+    result = stage(project, value, cache)
     # Storage identity and portable selection identity are distinct and derivable.
     lock_path = checked_path(project / LOCK)
     current = regular_bytes(lock_path) if lock_path.exists() else None
     if current != preimage:
         raise GuidanceError("selection lock changed during preparation; preserve concurrent edits")
     save_bytes(lock_path, canonical(value))
-    return {"selection": identity, "snapshot": stored}
+    return result
 
 
 def prepare(project, value, cache=None, *, fixtures=None):
-    sources, selections = request(value, fixtures)
     project = checked_path(project)
     if not project.is_dir():
         raise GuidanceError("project must be an existing directory")
     cache = checked_path(cache or project / ".guidance/cache")
     with locked(project / ".guidance"), locked(cache):
+        require_unconnected(project)
         preimage = lock_preimage(project, fixtures)
-        # Resolve approved sources exactly once, before any acquisition.
-        recorded = [{"id": s["id"], "url": s["url"], "ref": s["ref"],
-                     "commit": git_source.resolve(s, fixtures)} for s in sources]
-        by_id = {s["id"]: s for s in recorded}
-        objects = {s["id"]: git_source.acquire(s, cache, fixtures) for s in recorded}
-        chosen, ids = [], {}
-        for item in selections:
-            selected_source = by_id[item["source"]]
-            declaration, files = bundles.materialize(objects[item["source"]],
-                                                      selected_source["commit"], item["path"])
-            key = (item["source"], item["path"])
-            if declaration["id"] in ids and ids[declaration["id"]] != key:
-                raise GuidanceError("duplicate bundle ID")
-            ids[declaration["id"]] = key
-            snapshot = write_snapshot(cache / "bundles", files,
-                                      metadata(selected_source, item, declaration))
-            chosen.append(dict(item, id=declaration["id"], snapshot=snapshot))
-        result = {"schema": 1, "sources": sorted(recorded, key=lambda s: s["id"]),
-                  "bundles": sorted(chosen, key=lambda b: (b["source"], b["id"], b["binding"])),
-                  "engine": engine_identity()}
-        validate_lock(result, fixtures)
+        result = candidate(value, cache, fixtures=fixtures)
         return publish(project, result, cache, preimage)
+
+
+def require_unconnected(project):
+    if any((project / name).exists() for name in
+           (".guidance/connection.json", ".guidance/transaction.json")):
+        raise GuidanceError("native connection or recovery exists; use lifecycle commands")
+    path = project / LOCK
+    if path.exists() and "connection" in parse_json(regular_bytes(path)):
+        raise GuidanceError("recorded connection exists; use lifecycle restore")
+
+
+def candidate(value, cache, *, fixtures=None):
+    """Resolve once per source; caller owns project/cache locks and activation."""
+    sources, selections = request(value, fixtures)
+    recorded = [{"id": s["id"], "url": s["url"], "ref": s["ref"],
+                 "commit": git_source.resolve(s, fixtures)} for s in sources]
+    by_id = {s["id"]: s for s in recorded}
+    objects = {s["id"]: git_source.acquire(s, cache, fixtures) for s in recorded}
+    chosen, ids = [], {}
+    for item in selections:
+        selected_source = by_id[item["source"]]
+        declaration, files = bundles.materialize(objects[item["source"]],
+                                                  selected_source["commit"], item["path"])
+        key = (item["source"], item["path"])
+        if declaration["id"] in ids and ids[declaration["id"]] != key:
+            raise GuidanceError("duplicate bundle ID")
+        ids[declaration["id"]] = key
+        snapshot = write_snapshot(cache / "bundles", files,
+                                  metadata(selected_source, item, declaration))
+        chosen.append(dict(item, id=declaration["id"], snapshot=snapshot))
+    result = {"schema": 1, "sources": sorted(recorded, key=lambda s: s["id"]),
+              "bundles": sorted(chosen, key=lambda b: (b["source"], b["id"], b["binding"])),
+              "engine": engine_identity()}
+    return validate_lock(result, fixtures)
 
 
 def read_lock(raw, expected, fixtures=None):
@@ -176,23 +207,40 @@ def restore(project, raw, expected, cache=None, *, fixtures=None):
         raise GuidanceError("project must be an existing directory")
     cache = checked_path(cache or project / ".guidance/cache")
     with locked(project / ".guidance"), locked(cache):
+        require_unconnected(project)
+        if "connection" in value:
+            raise GuidanceError("connected lock needs lifecycle restore")
         preimage = lock_preimage(project, fixtures)
-        sources = {s["id"]: s for s in value["sources"]}
-        for item in value["bundles"]:
-            target = checked_path(cache / "bundles" / item["snapshot"])
-            if target.exists():
-                snapshot_bundle(target, item["snapshot"], sources[item["source"]], item)
-                continue
-            selected_source = sources[item["source"]]
-            objects = git_source.acquire(selected_source, cache, fixtures, offline=True)
-            declaration, files = bundles.materialize(objects, selected_source["commit"], item["path"])
-            actual = write_snapshot(cache / "bundles", files, metadata(selected_source, item, declaration))
-            if actual != item["snapshot"]:
-                raise GuidanceError("cached bundle differs from expected identity")
+        cached(value, cache, fixtures=fixtures)
         return publish(project, value, cache, preimage)
 
 
+def cached(value, cache, *, fixtures=None):
+    """Acquire recorded bundles offline; never resolve selectors."""
+    sources = {s["id"]: s for s in value["sources"]}
+    for item in value["bundles"]:
+        target = checked_path(cache / "bundles" / item["snapshot"])
+        if target.exists():
+            snapshot_bundle(target, item["snapshot"], sources[item["source"]], item)
+            continue
+        selected_source = sources[item["source"]]
+        objects = git_source.acquire(selected_source, cache, fixtures, offline=True)
+        declaration, files = bundles.materialize(objects, selected_source["commit"], item["path"])
+        actual = write_snapshot(cache / "bundles", files, metadata(selected_source, item, declaration))
+        if actual != item["snapshot"]:
+            raise GuidanceError("cached bundle differs from expected identity")
+
+
 def verify(project, expected, *, fixtures=None):
+    project = checked_path(project)
+    value = read_lock(regular_bytes(project / LOCK), expected, fixtures)
+    if "connection" in value or (project / ".guidance/transaction.json").exists():
+        from .lifecycle import verify as verify_connection
+        return verify_connection(project, expected, fixtures=fixtures)
+    return verify_prepared(project, expected, fixtures=fixtures)
+
+
+def verify_prepared(project, expected, *, fixtures=None):
     project = checked_path(project)
     value = read_lock(regular_bytes(project / LOCK), expected, fixtures)
     # Derive the storage manifest from the lock and recorded bundle manifests,
@@ -209,7 +257,7 @@ def verify(project, expected, *, fixtures=None):
         candidate = parse_json(raw)
         if not isinstance(candidate, dict):
             raise GuidanceError("invalid prepared snapshot manifest")
-        if candidate.get("metadata") == {"selection": value}:
+        if candidate.get("metadata") == {"selection": content_lock(value)}:
             matches.append(path)
     if len(matches) != 1:
         raise GuidanceError("missing or ambiguous prepared selection snapshot")

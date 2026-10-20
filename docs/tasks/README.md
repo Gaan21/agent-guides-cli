@@ -1,6 +1,6 @@
 # agent-guides: start here
 
-Status: T01/T02/T03 done; T04 ready; T05 ready; T08 pending (2026-10-19).
+Status: T01/T02/T03/T04 done; T05 ready; T06/T07/T08 pending (2026-10-20).
 Canonical board in Gaan21/agent-guides.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -40,14 +40,15 @@ Existing package usage docs describe live implementations, not the replacement.
 
 Statuses are `ready`, `pending`, `in_progress`, `blocked`, `done`. Update this board
 and the task header together. Mark `done` only with evidence satisfying that task.
-T01 establishes the scaffold; T02 adds non-activating preparation. Integration is pending.
+T01 establishes the scaffold; T02 adds preparation; T04 delivers accepted neutral
+lifecycle/connection tooling. Content split and consumer integration remain separate.
 
 | ID | Task | Status | Dependencies / executor |
 | --- | --- | --- | --- |
 | T01 | [Bootstrap neutral repository/package](T01-bootstrap.md) | done | Independent review accepted; see T01 completion record. |
 | T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
 | T03 | [Native loading feasibility](T03-native-loading.md) | done | Independent bounded macOS/Linux reviews and owner acceptance; root-start conditions in the acceptance record. |
-| T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | ready | T02 + T03 done; neutral tool agent, then installed-client confirmation. Not started. |
+| T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | done | Independent corrective and bounded closure review accepted; see [acceptance](T04-acceptance.md). |
 | T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
@@ -107,9 +108,11 @@ generated configuration, or a model's claim of compliance.
 ## Prompt for the next agent
 
 > Read the working repository's maintainer instructions, inspect status/diff,
-> then read docs/tasks/README.md, its agreed-scope link and ADR 0001. T03 is accepted;
-> continue T04 using T03-acceptance.md's next-agent execution order. T05 may proceed in
-> a separately owned workspace with private access. Read only the
+> then read docs/tasks/README.md, its agreed-scope link, ADR 0001 and T04-acceptance.md.
+> T01–T04 are complete. Continue T05 in a separately owned workspace with approved
+> private inputs/access; keep detailed classification/preservation evidence private.
+> If that access is missing, record the precise prerequisite, not another T03/T04
+> feasibility queue. Read only the
 > relevant technical-plan sections and dependency results. Preserve existing work
 > and content. Do not reopen closed decisions, activate a consumer, publish or
 > perform Git publication actions without authorization. If blocked, record the
@@ -123,17 +126,21 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current next-agent assignment: **T04 — complete lifecycle and recovery**, using
-the [accepted T03 strategy and ordered handoff](T03-acceptance.md#next-agent-execution-order).
+Current next assignment: **T05 — lossless common/private content split**, in a
+separately owned workspace with private access. Read [T04 acceptance](T04-acceptance.md)
+for the delivered neutral tooling, recorded checks and limits; do not resume its
+historical implementation checkpoints or earlier T03 feasibility queues.
 Routine sessions start at the project or selected-worktree root. Claude imports the
 short index; OpenCode uses native `instructions`, with an explicitly host-controlled
 route when project discovery is disabled. The managed Linux candidate depends on
 correct `PWD`; production launcher binding/registration is not yet applied or verified.
 Preserve isolation, existing guards and all retained failures. Do not reopen strict
 automatic injection, subdirectory startup or Linux Claude TUI as feasibility gates.
-T05 remains independently ready with private access in a separate owned workspace.
-T08 still requires an authorized T06 pilot. Task readiness does not authorize live
-managed configuration changes, source publication, migration or consumer activation.
+T06 remains pending T05. T08 still requires an authorized T06 pilot. Task readiness
+does not authorize live managed configuration changes, migration or activation.
+The owner authorized this T04 task's source commit/push and task-only temporary cleanup;
+future publication, private-repository creation and production changes need their own
+authorization. Preserve legacy delivery and every rule until authorized T06 migration.
 
 T02 closed after independent corrective acceptance and the refreshed four-job
 macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and linked CI.
@@ -252,3 +259,33 @@ No permanent integration, production configuration, consumer activation or relea
 was performed. Documentation commit/push is explicitly authorized for this closure;
 future publication and production actions require their own authorization.
 **T03 done; T04 ready, not started; T05 ready; T06/T07/T08 pending.**
+
+## T04 implementation checkpoint — 2026-10-20
+
+T04 is now **in_progress**. Project-local lifecycle/recovery commands, immutable
+retention, selected-client ownership and offline identity comparison are implemented;
+58 source tests and 58 clean installed-wheel tests pass on macOS/Python 3.15.0.
+See [T04's checkpoint](T04-lifecycle.md#implementation-checkpoint--2026-10-20)
+and the [development lifecycle contract](../lifecycle.md) for exact commands/limits.
+Managed-host registration, existing-JSONC handling, Linux/runtime matrix, measured
+production setup, installed-client confirmation and independent review remain pending.
+The owner declined a new OpenCode-version trial; none was run during implementation.
+T05 stays ready; T06/T07/T08 remain pending. No live activation or publication.
+
+## T04 completion and T05 handoff — 2026-10-20
+
+The owner subsequently authorized disposable native-client acceptance, independent
+review, Docker-based Linux checks, task-only cleanup and source commit/push. T04 is
+**done** after independent corrective and final closure acceptance; its earlier
+implementation queues and the preceding checkpoint are historical.
+
+See [T04 acceptance](T04-acceptance.md) for the delivered lifecycle/ownership contract,
+73-test package matrix, actual installed-client observations, interruption/input
+caveats, independent evidence locations and operator prerequisites. No production
+host, live consumer, legacy runtime or stable release was changed or activated.
+
+**Next: T05**, using approved private inputs/access in a separately owned workspace.
+Preserve every requirement and keep detailed classification evidence private; uncertain
+classification stays in WorkTracker. Do not start T06 migration until T05 passes.
+T07/T08 remain pending. This task's commit/push authorization is not permission for
+future source publication, private-repository creation, release or consumer activation.

@@ -21,15 +21,15 @@ class CliTests(unittest.TestCase):
                         result.stdout.strip(), f"agent-guides {version('agent-guides')}"
                     )
 
-    def test_unimplemented_operations_fail(self):
-        for operation in ("install", "update", "status", "remove"):
+    def test_lifecycle_operations_require_explicit_inputs(self):
+        for operation in ("install", "update", "status", "remove", "recover"):
             with self.subTest(operation=operation):
                 result = subprocess.run(
                     [sys.executable, "-I", "-m", "agent_guides", operation],
                     capture_output=True, text=True,
                 )
                 self.assertEqual(result.returncode, 2)
-                self.assertIn("invalid choice", result.stderr)
+                self.assertIn("required", result.stderr)
 
 
 if __name__ == "__main__":

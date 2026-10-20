@@ -4,9 +4,10 @@ Status: owner decisions consolidated 2026-10-17, reading behavior clarified
 2026-10-18. Direction selected: Git
 acquisition and native Claude Code/OpenCode loading with `agent-guides`.
 T03 feasibility was owner-accepted 2026-10-19 for project/worktree-root starts;
-see [accepted connection and limits](tasks/T03-acceptance.md). T04 is ready.
-Permanent native connection/lifecycle integration is not implemented; non-activating
-preparation exists. Current installation and migration commands
+see [accepted connection and limits](tasks/T03-acceptance.md). T04's neutral lifecycle
+is [accepted](tasks/T04-acceptance.md), with owned project/managed routes and bounded
+installed-client/platform evidence. Production activation remains separate.
+Non-activating preparation remains available. Legacy installation and migration commands
 remain documented in [legacy installed mode](https://github.com/Gaan21/flutter-agent-guidelines/blob/develop/docs/installed-mode.md).
 Execution starts at the [agent handoff and task index](tasks/README.md).
 

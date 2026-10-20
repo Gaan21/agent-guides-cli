@@ -38,6 +38,8 @@ class DistributionTests(unittest.TestCase):
                     "docs/preparation.md", "tests/test_cli.py", "tests/check_distribution.py",
                     "tests/fixtures.py", "tests/test_preparation.py", "tests/test_rejection.py",
                     "tests/test_identity.py", "tests/test_commands.py",
+                    "tests/test_lifecycle.py", "tests/test_transactions.py", "tests/test_host.py",
+                    "docs/lifecycle.md", "docs/decisions/0002-native-config-ownership.md",
                 }
                 required.update(str(p.relative_to(ROOT)) for p in (ROOT / "docs/tasks").glob("*.md"))
                 self.assertTrue(required <= names, required - names)
@@ -62,6 +64,7 @@ class DistributionTests(unittest.TestCase):
                     *(f"agent_guides/{name}.py" for name in (
                         "__init__", "__main__", "cli", "integrity", "storage",
                         "git_source", "bundles", "preparation", "task_identity",
+                        "native", "transactions", "lifecycle", "host",
                     )),
                     *(f"{metadata}/{name}" for name in (
                         "METADATA", "WHEEL", "entry_points.txt", "top_level.txt", "RECORD",

@@ -1,9 +1,12 @@
 # Shared guidance delivery: implementation plan
 
 Status: technical proposal, selective-reading direction clarified 2026-10-18;
-preparation exists, permanent native connection/lifecycle integration is pending.
+preparation and neutral lifecycle are implemented with
+[bounded T04 acceptance](tasks/T04-acceptance.md). Project and approved managed-host
+registration are implemented; see [actual usage](lifecycle.md) and the
+[no-JSONC-rewrite ownership design](decisions/0002-native-config-ownership.md).
 T03 now has [owner-accepted root-start feasibility](tasks/T03-acceptance.md),
-2026-10-19; [T04](tasks/T04-lifecycle.md) is the next ready implementation task.
+2026-10-19; T04 is complete and [T05](tasks/T05-content-split.md) is next ready.
 [Delivery scope](delivery-scope.md) is the authority for agreed requirements.
 Use the [handoff/task index](tasks/README.md) for execution order and progress.
 Names, schemas and paths below are proposals, not available commands. Existing

@@ -76,7 +76,8 @@ candidate identity. No arbitrary percentage or new enforcement system is approve
 
 ## Consequences and public narrative
 
-T03 is owner-accepted for project/worktree-root starts; [T04 is ready](../tasks/T04-lifecycle.md).
+T03 is owner-accepted for project/worktree-root starts; neutral lifecycle now has
+[bounded T04 acceptance](../tasks/T04-acceptance.md). T05 is next ready.
 See [connection acceptance and retained limits](../tasks/T03-acceptance.md). Lifecycle integrity,
 source pinning, content preservation, security guards and publication permissions
 are unchanged. Observation can begin with an authorized T06 clone pilot and later

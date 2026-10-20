@@ -22,11 +22,28 @@ def sync_directory(path):
         os.close(descriptor)
 
 
-def save_bytes(path, content):
+def make_directory(path):
+    """Make each missing directory durable in its parent; reject path aliases."""
+    path = checked_path(path)
+    if path.is_dir():
+        return
+    if path.exists():
+        raise GuidanceError(f"expected directory: {path}")
+    make_directory(path.parent)
+    try:
+        path.mkdir()
+    except FileExistsError:
+        if not checked_path(path).is_dir():
+            raise GuidanceError(f"expected directory: {path}")
+    sync_directory(path.parent)
+
+
+def save_bytes(path, content, *, mode=0o600):
     path = checked_path(path)
     descriptor, temporary = tempfile.mkstemp(prefix=".write-", dir=path.parent)
     try:
         with os.fdopen(descriptor, "wb") as stream:
+            os.fchmod(stream.fileno(), mode)
             stream.write(content)
             stream.flush()
             os.fsync(stream.fileno())
@@ -39,16 +56,18 @@ def save_bytes(path, content):
 @contextmanager
 def locked(directory):
     directory = checked_path(directory)
-    directory.mkdir(parents=True, exist_ok=True)
+    make_directory(directory)
     lock = checked_path(directory / "writer-lock")
     try:
         lock.mkdir()
     except FileExistsError as error:
         raise GuidanceError(f"writer lock exists; inspect before retry: {lock}") from error
     try:
+        sync_directory(directory)
         yield
     finally:
         lock.rmdir()
+        sync_directory(directory)
 
 
 def verify_snapshot(path, expected):
@@ -92,7 +111,7 @@ def verify_snapshot(path, expected):
 
 def write_snapshot(parent, files, metadata):
     parent = checked_path(parent)
-    parent.mkdir(parents=True, exist_ok=True)
+    make_directory(parent)
     inventory(list(files) + ["manifest.json"])
     if sum(map(len, files.values())) > MAX_TOTAL:
         raise GuidanceError("snapshot size limit")
@@ -107,7 +126,7 @@ def write_snapshot(parent, files, metadata):
     try:
         for name, content in files.items():
             output = checked_path(temporary / name)
-            output.parent.mkdir(parents=True, exist_ok=True)
+            make_directory(output.parent)
             save_bytes(output, content)
             output.chmod(0o444)
         save_bytes(temporary / "manifest.json", canonical(manifest))

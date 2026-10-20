@@ -1,4 +1,4 @@
-"""Non-activating exact Git preparation and host evidence commands."""
+"""Exact Git preparation, project-local lifecycle and host evidence commands."""
 
 import argparse
 from collections.abc import Sequence
@@ -7,14 +7,14 @@ from pathlib import Path
 import sys
 
 from .integrity import GuidanceError, canonical, parse_json, regular_bytes
-from . import preparation, task_identity
+from . import lifecycle, preparation, task_identity
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="agent-guides",
         description=(
-            "Neutral guidance preparation. No native connection or consumer activation."
+            "Neutral guidance preparation and explicit project-local native connection."
         ),
     )
     parser.add_argument(
@@ -26,12 +26,28 @@ def main(argv: Sequence[str] | None = None) -> int:
     restore = commands.add_parser("restore", help="restore exact recorded data, offline only")
     restore.add_argument("--lock", type=Path, required=True)
     restore.add_argument("--expected", required=True, help="independently retained selection SHA-256")
+    restore.add_argument("--current", help="expected existing selection when restoring a connected lock")
+    restore.add_argument("--host-config", type=Path, help="approved external read-only managed JSON; never edited")
     for command in (prepare, restore):
         command.add_argument("--project", type=Path, required=True)
         command.add_argument("--cache", type=Path)
-    verify = commands.add_parser("verify", help="compare prepared bytes with expected selection identity")
+    install = commands.add_parser("install", help="prepare and connect selected clients in one operation")
+    install.add_argument("--request", type=Path, required=True)
+    install.add_argument("--client", choices=("claude", "opencode"), action="append", required=True)
+    install.add_argument("--expected", help="expected existing selection, if any")
+    install.add_argument("--host-config", type=Path, help="approved external read-only managed JSON; never edited")
+    update = commands.add_parser("update", help="explicitly update the recorded selection and connection")
+    for command in (install, update):
+        command.add_argument("--project", type=Path, required=True)
+        command.add_argument("--cache", type=Path)
+    update.add_argument("--expected", required=True)
+    remove = commands.add_parser("remove", help="remove only owned integration; retain lock and content")
+    status = commands.add_parser("status", help="offline integrity and connection status; no repair")
+    recovery = commands.add_parser("recover", help="recover interrupted writes without overwriting unknown edits")
+    recovery.add_argument("--project", type=Path, required=True)
+    verify = commands.add_parser("verify", help="compare local content and connection with expected identity")
     capture = commands.add_parser("task-pin", help="retain host task identity once outside generated storage")
-    for command in (verify, capture):
+    for command in (verify, capture, remove, status):
         command.add_argument("--project", type=Path, required=True)
         command.add_argument("--expected", required=True)
     capture.add_argument("--output", type=Path, required=True)
@@ -49,7 +65,25 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.command == "prepare":
             result = preparation.prepare(args.project, parse_json(regular_bytes(args.request)), args.cache)
         elif args.command == "restore":
-            result = preparation.restore(args.project, regular_bytes(args.lock), args.expected, args.cache)
+            raw = regular_bytes(args.lock)
+            if "connection" in preparation.read_lock(raw, args.expected):
+                result = lifecycle.restore(args.project, raw, args.expected, args.cache,
+                                           current=args.current, host_config=args.host_config)
+            else:
+                if args.current is not None or args.host_config is not None:
+                    raise GuidanceError("--current/--host-config apply only to connected restore")
+                result = preparation.restore(args.project, raw, args.expected, args.cache)
+        elif args.command == "install":
+            result = lifecycle.install(args.project, parse_json(regular_bytes(args.request)), args.client,
+                                       args.cache, expected=args.expected, host_config=args.host_config)
+        elif args.command == "update":
+            result = lifecycle.update(args.project, args.expected, args.cache)
+        elif args.command == "remove":
+            result = lifecycle.remove(args.project, args.expected)
+        elif args.command == "recover":
+            result = lifecycle.recover(args.project)
+        elif args.command == "status":
+            result = lifecycle.verify(args.project, args.expected)
         elif args.command == "verify":
             result = preparation.verify(args.project, args.expected)
         elif args.command == "task-pin":

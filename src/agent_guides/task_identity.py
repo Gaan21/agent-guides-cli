@@ -7,10 +7,15 @@ from .integrity import (GuidanceError, canonical, checked_path, digest, fields,
 from .preparation import LOCK, engine_identity, read_lock, verify
 
 
-def policy_names(project):
-    # Native root policies only. Nested/indirect imports/configuration must be
-    # supplied explicitly; do not claim exhaustive native loader discovery.
-    return [name for name in ("AGENTS.md", "CLAUDE.md")
+def policy_names(project, clients=()):
+    # Root policies and selected-client project settings only. Nested/indirect
+    # imports must be explicit; this is not an exhaustive native loader model.
+    names = ["AGENTS.md", "CLAUDE.md"]
+    if "claude" in clients:
+        names += [".claude/settings.json", ".claude/settings.local.json"]
+    if "opencode" in clients:
+        names += ["opencode.json", "opencode.jsonc", ".opencode/opencode.json", ".opencode/opencode.jsonc"]
+    return [name for name in names
              if (project / name).exists() or (project / name).is_symlink()]
 
 
@@ -41,12 +46,19 @@ def hashes(project, names):
 
 def capture(project, expected, policies=(), overlays=(), *, fixtures=None):
     project = checked_path(project)
-    verify(project, expected, fixtures=fixtures)
+    verified = verify(project, expected, fixtures=fixtures)
     selection = read_lock(regular_bytes(project / LOCK), expected, fixtures)
-    policy = sorted(set(policy_names(project)) | set(policies))
-    return {"schema": 1, "selection": expected, "engine": engine_identity(),
-            "sources": selection["sources"], "bundles": selection["bundles"],
-            "policy": hashes(project, policy), "overlays": hashes(project, list(overlays))}
+    clients = selection.get("connection", {}).get("clients", [])
+    policy = sorted(set(policy_names(project, clients)) | set(policies))
+    result = {"schema": 1, "selection": expected, "engine": engine_identity(),
+              "sources": selection["sources"], "bundles": selection["bundles"],
+              "policy": hashes(project, policy), "overlays": hashes(project, list(overlays))}
+    if "connection" in selection:
+        from .native import STATE
+        state = project / STATE
+        result["connection"] = {"status": verified["status"],
+                                "ownership": digest(regular_bytes(state)) if state.exists() else None}
+    return result
 
 
 def retain(path, value, project):
@@ -67,7 +79,7 @@ def join(project, raw, expected_task, *, fixtures=None):
     if digest(raw) != expected_task:
         raise GuidanceError("expected task identity mismatch")
     value = parse_json(raw)
-    fields(value, ("schema", "selection", "sources", "bundles", "engine", "policy", "overlays"))
+    fields(value, ("schema", "selection", "sources", "bundles", "engine", "policy", "overlays"), ("connection",))
     if type(value["schema"]) is not int or value["schema"] != 1 or canonical(value) != raw:
         raise GuidanceError("unsupported task identity schema/encoding")
     if not isinstance(value["policy"], dict) or not isinstance(value["overlays"], dict):
