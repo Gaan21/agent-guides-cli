@@ -43,6 +43,17 @@ live project only under explicit authorization with a tested rollback path.
   clients and repeat acceptance without double injection. Retain originals and
   rollback until success is reviewed.
 
+## Legacy retirement
+
+Only after the migration above is reviewed, and each step separately authorized:
+
+1. Mark `flutter-agent-guidelines` deprecated with successors (`agent-guides-cli`,
+   `agent-guides`), as was done for `dev-guidelines`; keep its rollback instructions.
+2. Archive it on GitHub (read-only). Do not delete it: exact recorded commits must
+   stay restorable for rollback and historical restore.
+3. `dev-guidelines` stays as is until its remaining non-Flutter consumers have
+   successor bundles in `agent-guides` and are migrated; then archive, not delete.
+
 ## Completion rule
 
 If only the clone trial is authorized/completed, report that milestone and keep

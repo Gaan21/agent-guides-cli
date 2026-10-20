@@ -37,6 +37,20 @@ Existing package usage docs describe live implementations, not the replacement.
 - Root-started work: native short entry, model-selected relevant topics/dependencies,
   reuse while in context. No all-topic/per-patch reads or absolute editing gate.
 
+## Repository map
+
+| Repository | Visibility | Role |
+| --- | --- | --- |
+| `agent-guides-cli` (this one) | public | Tool, task board and decisions. No authored guidance. |
+| `agent-guides` | public | Common guidance catalog, one bundle per stack; empty until T05. |
+| `worktracker-architecture-guides` | private | WorkTracker bundle plus private T05 evidence; empty until T05. |
+| `flutter-agent-guidelines` | public | Legacy runtime and current Flutter payload; WorkTracker still uses it. |
+| `dev-guidelines` | private | Deprecated archive; several non-Flutter consumers still load it. |
+
+All are cloned as sibling directories with the repository name. Each new guides
+repository has a README/AGENTS.md pointing back to this board. Legacy retirement
+order: [T06](T06-migration.md#legacy-retirement).
+
 ## Task board
 
 Statuses are `ready`, `pending`, `in_progress`, `blocked`, `done`. Update this board
@@ -82,7 +96,8 @@ Use independent implementation/review against one retained task identity.
 ## Moving the handoff to the new repositories
 
 This folder is the bootstrap home because the new repositories do not exist yet.
-At T01, carry scope, technical reference and the task board into `agent-guides`,
+At T01, carry scope, technical reference and the task board into the tool repository
+(then `agent-guides`, now `agent-guides-cli` per ADR 0003),
 preserving maintainer policy and fixing relative links. Record its actual location
 here and leave a pointer; do not keep two independently edited task boards.
 Relevant private task instructions may be linked/copied as a handoff, but detailed
@@ -109,11 +124,12 @@ generated configuration, or a model's claim of compliance.
 ## Prompt for the next agent
 
 > Read the working repository's maintainer instructions, inspect status/diff,
-> then read docs/tasks/README.md, its agreed-scope link, ADR 0001 and T04-acceptance.md.
-> T01–T04 are complete. Continue T05 in a separately owned workspace with approved
-> private inputs/access; keep detailed classification/preservation evidence private.
-> If that access is missing, record the precise prerequisite, not another T03/T04
-> feasibility queue. Read only the
+> then read docs/tasks/README.md (including its repository map), its agreed-scope
+> link, ADR 0001, ADR 0003 and T04-acceptance.md. T01–T04 are complete. Continue
+> T05 as described in T05-content-split.md: the public `agent-guides` and private
+> `worktracker-architecture-guides` repositories exist and are cloned as siblings;
+> the private README lists exact inputs. Keep detailed classification/preservation
+> evidence in that private repository's `evidence/`. Read only the
 > relevant technical-plan sections and dependency results. Preserve existing work
 > and content. Do not reopen closed decisions, activate a consumer, publish or
 > perform Git publication actions without authorization. If blocked, record the
@@ -139,9 +155,9 @@ Preserve isolation, existing guards and all retained failures. Do not reopen str
 automatic injection, subdirectory startup or Linux Claude TUI as feasibility gates.
 T06 remains pending T05. T08 still requires an authorized T06 pilot. Task readiness
 does not authorize live managed configuration changes, migration or activation.
-The owner authorized this T04 task's source commit/push and task-only temporary cleanup;
-future publication, private-repository creation and production changes need their own
-authorization. Preserve legacy delivery and every rule until authorized T06 migration.
+Repositories for T05 already exist (see the repository map). Authorization status
+is recorded in [T05](T05-content-split.md#workspace-destinations-and-authorization);
+production changes and releases need their own authorization. Preserve legacy delivery and every rule until authorized T06 migration.
 
 T02 closed after independent corrective acceptance and the refreshed four-job
 macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and linked CI.
@@ -299,3 +315,6 @@ new public `agent-guides` catalog; WorkTracker architecture stays private
 packaging and usage docs use the new name; package and distribution checks pass.
 T05 now prepares the Flutter bundle in `agent-guides` plus the private bundle.
 Earlier records keep the names they executed. Client trials were not repeated.
+The GitHub repository was renamed, the local checkout moved to `agent-guides-cli`,
+legacy forwarding links were updated, and both new guides repositories were created,
+cloned and given README/AGENTS.md pointers. **Next: T05.**

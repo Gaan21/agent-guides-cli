@@ -19,6 +19,19 @@ and the private `worktracker-architecture-guides` bundle without losing, weakeni
 - Keep originals and the current functioning connection. Do not change active
   instructions or reclassify the whole current profile by renaming it.
 
+## Workspace, destinations and authorization
+
+- Common Flutter bundle: top-level `flutter/` in the public `agent-guides` repository.
+- WorkTracker bundle: `bundle/` in the private `worktracker-architecture-guides`
+  repository; private inventory/classification in its `evidence/` (owner decision,
+  2026-10-20). Exact inputs and pins are listed in that private README only.
+- Both repositories exist, empty apart from README/AGENTS.md, cloned as siblings.
+- Authorized: pushing the private repository's T05 content when T05 is complete.
+  Pushing content to the public `agent-guides` needs explicit owner authorization;
+  run the public-output check (step 4) first and report it with the request.
+- Not in T05: editing WorkTracker, installed snapshots or legacy repositories, and
+  deprecating legacy delivery; see [T06 legacy retirement](T06-migration.md#legacy-retirement).
+
 ## Work
 
 1. In private evidence, inventory every rule, exception, topic and required link.
@@ -55,5 +68,7 @@ retirement with T06 after validated migration; preserve rollback source/evidence
 
 ## Handoff
 
-Privately record exact candidate sources and selections for T06. Public handoff
+Privately record exact candidate sources and selections for T06. Propose (do not
+apply without authorization) a legacy README note that common content now lives
+in `agent-guides` while the legacy runtime stays in use. Public handoff
 reports only readiness/coverage outcome, not product content. Completion evidence: pending.
