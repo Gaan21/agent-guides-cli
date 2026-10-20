@@ -92,7 +92,7 @@ T01 transfer completed: this checkout is the authoritative handoff. Public remot
 <https://github.com/Gaan21/agent-guides-cli> (renamed by ADR 0003). Owner subsequently authorized committing
 and pushing the scaffold and legacy forwarding changes. Source upload is separate
 from releases, registry publication and consumer activation.
-The approved checkout is the sibling `agent-guides` directory of the legacy
+The approved checkout is the sibling `agent-guides-cli` directory of the legacy
 checkout; exact machine locations and execution identity remain in local Git
 metadata, outside public source. Legacy documents now contain forwarding pointers.
 Read [T01 results](T01-bootstrap.md#completion-record--2026-10-17) before T02.
