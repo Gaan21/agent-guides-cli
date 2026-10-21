@@ -126,18 +126,20 @@ or dependency features are future work only after a concrete use case establishe
 their value; they are not part of phase 1 or required to install common guidance
 and project architecture together.
 
-Initial connection selects common guidance plus the separate WorkTracker
-architecture bundle where applicable, in one selection. No extra architecture
-profile activation. The owner selected the new separate private repository
-`worktracker-architecture-guides`; its owner/URL/access and actual content extraction
-remain execution inputs. Use synthetic fixtures
+Initial connection selects approved common technology/topic bundles plus the correct
+private product bundle where applicable, in one selection. No extra architecture
+profile activation. Owner clarification (2026-10-21) makes the existing private
+`worktracker-architecture-guides` repository a product catalog, retaining its name
+for now. Product bundle paths and reviewed extraction remain execution inputs.
+Use synthetic fixtures
 until the real source is available and reviewed. Do not publish product content
 or relabel the current `profiles/architecture.md` wholesale as WorkTracker.
 
 Before extraction, inventory the source guidance and map every rule, exception,
 topic and required reference to its destination, with coverage checks. Ambiguous
-common-versus-product content goes to the private WorkTracker bundle by owner
-decision. Preserve original source and working delivery until completeness and
+common-versus-product content stays private for its product or in explicit unresolved
+retention, never as another product's active rules. Preserve original source and
+working delivery until completeness and
 consumer migration checks pass; no rule may disappear through classification,
 deduplication or rewriting. Retain detailed private migration evidence.
 
@@ -347,10 +349,11 @@ test portability; they do not prove a second physical machine or another OS.
 
 ## 7. Execution inputs and design risks
 
-The architecture source decision is settled: a new separate private Git repository,
-named `worktracker-architecture-guides`, preserving all guidance and assigning
-ambiguous rules to WorkTracker. Its owner/URL/access/creation authorization and
-reviewed extraction are migration prerequisites, not phase-1 blockers.
+The private source decision is settled: the existing `worktracker-architecture-guides`
+repository is a product-separated catalog (owner clarification 2026-10-21), not a
+universal WorkTracker profile. Preserve all guidance and retain doubtful material
+privately for its product or as unresolved evidence. Reviewed extraction and exact
+selected product paths are migration prerequisites, not phase-1 engine blockers.
 
 The executable decision is settled: `agent-guides-cli`, a neutral Python package in
 its own new public repository, distributed via PyPI/releases, targeting macOS and

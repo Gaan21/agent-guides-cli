@@ -1,6 +1,6 @@
 # agent-guides-cli: start here
 
-Status: T01/T02/T03/T04 done; T05 ready; T06/T07/T08 pending (2026-10-20).
+Status: T01/T02/T03/T04/T05 done; T06/T07/T08 pending (2026-10-21).
 Canonical board in Gaan21/agent-guides-cli.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -42,8 +42,8 @@ Existing package usage docs describe live implementations, not the replacement.
 | Repository | Visibility | Role |
 | --- | --- | --- |
 | `agent-guides-cli` (this one) | public | Tool, task board and decisions. No authored guidance. |
-| `agent-guides` | public | Common guidance catalog, one bundle per stack; empty until T05. |
-| `worktracker-architecture-guides` | private | WorkTracker bundle plus private T05 evidence; empty until T05. |
+| `agent-guides` | public | Common guidance catalog; T05 prepares all existing stack/topic bundles. |
+| `worktracker-architecture-guides` | private | Product catalog: independently selected product bundles plus private T05 evidence; name retained for now. |
 | `flutter-agent-guidelines` | public | Legacy runtime and current Flutter payload; WorkTracker still uses it. |
 | `dev-guidelines` | private | Deprecated archive; several non-Flutter consumers still load it. |
 
@@ -64,7 +64,7 @@ lifecycle/connection tooling. Content split and consumer integration remain sepa
 | T02 | [Exact multi-source preparation](T02-preparation.md) | done | Independent corrective review accepted; refreshed four-job CI passed. |
 | T03 | [Native loading feasibility](T03-native-loading.md) | done | Independent bounded macOS/Linux reviews and owner acceptance; root-start conditions in the acceptance record. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | done | Independent corrective and bounded closure review accepted; see [acceptance](T04-acceptance.md). |
-| T05 | [Lossless common/private content split](T05-content-split.md) | ready | T01 + T02 done; consumer agent with private access. |
+| T05 | [Lossless common/private content split](T05-content-split.md) | done | Bounded local content acceptance after independent R1–R5 corrections; see [acceptance](T05-acceptance.md). |
 | T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
 | T08 | [Lightweight selective-reading observation](T08-lightweight-observation.md) | pending | T03 acceptance + authorized T06 clone pilot; client/consumer agent and reviewer. Not a T04/T06/T07 dependency. |
@@ -123,6 +123,13 @@ generated configuration, or a model's claim of compliance.
 
 ## Prompt for the next agent
 
+Current handoff (2026-10-21): T05 is done for bounded local content preparation
+across the existing technologies/topics. Read [T05 acceptance](T05-acceptance.md).
+**Next: T06**, with its own consumer access, retained identity and explicit pilot/
+migration authorization. It remains pending; closure does not start it automatically.
+The T05 prompt and assignments below are historical, not the current work queue.
+Deferred improvement proposals remain separate, not new acceptance gates.
+
 > Read the working repository's maintainer instructions, inspect status/diff,
 > then read docs/tasks/README.md (including its repository map), its agreed-scope
 > link, ADR 0001, ADR 0003 and T04-acceptance.md. T01–T04 are complete. Continue
@@ -143,7 +150,7 @@ the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
 
-Current next assignment: **T05 — lossless common/private content split**, in a
+Historical T04-to-T05 assignment: **T05 — lossless common/private content split**, in a
 separately owned workspace with private access. Read [T04 acceptance](T04-acceptance.md)
 for the delivered neutral tooling, recorded checks and limits; do not resume its
 historical implementation checkpoints or earlier T03 feasibility queues.
@@ -318,3 +325,24 @@ Earlier records keep the names they executed. Client trials were not repeated.
 The GitHub repository was renamed, the local checkout moved to `agent-guides-cli`,
 legacy forwarding links were updated, and both new guides repositories were created,
 cloned and given README/AGENTS.md pointers. **Next: T05.**
+
+## T05 completion and T06 handoff — 2026-10-21
+
+T05 is **done** after authorized bounded administrative acceptance of local content
+preparation and the independent R1–R5 corrective pass chain. Ten common bundles and
+two independently selectable private product bundles are prepared; no engine,
+consumer, installed snapshot or legacy delivery was changed by this closure.
+
+See [T05 acceptance](T05-acceptance.md) for recorded commands, 157 final passing
+test results, offline restore/selection checks, review limits and upload boundaries.
+Exact identities and detailed dispositions remain private; `.git/` seals are
+local-only and ordinary source commits do not publish them. This is not stable
+release approval, source trust, consumer migration or new native/client/model proof;
+T03's accepted scope and limitations are unchanged.
+
+**Next: T06**, subject to its existing prerequisites and separate authorization;
+T06/T07/T08 remain pending. No staging, commit, push, upload or activation occurred.
+The private T05 upload has prior conditional owner approval; public catalog content
+upload still requires explicit approval. Documentation approval is not blanket source
+upload permission. Retain T05's [deferred follow-up links](T05-content-split.md#handoff)
+and the private evidence index as low-priority improvements, not T05 gates.

@@ -26,6 +26,17 @@ name `agent-guides` describes the content better than the executable.
 
 ## Consequences
 
+Owner scope expansion, 2026-10-21: T05 now prepares every existing common
+technology/topic, rather than Flutter alone. The repository/package split and
+selectable-bundle model are unchanged; this is not approval for public upload or
+consumer migration. Owner-controlled original catalog content may be adapted under
+Apache-2.0 after classification/provenance review; third-party rights stay separate.
+
+Further owner clarification: the existing private repository becomes one catalog
+with separate selectable product bundles. Keep its current name for now; no remote
+rename or automatic cross-product activation. WorkTracker is one product bundle,
+not the policy namespace for every other product. Common/public placement is unchanged.
+
 - One source has one recorded commit. Bundles selected from `agent-guides` move
   together on update; per-bundle snapshot digests still show which bundle changed.
   Independently versioned stacks would need separate repositories; not selected.

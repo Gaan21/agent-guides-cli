@@ -6,8 +6,10 @@ Read [handoff](README.md), preceding evidence and current consumer instructions.
 
 ## Goal
 
-Demonstrate the complete experience with both selected bundles, then migrate the
-live project only under explicit authorization with a tested rollback path.
+Demonstrate the complete experience with the approved common technology/topic
+selection and the private WorkTracker product bundle, then migrate the live project
+only under explicit authorization with a tested rollback path. Other private product
+bundles are not implicitly selected or migrated.
 
 ## Work and acceptance
 

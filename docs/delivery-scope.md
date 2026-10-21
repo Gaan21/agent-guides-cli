@@ -56,6 +56,13 @@ that an agent consults every relevant document or follows every instruction.
 
 ## First-version inputs
 
+Owner expansion, 2026-10-21: T05 prepares all existing common guidance in the single
+`agent-guides` catalog, with selectable technology/topic bundles. Initial inventory
+includes Flutter, Git, Supabase, Next.js, Astro, .NET and cross-cutting agent work.
+This broadens content preparation, not the engine or activation scope. Product
+specifics remain private; preserve requirements and audit rights before export.
+See [T05](tasks/T05-content-split.md) for the current acceptance and authorization.
+
 Owner-confirmed: support multiple Git source repositories per project, Git-only
 acquisition initially, and reading/navigation instructions maintained alongside
 the guidance rather than embedded in the tool. One source can still contain
@@ -92,15 +99,21 @@ technology detection are not selected features.
 
 ### Architecture organization — owner-selected
 
+Owner clarification, 2026-10-21: reuse the existing private guidance repository as
+a product catalog with independently selectable product directories. Prepare
+WorkTracker and other existing product-specific rules separately; common technology
+and topic guidance remains public. The current private repository name is retained;
+no remote rename, cross-product activation or consumer migration is implied.
+
 Common guidance lives in the public `agent-guides` repository, one bundle per
 stack or topic ([ADR 0003](decisions/0003-tool-and-guides-repositories.md)).
-Keep common guidance separate from a specific bundle named **WorkTracker
-architecture**. The project's initial connection includes both; routine startup
-and updates preserve that selection without requiring another profile activation.
-This bundle is project-specific, not a generic architecture default for unrelated
-consumers. The owner selected a new, separate private Git repository for this
-bundle, named `worktracker-architecture-guides`. Its owner/URL, access and creation
-authorization are execution prerequisites; the privacy/name decision is closed.
+Keep common guidance separate from each product bundle. WorkTracker's initial
+connection selects its approved common technology/topic bundles plus the private
+WorkTracker bundle; routine startup/updates preserve that selection without another
+profile activation. Other products select their own private bundle, not WorkTracker
+architecture as a generic default. The existing private repository is currently
+named `worktracker-architecture-guides`; its catalog layout is product-separated.
+Renaming that remote or changing a consumer requires separate authorization.
 
 Project-local instructions and exceptions retain authority. Bundling WorkTracker
 architecture does not authorize copying private product details into the public
@@ -110,8 +123,9 @@ WorkTracker-specific decisions need review when preparing the separate bundles.
 
 Content preservation is mandatory: inventory the existing guidance and map every
 rule, exception, topic and required reference to its destination. If common versus
-WorkTracker classification is uncertain, retain it in the private WorkTracker
-bundle. Do not drop or weaken it during extraction. Preserve the original source
+product classification is uncertain, retain it privately with the correct product
+or an explicit unresolved record, never activate it in another product's bundle.
+Do not drop or weaken it during extraction. Preserve the original source
 and check completeness before retiring old delivery; source deletion is not proof
 of successful migration. Keep the detailed classification record private.
 
