@@ -91,11 +91,31 @@ identity, clone-pilot authorization and separately approved live migration/rollb
 T07/T08 keep their existing order and prerequisites. No consumer activation, legacy
 retirement, release or registry publication follows from this closure.
 
-Ready for an authorized scoped commit/push handoff, not automatically staged or
-committed. Prior documentation approval and conditional private T05 upload approval
-remain recorded; public catalog content upload needs explicit owner permission.
+At documentation closure, the work was ready for an authorized scoped commit/push
+handoff, not automatically staged or committed. Prior documentation approval and
+conditional private T05 upload approval were recorded; public catalog content
+upload still needed explicit owner permission.
 Repository creation and source upload are separate permissions. No staging, commit,
 push, upload or publication was performed by this closure.
 
 [Deferred follow-ups](T05-content-split.md#handoff) and the private evidence index
 remain low-priority improvement work, not unresolved T05 gates or a competing board.
+
+## Subsequent authorized source publication — 2026-10-21
+
+The owner subsequently authorized scoped T05 commits and pushes in all three
+existing repositories. Source upload to their existing `develop` branches completed;
+local HEAD matched each remote branch and all three working trees were clean.
+The [common catalog README](https://github.com/Gaan21/agent-guides/blob/develop/README.md)
+now introduces the available source, bundle selection and retained notices.
+
+Publication preflight matched the accepted candidate's 159 live files, reconciled
+the prior 157 results without rerunning suites, and passed staged whitespace,
+line-limit, safety and current-document local-link checks. Detailed outcomes stay
+private. Git upload does not transfer local-only seals or establish evidence
+portability, native loading, model compliance, stable approval or consumer migration.
+Future publication, releases, registry actions and activation need separate authority.
+
+Continue from [the canonical board](README.md) to [T06](T06-migration.md), this
+acceptance and the private `CONTINUE.md`; do not repeat T05. T06 remains pending
+its own clone/client access and pilot/live-migration authorization.

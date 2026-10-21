@@ -340,9 +340,10 @@ local-only and ordinary source commits do not publish them. This is not stable
 release approval, source trust, consumer migration or new native/client/model proof;
 T03's accepted scope and limitations are unchanged.
 
-**Next: T06**, subject to its existing prerequisites and separate authorization;
-T06/T07/T08 remain pending. No staging, commit, push, upload or activation occurred.
-The private T05 upload has prior conditional owner approval; public catalog content
-upload still requires explicit approval. Documentation approval is not blanket source
-upload permission. Retain T05's [deferred follow-up links](T05-content-split.md#handoff)
+**Next: [T06](T06-migration.md)**, subject to its existing prerequisites and separate
+authorization; T06/T07/T08 remain pending. Closure itself performed no publication.
+The owner subsequently authorized and completed T05 source upload in all three
+repositories; see [publication outcome](T05-acceptance.md#subsequent-authorized-source-publication--2026-10-21).
+This does not authorize future publication or consumer activation.
+Retain T05's [deferred follow-up links](T05-content-split.md#handoff)
 and the private evidence index as low-priority improvements, not T05 gates.

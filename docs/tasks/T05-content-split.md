@@ -39,13 +39,15 @@ from the initial Flutter extraction to every existing technology/topic.
   `evidence/` (owner decision,
   2026-10-20). Exact inputs and pins are listed in that private README only.
 - Both repositories exist, cloned as siblings; deferred-maintenance documentation
-  is already retained. Guidance bundles are prepared and accepted locally; not uploaded.
+  is already retained. Guidance bundles are accepted and their T05 source upload
+  subsequently completed with explicit owner authorization; see [acceptance](T05-acceptance.md).
 - Owner authorized Apache-2.0 for the selected owner-controlled original material
   from the private catalog. This excludes private history, product-specific output
   and third-party relicensing; review every candidate's provenance/notices.
-- Authorized: pushing the private repository's T05 content when T05 is complete.
-  Pushing content to the public `agent-guides` needs explicit owner authorization;
-  run the public-output check (step 4) first and report it with the request.
+- At preparation time, authorized: pushing the private repository's T05 content
+  when T05 is complete.
+  Public `agent-guides` content upload still required explicit owner authorization
+  after the public-output check (step 4); that upload subsequently completed above.
 - Not in T05: editing WorkTracker, installed snapshots or legacy repositories, and
   deprecating legacy delivery; see [T06 legacy retirement](T06-migration.md#legacy-retirement).
 
