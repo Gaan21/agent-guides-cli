@@ -5,6 +5,8 @@
 - Preserve the agreed scope and task order in `docs/tasks/README.md`. Inspect Git
   status/diff before work; retain existing work. No legacy runtime deletion or
   automatic consumer migration. Record checks, limitations and handoff results.
+- When asked about pending work, start with `docs/tasks/README.md`; include T05's
+  deferred follow-up links without changing task order or creating a competing board.
 - Multiple owner-selected Git sources; resolve approved selections once during
   install/update; restore exact recorded commits. No independent latest resolution
   for implementation and review. Never edit live snapshots.

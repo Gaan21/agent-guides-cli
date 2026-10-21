@@ -68,6 +68,28 @@ retirement with T06 after validated migration; preserve rollback source/evidence
 
 ## Handoff
 
+### Preparatory clarification — 2026-10-21
+
+Read-only architecture/linter research was retained privately. The owner deferred
+implementation of its improvement proposals; it is not a new T05 prerequisite.
+Future-maintainer summaries are recorded in the maintained common-guidance and
+linter repositories, with required bidirectional change-impact review. No legacy
+source, consumer, installed snapshot or lint selection was modified. The owner
+subsequently accepted Result for public domain operations and direct values for
+infallible getters/internal calculations. Detector/consumer changes remain deferred.
+T05 remains ready: inventory, content extraction and acceptance are not complete.
+Documentation checks and authorization limits are recorded in the private evidence
+index. The owner subsequently authorized documentation commit/push in the CLI,
+common-guidance, private-guidance and linter repositories. Consumer activation,
+releases and implementation of deferred improvements remain unauthorized.
+
+Future-maintainer follow-up (low urgency; not new T05 gates):
+
+- [Common guidance](https://github.com/Gaan21/agent-guides/blob/develop/docs/deferred-improvements.md).
+- [Dart linter](https://github.com/Gaan21/dart-architecture-lints/blob/main/docs/deferred-guidance-alignment.md).
+- Detailed product findings and research remain in the private repository's
+  evidence index; never copy them into either public follow-up.
+
 Privately record exact candidate sources and selections for T06. Propose (do not
 apply without authorization) a legacy README note that common content now lives
 in `agent-guides` while the legacy runtime stays in use. Public handoff
