@@ -1,6 +1,6 @@
 # agent-guides-cli: start here
 
-Status: T01/T02/T03/T04/T05 done; T06/T07/T08 pending (2026-10-21).
+Status: T01/T02/T03/T04/T05 done; T06 in_progress; T07/T08 pending (2026-10-22).
 Canonical board in Gaan21/agent-guides-cli.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -65,7 +65,7 @@ lifecycle/connection tooling. Content split and consumer integration remain sepa
 | T03 | [Native loading feasibility](T03-native-loading.md) | done | Independent bounded macOS/Linux reviews and owner acceptance; root-start conditions in the acceptance record. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | done | Independent corrective and bounded closure review accepted; see [acceptance](T04-acceptance.md). |
 | T05 | [Lossless common/private content split](T05-content-split.md) | done | Bounded local content acceptance after independent R1–R5 corrections; see [acceptance](T05-acceptance.md). |
-| T06 | [WorkTracker acceptance and migration](T06-migration.md) | pending | T03 + T04 + T05; consumer agent and owner. |
+| T06 | [WorkTracker acceptance and migration](T06-migration.md) | in_progress | T03 + T04 + T05; consumer agent and owner. Clone pilot run; live migration not authorized. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
 | T08 | [Lightweight selective-reading observation](T08-lightweight-observation.md) | pending | T03 acceptance + authorized T06 clone pilot; client/consumer agent and reviewer. Not a T04/T06/T07 dependency. |
 
@@ -356,3 +356,15 @@ the sibling checkout now use the new name
 ([ADR 0003](../decisions/0003-tool-and-guides-repositories.md)).
 Historical records, T05's sealed selection and local seals keep the old source name.
 T06 records its own selection with the new name. No consumer or task status changed.
+
+## T06 clone pilot checkpoint — 2026-10-22
+
+Owner authorized a disposable-clone pilot with both clients and model access. Client
+work used the current guides (`develop`) and installed clients; it found that private
+sources were unreachable (the engine carries no credentials). Owner-approved fix:
+operator-maintained local mirrors (`--mirror`); independent review accepted after
+corrections; still **uncommitted**. Install, real guidance update, rollback and offline
+checks passed; interrupted operations need manual lock removal before recovery, and
+selective reading was mixed. Independent evidence review: accepted with corrections.
+See the [T06 checkpoint](T06-migration.md#clone-pilot-checkpoint--2026-10-22). Live migration,
+engine commit/push and T08 sampling need their own authorization. T07/T08 pending.

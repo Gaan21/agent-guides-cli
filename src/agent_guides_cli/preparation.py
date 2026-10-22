@@ -30,6 +30,8 @@ def request(value, fixtures=None):
     ids, urls = [s["id"] for s in sources], [s["url"] for s in sources]
     if len(set(ids)) != len(ids) or len(set(urls)) != len(urls):
         raise GuidanceError("duplicate source identity/locator")
+    if isinstance(fixtures, git_source.Mirrors) and not set(fixtures) <= set(ids):
+        raise GuidanceError("mirror names an unselected source")
     selections = []
     for item in value["bundles"]:
         fields(item, ("source", "path", "binding"))
@@ -49,6 +51,8 @@ def request(value, fixtures=None):
 
 
 def validate_lock(value, fixtures=None):
+    if isinstance(fixtures, git_source.Mirrors):
+        fixtures = None  # Mirrors are transport for new resolution/acquisition, not recorded identity.
     fields(value, ("schema", "sources", "bundles", "engine"), ("connection",))
     if type(value["schema"]) is not int or value["schema"] != 1:
         raise GuidanceError("unsupported selection schema")

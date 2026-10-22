@@ -15,6 +15,13 @@ from .integrity import (GuidanceError, MAX_FILE, canonical, checked_path, digest
                         fields, identifier, relative_name)
 
 
+class Mirrors(dict):
+    """Operator-maintained local Git copies by source id: a credential-free transport.
+
+    The approved HTTPS locator stays recorded; exact commits are verified as usual.
+    """
+
+
 def git(*arguments, limit=2 * MAX_FILE):
     environment = {key: value for key, value in os.environ.items()
                    if not key.startswith("GIT_")}
@@ -65,7 +72,8 @@ def source(value, fixtures=None, *, recorded=False):
     except ValueError as error:
         raise GuidanceError("invalid Git locator") from error
     # Dependency injection for disposable tests only; never written as a machine path.
-    fixture = fixtures is not None and url == f"fixture://{value['id']}" and value['id'] in fixtures
+    fixture = (fixtures is not None and not isinstance(fixtures, Mirrors)
+               and url == f"fixture://{value['id']}" and value['id'] in fixtures)
     if not valid and not fixture:
         raise GuidanceError("credential-free HTTPS Git locator required")
     ref = reference(value.get("ref", "refs/heads/develop"))
@@ -77,7 +85,29 @@ def source(value, fixtures=None, *, recorded=False):
     return result
 
 
+def mirror_options(value, fixtures):
+    """Only an operator-named mirror may be owned by its keeper rather than the caller."""
+    if isinstance(fixtures, Mirrors) and value["id"] in fixtures:
+        return ("-c", f"safe.directory={checked_path(fixtures[value['id']])}")
+    return ()
+
+
 def locator(value, fixtures):
+    if isinstance(fixtures, Mirrors) and value["id"] in fixtures:
+        path = checked_path(fixtures[value["id"]])
+        if not path.is_dir():
+            raise GuidanceError(f"mirror directory unavailable: {value['id']}")
+        def read(*arguments):
+            try:
+                return git(*mirror_options(value, fixtures), "--git-dir", path, *arguments).decode().strip()
+            except GuidanceError as error:
+                raise GuidanceError(f"mirror is not a readable bare Git repository: {value['id']}") from error
+        # A mirror must be a bare copy of exactly the approved locator.
+        if read("rev-parse", "--is-bare-repository") != "true":
+            raise GuidanceError(f"mirror is not a readable bare Git repository: {value['id']}")
+        if read("config", "--default=", "--get", "remote.origin.url") != value["url"]:
+            raise GuidanceError(f"mirror origin is not the approved source: {value['id']}")
+        return str(path)
     if value["url"].startswith("fixture://"):
         path = checked_path(fixtures[value["id"]])
         if not path.is_dir():
@@ -90,7 +120,9 @@ def resolve(value, fixtures=None):
     """Called once per selected source only for preparation, never restore/join."""
     if "revision" in value:
         return value["revision"]
-    rows = git("ls-remote", "--refs", "--", locator(value, fixtures), value["ref"]).decode().splitlines()
+    remote = locator(value, fixtures)
+    rows = git(*mirror_options(value, fixtures), "ls-remote", "--refs", "--", remote,
+               value["ref"]).decode().splitlines()
     matches = [row.split()[0] for row in rows if len(row.split()) == 2 and row.split()[1] == value["ref"]]
     if len(matches) != 1:
         raise GuidanceError("approved branch missing or ambiguous")
@@ -109,11 +141,12 @@ def acquire(value, cache, fixtures=None, *, offline=False):
             pass
     if offline:
         raise GuidanceError(f"missing cached exact commit: {value['id']} {revision}")
+    remote = locator(value, fixtures)
     if not objects.exists():
         objects.parent.mkdir(parents=True, exist_ok=True)
         git("init", "--bare", "--template=", objects)
-    git("--git-dir", objects, "fetch", "--no-tags", "--depth=1", "--",
-        locator(value, fixtures), revision)
+    git(*mirror_options(value, fixtures), "--git-dir", objects, "fetch", "--no-tags", "--depth=1",
+        "--", remote, revision)
     actual = git("--git-dir", objects, "rev-parse", "FETCH_HEAD^{commit}").decode().strip()
     if actual != revision or git("--git-dir", objects, "cat-file", "-t", revision).strip() != b"commit":
         raise GuidanceError("fetched object differs from recorded commit")

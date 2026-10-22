@@ -15,8 +15,23 @@ for building and clean-install verification. Uncached sources require authorized
 network access. Public and credential-free HTTPS Git locators are accepted (no
 embedded user/password, query, fragment or custom port). Authentication failures
 are reported, not repaired; no credential or global Git configuration is installed.
-SSH/local-folder import is not implemented. Disposable tests inject `fixture://`
+SSH is not implemented. Disposable tests inject `fixture://`
 sources through the Python API; the public CLI does not accept that transport.
+
+Private or credential-requiring sources use an operator-maintained local Git copy:
+`--mirror SOURCE=PATH` on `prepare`, `install` and `update` (repeatable). Whoever holds
+access keeps it with their own credentials: `git clone --mirror URL PATH`, then
+`git --git-dir PATH remote update` before each install/update. The engine never reads
+credentials. The copy must be bare and its `remote.origin.url` must equal the approved
+URL exactly; SSH keepers can map that URL to a key with `url.<ssh>.insteadOf`.
+The branch is resolved once from the copy and the exact commit fetched and verified;
+the lock records only the approved locator and commit, never the path.
+**A stale copy silently yields its older commit**: refresh it first. The copy must be
+readable by the operating user; `safe.directory` is set for that exact path only, so
+a keeper may own it (other-owner use is untested; verify on the target host). Paths
+must not contain symlinked components (on macOS, `/private/tmp` rather than `/tmp`).
+Unmirrored sources still use HTTPS. Restore stays offline from cached objects and
+needs no mirror. The local cache's Git `FETCH_HEAD` may name the copy's path.
 
 An explicit preparation request is an input, not a second persistent project
 configuration. For example (placeholder repositories, not live source approval):

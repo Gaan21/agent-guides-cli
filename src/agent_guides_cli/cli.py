@@ -6,8 +6,8 @@ from importlib.metadata import version
 from pathlib import Path
 import sys
 
-from .integrity import GuidanceError, canonical, parse_json, regular_bytes
-from . import lifecycle, preparation, task_identity
+from .integrity import GuidanceError, canonical, identifier, parse_json, regular_bytes
+from . import git_source, lifecycle, preparation, task_identity
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -41,6 +41,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         command.add_argument("--project", type=Path, required=True)
         command.add_argument("--cache", type=Path)
     update.add_argument("--expected", required=True)
+    for command in (prepare, install, update):
+        command.add_argument("--mirror", action="append", default=[], metavar="SOURCE=PATH",
+                             help="resolve/fetch that source from an operator-maintained local Git copy")
     remove = commands.add_parser("remove", help="remove only owned integration; retain lock and content")
     status = commands.add_parser("status", help="offline integrity and connection status; no repair")
     recovery = commands.add_parser("recover", help="recover interrupted writes without overwriting unknown edits")
@@ -62,8 +65,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         parser.print_help()
         return 0
     try:
+        mirrors = _mirrors(getattr(args, "mirror", []))
         if args.command == "prepare":
-            result = preparation.prepare(args.project, parse_json(regular_bytes(args.request)), args.cache)
+            result = preparation.prepare(args.project, parse_json(regular_bytes(args.request)), args.cache,
+                                         fixtures=mirrors)
         elif args.command == "restore":
             raw = regular_bytes(args.lock)
             if "connection" in preparation.read_lock(raw, args.expected):
@@ -75,9 +80,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                 result = preparation.restore(args.project, raw, args.expected, args.cache)
         elif args.command == "install":
             result = lifecycle.install(args.project, parse_json(regular_bytes(args.request)), args.client,
-                                       args.cache, expected=args.expected, host_config=args.host_config)
+                                       args.cache, expected=args.expected, host_config=args.host_config,
+                                       fixtures=mirrors)
         elif args.command == "update":
-            result = lifecycle.update(args.project, args.expected, args.cache)
+            result = lifecycle.update(args.project, args.expected, args.cache, fixtures=mirrors)
         elif args.command == "remove":
             result = lifecycle.remove(args.project, args.expected)
         elif args.command == "recover":
@@ -96,3 +102,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"agent-guides-cli: {error}", file=sys.stderr)
         return 1
     return 0
+
+
+def _mirrors(values):
+    """Parse repeated SOURCE=PATH; None keeps the default HTTPS transport."""
+    if not values:
+        return None
+    mirrors = git_source.Mirrors()
+    for value in values:
+        source, separator, path = value.partition("=")
+        if not separator or not path:
+            raise GuidanceError("--mirror expects SOURCE=PATH")
+        if identifier(source) in mirrors:
+            raise GuidanceError(f"duplicate mirror: {source}")
+        mirrors[source] = Path(path)
+    return mirrors

@@ -10,7 +10,8 @@ Use an inspected development wheel, Python 3.11+, Git, a writable project/worktr
 root and explicitly approved sources/clients. Source-build acquisition is in the
 root README; [preparation](preparation.md) defines bundle/request inputs. Reuse
 one tools environment across content updates. Credentials/global settings are not
-installed. Uncached HTTPS sources need authorized access.
+installed. Uncached HTTPS sources need credential-free access; private sources use
+an operator-maintained `--mirror` copy on install/update ([preparation](preparation.md)).
 
 Change connections between tasks, with selected clients quiescent; the tool cannot
 detect active sessions. Restart affected clients once afterward. No hot-context

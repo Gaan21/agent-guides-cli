@@ -1,6 +1,6 @@
 # T06 — WorkTracker acceptance and explicit migration
 
-Status: pending. Depends on: T03 + T04 + T05.
+Status: in_progress (clone pilot run). Depends on: T03 + T04 + T05.
 Executor: WorkTracker agent with owner-authorized client and migration access.
 Read [handoff](README.md), preceding evidence and current consumer instructions.
 
@@ -67,3 +67,59 @@ an authorized clone pilot and reuse existing traces, but is not a new completion
 dependency. Concrete delivery/behavior failures still require owner/reviewer
 disposition; observation is not permission to ignore them or activate live capture.
 Completion evidence: pending.
+
+## Clone pilot checkpoint — 2026-10-22
+
+Owner-authorized disposable consumer clone; no live checkout, consumer commit or
+activation changed. Exact identities, traces, expectations (sealed before traces),
+the consumer patch and the live migration/rollback procedure are private evidence.
+
+- **Engine:** private HTTPS sources failed because Git runs without credentials by
+  design. Added `--mirror SOURCE=PATH` (bare copy whose origin equals the approved URL;
+  lock keeps only URL + commit). Independent review: accept after corrections; 79/79
+  installed-wheel tests and distribution check on macOS/Python 3.15. Not committed.
+- **Consumer preflight:** the engine refused while root instructions named the legacy
+  package or the generated index path. The consumer change rewrote the delivery and
+  guidance-source lines and added a read-before-applicable-edits rule the models saw.
+- **Host:** first install ~5 s; temporary-root portability and offline restore; real
+  guidance update through a refreshed mirror (a stale mirror silently keeps the old
+  commit); offline rollback; owned-config edits block removal; user bytes kept.
+  `kill -9` mid-write → refusal until recovery → exact old selection. **Failed/limited:**
+  every kill leaves two abandoned empty writer locks that block all operations,
+  including `recover`, until an operator removes them; the local Git cache records the
+  mirror path (lock and records do not).
+- **Clients (Claude Code 2.1.308, OpenCode 2.1.3, root start, one `.` scope):** Claude's
+  own context report shows the index once (~13k tokens); for OpenCode only the resolved
+  configuration was checked, not observed loading. Model behavior is separate: both read
+  relevant guides before edits, reused them across a layer switch and skipped an
+  irrelevant neighboring stack. Claude omitted required topics (including testing) and
+  made no fresh reads after compaction whose summary kept only topic names; OpenCode
+  read the required topics plus many unnecessary ones. Non-interactive OpenCode `/compact` is not native compaction. Edits were not
+  built, tested or reviewed.
+- **Rollback rehearsal:** remove + instruction revert restores the exact consumer tree;
+  legacy reconnect/disconnect with its own tool; reinstall gives the identical selection.
+- **Guards:** consumer smoke suites pass with the new delivery (regression check only,
+  not the guard owner's acceptance).
+- **Independent evidence review:** accepted with corrections as a bounded clone-pilot
+  milestone; corrections applied.
+
+Pending: interactive TUI (both clients, native compaction, post-loss reads), OpenCode
+initial-request capture, two scopes, detail links and local-authority precedence, T05
+coverage in effective delivery, guard-owner acceptance, product-edit review, daily use,
+Linux, physical second machine, owner disposition of read omissions and lock recovery,
+engine commit/push, and separately authorized live migration.
+
+### Follow-up before the next pilot run
+
+Owner decision: record fixes for every failed or weak result; another agent implements
+them later and repeats the pilot. T06 stays `in_progress`. Detailed table: private
+evidence `FOLLOW-UP.md`. In short:
+
+- Engine: lock holder identity so `recover` can clear locks of dead processes; report
+  unchanged sources and mirror freshness; no mirror path in the cache; detect real
+  imports instead of prose mentions; measure index size; test other-owner mirrors.
+- Content: unmissable routes for common tests/layers/UI; reread after compaction;
+  narrower "read when" conditions; optional sibling repositories.
+- Consumer/factory: owner review of the instruction patch and of a production MCP
+  enabled by default; factory mirrors and deploy key.
+- Re-run with the missing checks listed above.
