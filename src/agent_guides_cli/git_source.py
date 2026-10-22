@@ -7,8 +7,10 @@ git_source.py (Apache-2.0, see NOTICE). Resolution and acquisition are separate.
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import tempfile
+import time
 from urllib.parse import urlsplit
 
 from .integrity import (GuidanceError, MAX_FILE, canonical, checked_path, digest,
@@ -129,11 +131,61 @@ def resolve(value, fixtures=None):
     return commit(matches[0])
 
 
+def source_diagnostics(previous, current, *, revisions=None, fixtures=None):
+    """Observations only: never resolve, fetch, or add transport to lock identity.
+
+    A mirror's regular FETCH_HEAD mtime is a local refresh observation, not proof
+    of upstream freshness (nor of a successful fetch of the selected branch).
+    """
+    old = {s["id"]: s["commit"] for s in (previous or {}).get("sources", [])}
+    pinned = revisions if revisions is not None else current.get("connection", {}).get("revisions", {})
+    result = []
+    for selected in current["sources"]:
+        name, revision = selected["id"], selected["commit"]
+        mirrored = isinstance(fixtures, Mirrors) and name in fixtures
+        observation = {"status": "unavailable", "fetch_head_mtime_ns": None, "age_seconds": None,
+                       "upstream_freshness": "not_proven"}
+        if mirrored:
+            try:
+                info = checked_path(Path(fixtures[name]) / "FETCH_HEAD").lstat()
+                if stat.S_ISREG(info.st_mode):
+                    observation.update(status="observed", fetch_head_mtime_ns=info.st_mtime_ns,
+                                       age_seconds=(time.time_ns() - info.st_mtime_ns) / 1_000_000_000)
+            except (OSError, GuidanceError):
+                pass
+        result.append({"source": name, "old_commit": old.get(name), "new_commit": revision,
+                       "change": "new" if name not in old else
+                                 "unchanged" if old[name] == revision else "changed",
+                       "pinned": name in pinned,
+                       "transport": "mirror" if mirrored else
+                                    "fixture" if selected["url"].startswith("fixture://") else "https",
+                       "mirror_refresh": observation if mirrored else None})
+    return result
+
+
+def clear_fetch_head(objects):
+    """Drop only this cache's regular transport receipt, including old path leaks.
+
+    FETCH_HEAD is disposable fetch metadata, not an object/ref or freshness proof.
+    Refuse unexpected filesystem types; never follow links or remove directories.
+    Caller holds the cache writer lock. Keeper-owned mirrors are never modified.
+    """
+    path = objects / "FETCH_HEAD"
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        return
+    if not stat.S_ISREG(info.st_mode):
+        raise GuidanceError("cache FETCH_HEAD is not a regular file; resolve explicitly")
+    path.unlink()
+
+
 def acquire(value, cache, fixtures=None, *, offline=False):
     """Use the recorded exact commit. Complete cached objects need no network."""
     objects = checked_path(Path(cache) / "git" / digest(canonical(value["url"])))
     revision = commit(value["commit"])
     if objects.exists():
+        clear_fetch_head(objects)
         try:
             if git("--git-dir", objects, "cat-file", "-t", revision).strip() == b"commit":
                 return objects
@@ -145,9 +197,9 @@ def acquire(value, cache, fixtures=None, *, offline=False):
     if not objects.exists():
         objects.parent.mkdir(parents=True, exist_ok=True)
         git("init", "--bare", "--template=", objects)
-    git(*mirror_options(value, fixtures), "--git-dir", objects, "fetch", "--no-tags", "--depth=1",
+    git(*mirror_options(value, fixtures), "--git-dir", objects, "fetch", "--no-write-fetch-head", "--no-tags", "--depth=1",
         "--", remote, revision)
-    actual = git("--git-dir", objects, "rev-parse", "FETCH_HEAD^{commit}").decode().strip()
+    actual = git("--git-dir", objects, "rev-parse", revision + "^{commit}").decode().strip()
     if actual != revision or git("--git-dir", objects, "cat-file", "-t", revision).strip() != b"commit":
         raise GuidanceError("fetched object differs from recorded commit")
     return objects

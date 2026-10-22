@@ -73,6 +73,60 @@ class MirrorTests(GitFixture):
         lock = preparation.read_lock(self.read_lock(), updated["selection"])
         self.assertEqual({s["id"]: s["commit"] for s in lock["sources"]}["alpha"], self.commits["alpha"])
 
+    def test_refresh_observation_is_local_only_and_never_exposes_path(self):
+        value = preparation.candidate(self.request, self.cache, fixtures=self.mirrors)
+        rows = git_source.source_diagnostics(value, value, fixtures=self.mirrors)
+        self.assertEqual(rows[0]["transport"], "mirror")
+        self.assertEqual(rows[0]["mirror_refresh"]["status"], "unavailable")
+        self.refresh("alpha")
+        rows = git_source.source_diagnostics(value, value, fixtures=self.mirrors)
+        info = rows[0]["mirror_refresh"]
+        self.assertEqual(info["status"], "observed")
+        self.assertEqual(info["fetch_head_mtime_ns"], (self.mirrors["alpha"] / "FETCH_HEAD").stat().st_mtime_ns)
+        self.assertEqual(info["upstream_freshness"], "not_proven")
+        self.assertEqual(rows[0]["change"], "unchanged")
+        for mirror in self.mirrors.values():
+            self.assertNotIn(str(mirror), json.dumps(rows))
+        receipt = self.mirrors["alpha"] / "FETCH_HEAD"
+        receipt.unlink()
+        receipt.symlink_to(self.mirrors["alpha"] / "HEAD")
+        self.assertEqual(git_source.source_diagnostics(value, value, fixtures=self.mirrors)[0]
+                         ["mirror_refresh"]["status"], "unavailable")
+
+    def test_cache_fetch_head_removed_on_cached_offline_access_only(self):
+        value = preparation.candidate(self.request, self.cache, fixtures=self.mirrors)
+        selected = value["sources"][0]
+        objects = git_source.acquire(selected, self.cache, offline=True)
+        receipt = objects / "FETCH_HEAD"
+        self.assertFalse(receipt.exists())
+        marker = objects / "unrelated-operator-note"
+        marker.write_bytes(b"keep")
+        receipt.write_text(str(self.mirrors["alpha"]))
+        self.assertEqual(git_source.acquire(selected, self.cache, offline=True), objects)
+        self.assertFalse(receipt.exists())
+        self.assertEqual(marker.read_bytes(), b"keep")
+        self.assertEqual(git_source.git("--git-dir", objects, "cat-file", "-t", selected["commit"]).strip(), b"commit")
+        receipt.symlink_to(marker)
+        with self.assertRaisesRegex(GuidanceError, "not a regular file"):
+            git_source.acquire(selected, self.cache, offline=True)
+        self.assertEqual(marker.read_bytes(), b"keep")
+        receipt.unlink()
+        receipt.mkdir()
+        with self.assertRaisesRegex(GuidanceError, "not a regular file"):
+            git_source.acquire(selected, self.cache, offline=True)
+
+    def test_fetch_never_writes_receipt_or_validates_fetch_head(self):
+        with patch.object(git_source, "git", wraps=git_source.git) as run:
+            preparation.candidate(self.request, self.cache, fixtures=self.mirrors)
+        fetches = [call.args for call in run.call_args_list if "fetch" in call.args]
+        self.assertEqual(len(fetches), 2)
+        self.assertTrue(all("--no-write-fetch-head" in args for args in fetches))
+        self.assertFalse(any("FETCH_HEAD^{commit}" in call.args for call in run.call_args_list))
+        for source in self.request["sources"]:
+            options = git_source.mirror_options(source, self.mirrors)
+            self.assertEqual(options, ("-c", f"safe.directory={self.mirrors[source['id']]}"))
+        self.assertFalse(any(p.name == "FETCH_HEAD" for p in (self.cache / "git").rglob("*")))
+
     def test_added_mirrored_source_is_accepted_with_existing_lock(self):
         full = json.loads(json.dumps(self.request))
         self.request["sources"] = self.request["sources"][:1]

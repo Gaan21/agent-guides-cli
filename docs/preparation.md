@@ -26,12 +26,19 @@ credentials. The copy must be bare and its `remote.origin.url` must equal the ap
 URL exactly; SSH keepers can map that URL to a key with `url.<ssh>.insteadOf`.
 The branch is resolved once from the copy and the exact commit fetched and verified;
 the lock records only the approved locator and commit, never the path.
-**A stale copy silently yields its older commit**: refresh it first. The copy must be
+**A stale copy yields its older commit**: refresh it first. Install/update JSON reports
+each resolved source and updates distinguish changed from unchanged commits. Mirror
+`FETCH_HEAD` mtime/age is only a local refresh observation (or unavailable), never
+proof of upstream freshness; unchanged upstream and an unrefreshed mirror can look
+identical. The copy must be
 readable by the operating user; `safe.directory` is set for that exact path only, so
 a keeper may own it (other-owner use is untested; verify on the target host). Paths
 must not contain symlinked components (on macOS, `/private/tmp` rather than `/tmp`).
 Unmirrored sources still use HTTPS. Restore stays offline from cached objects and
-needs no mirror. The local cache's Git `FETCH_HEAD` may name the copy's path.
+needs no mirror. Fetch uses `--no-write-fetch-head`; exact commits are verified
+directly. Accessing a cached Git object store clears only its regular legacy
+`FETCH_HEAD` transport metadata, including on offline object hits. Unexpected file
+types fail closed. This does not scrub old logs or untouched historical caches.
 
 An explicit preparation request is an input, not a second persistent project
 configuration. For example (placeholder repositories, not live source approval):
@@ -142,7 +149,9 @@ latest fallback. Moving upstream branches does not affect restore or review.
 Candidates are validated before the lock is atomically replaced. A conflicting
 existing lock, preimage drift or preparation failure preserves existing active
 selection bytes. Cache candidates may remain after failure; no automatic pruning.
-Writers use explicit directory locks; inspect an abandoned lock before retrying.
+Writers publish complete holder metadata (process generation, host/visibility domain,
+operation and token) with directory locks. Explicit `recover --cache CACHE` can clear
+provably dead local holders; legacy/unknown/foreign holders require inspection.
 Files are read-only as an accidental-write guard, not a same-user sandbox. No live
 snapshot is edited. Crash recovery for native multi-file integration belongs to T04.
 

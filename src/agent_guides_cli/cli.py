@@ -48,6 +48,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     status = commands.add_parser("status", help="offline integrity and connection status; no repair")
     recovery = commands.add_parser("recover", help="recover interrupted writes without overwriting unknown edits")
     recovery.add_argument("--project", type=Path, required=True)
+    recovery.add_argument("--cache", type=Path, help="original cache if external; only provably dead local locks are cleared")
     verify = commands.add_parser("verify", help="compare local content and connection with expected identity")
     capture = commands.add_parser("task-pin", help="retain host task identity once outside generated storage")
     for command in (verify, capture, remove, status):
@@ -87,7 +88,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         elif args.command == "remove":
             result = lifecycle.remove(args.project, args.expected)
         elif args.command == "recover":
-            result = lifecycle.recover(args.project)
+            result = lifecycle.recover(args.project, args.cache)
         elif args.command == "status":
             result = lifecycle.verify(args.project, args.expected)
         elif args.command == "verify":

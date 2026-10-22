@@ -36,10 +36,12 @@ The candidate owns:
   without changing root ignore rules; it stays when retained content stays.
 
 If both native configuration slots are occupied, installation stops before source
-resolution; it never parses/rewrites user JSONC. An edited owned config needs explicit
+resolution; inspection may parse user JSONC but never rewrites it. An edited owned config needs explicit
 resolution; it is never silently replaced/deleted. Claude blocks are surgically
 edited. Known legacy tokens are checked in selected clients' root instructions and
-settings. This bounded inventory is not exhaustive indirect-import/plugin discovery.
+settings. Import syntax and executable JSON/JSONC registration fields are inspected,
+not historical prose mentions or fenced examples. This bounded inventory is not
+exhaustive indirect-import/plugin discovery.
 Unselected client settings and unrelated guards/lints are not modified or executed.
 
 **Managed OpenCode:** explicitly supply `--host-config HOST_JSON` on install and on
@@ -87,6 +89,12 @@ request/expected selection is a no-op, not an implicit update. Remove first to c
 clients. Restore never resolves branches or uses the network: complete cached bundles
 or exact Git objects are required. Missing identities fail without switching.
 
+Install/update JSON includes per-source changed/unchanged diagnostics, revision policy
+and local mirror-refresh observations, never proof of upstream currency. Refresh
+operator mirrors first. Index measurements report exact rendered UTF-8 bytes per
+bundle/binding plus shared overhead; these are not client token counts or loading
+evidence. Diagnostics do not enter selection identity.
+
 ## Recovery and retention
 
 Immutable selections and exact portable lock copies are retained before activation.
@@ -109,8 +117,14 @@ or while a recovery journal exists.
 The next mutation recovers first, or run `recover`. Uncommitted work rolls back only
 when every path matches its before/after image. Unknown edits stop restoration and
 preserve the journal. Committed work remains; its completed journal is cleared.
-Recovery is idempotent. Abandoned `writer-lock` directories need operator inspection,
-never automatic age-based deletion.
+Recovery is idempotent. Run `recover --cache CACHE` with the original cache when it
+is external. Recovery acquires both writer locks and may retire a holder only when
+its process is provably gone in the same host/process-visibility domain. Live,
+foreign, malformed, legacy-empty and unverifiable locks remain refused; lock age
+never authorizes deletion. Process-generation observations use kernel data, not
+formatted dates. Cooperating writers/recoverers serialize lock metadata with a local
+advisory guard. Interrupted candidate/retirement cleanup may leave inert debris, not
+an empty active lock. Arbitrary network filesystem locking is not verified.
 
 Remove deletes only verified owned integration, retaining locks, cached objects,
 prior selections and unrelated user bytes. A newly created `CLAUDE.md` disappears

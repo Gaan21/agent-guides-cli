@@ -6,7 +6,7 @@ integrity is not evidence of native loading, model behavior or permission guards
 
 from contextlib import contextmanager
 
-from . import host, native, preparation as prep, transactions as tx
+from . import git_source, host, native, preparation as prep, transactions as tx
 from .integrity import (GuidanceError, canonical, checked_path, digest, fields,
                         parse_json, regular_bytes)
 from .storage import locked, make_directory, save_bytes, verify_snapshot
@@ -50,15 +50,15 @@ def storage_ignore(project, *, create=False):
 
 
 @contextmanager
-def mutation(project, cache=None):
+def mutation(project, cache=None, *, operation="install"):
     project = project_root(project)
     cache = checked_path(cache or project / ".guidance/cache")
     if cache == project / ".guidance":
         raise GuidanceError("cache cannot share the project writer-lock directory")
-    with locked(project / ".guidance"):
+    with locked(project / ".guidance", operation=operation):
         storage_ignore(project, create=True)
         tx.recover(project)
-        with locked(cache):
+        with locked(cache, operation=operation):
             yield project, cache
 
 
@@ -107,6 +107,14 @@ def retain_lock(project, raw):
 def rendition(project, value, result, *, root=False):
     _, files = verify_snapshot(project / ".guidance/selections" / result["snapshot"], result["snapshot"])
     return native.render(value, result["snapshot"], files, root=root)
+
+
+def index_sizes(project, value, result, route):
+    _, files = verify_snapshot(project / ".guidance/selections" / result["snapshot"], result["snapshot"])
+    sizes = native.entry_sizes(value, result["snapshot"], files)
+    if route["route"] == "managed":
+        sizes["managed_root"] = native.entry_sizes(value, result["snapshot"], files, root=True)
+    return sizes
 
 
 def verify(project, expected, *, fixtures=None, _transaction=False):
@@ -208,7 +216,7 @@ def preflight(project, selected, expected, fixtures, *, route=None, host_config=
     before = tx.Preimages(project, surfaces(selected, route))
     if route["route"] == "managed" and "claude" in selected:
         raw = before[native.CLAUDE] or b""
-        if b"AGENTS.md" in raw and b"@" in raw and not native.imports_agents(raw) and (state or {}).get("block") is None:
+        if native.has_agents_import(raw) and not native.imports_agents(raw) and (state or {}).get("block") is None:
             raise GuidanceError("ambiguous existing Claude AGENTS.md import; resolve explicitly to avoid duplication")
     if state is None:
         if before[native.ENTRY] is not None:
@@ -277,6 +285,7 @@ def activate(project, value, cache, selected, state, before, fixtures, route, re
     changed = tx.apply(project, before.plan(after),
                        lambda: verify(project, expected, fixtures=fixtures, _transaction=True))
     return dict(verify(project, expected, fixtures=fixtures), changed=changed,
+                index_size=index_sizes(project, value, result, route),
                 restart=selected if changed else [],
                 launcher_binding="operation_cwd_pwd_checked" if registration else "not_verified",
                 client_loading="not_checked", record=record)
@@ -300,13 +309,20 @@ def install(project, request, selected, cache=None, *, expected=None, host_confi
             if (order(normalized_sources) != order(sources) or order(normalized_bundles) != order(bundles) or
                     revisions != old["connection"]["revisions"]):
                 raise GuidanceError("installed selection differs; use explicit update or remove first")
-            return dict(verify(project, expected, fixtures=fixtures), changed=False, restart=[])
+            result = verify(project, expected, fixtures=fixtures)
+            diagnostics = git_source.source_diagnostics(old, old, revisions=revisions, fixtures=fixtures)
+            for source in diagnostics:
+                source["resolution"] = "retained_not_resolved"
+            return dict(result, changed=False, restart=[], sources=diagnostics,
+                        index_size=index_sizes(project, old, result, route))
         value = prep.candidate(request, cache, fixtures=fixtures)
-        return activate(project, value, cache, selected, state, before, fixtures, route, registration, revisions)
+        diagnostics = git_source.source_diagnostics(old, value, revisions=revisions, fixtures=fixtures)
+        return dict(activate(project, value, cache, selected, state, before, fixtures, route, registration, revisions),
+                    sources=diagnostics)
 
 
 def update(project, expected, cache=None, *, fixtures=None):
-    with mutation(project, cache) as (project, cache):
+    with mutation(project, cache, operation="update") as (project, cache):
         old = prep.read_lock(regular_bytes(project / prep.LOCK), expected, fixtures)
         if "connection" not in old:
             raise GuidanceError("update requires an installed lifecycle selection")
@@ -322,7 +338,9 @@ def update(project, expected, cache=None, *, fixtures=None):
             if source["id"] in revisions:
                 source["revision"] = revisions[source["id"]]
         value = prep.candidate(request, cache, fixtures=fixtures)
-        return activate(project, value, cache, selected, state, before, fixtures, route, registration, revisions)
+        diagnostics = git_source.source_diagnostics(old, value, revisions=revisions, fixtures=fixtures)
+        return dict(activate(project, value, cache, selected, state, before, fixtures, route, registration, revisions),
+                    sources=diagnostics)
 
 
 def restore(project, raw, expected, cache=None, *, current=None, host_config=None, fixtures=None):
@@ -330,7 +348,7 @@ def restore(project, raw, expected, cache=None, *, current=None, host_config=Non
     if "connection" not in value:
         raise GuidanceError("prepared-only lock needs the preparation restore command")
     selected = value["connection"]["clients"]
-    with mutation(project, cache) as (project, cache):
+    with mutation(project, cache, operation="restore") as (project, cache):
         if current is None and tx.read(project, prep.LOCK) is not None:
             current = expected
         _, state, before, route, registration = preflight(project, selected, current, fixtures,
@@ -341,7 +359,7 @@ def restore(project, raw, expected, cache=None, *, current=None, host_config=Non
 
 def remove(project, expected, *, fixtures=None):
     project = project_root(project)
-    with locked(project / ".guidance"):
+    with locked(project / ".guidance", operation="remove"):
         tx.recover(project)
         result = verify(project, expected, fixtures=fixtures)
         if result["status"] != "installed":
@@ -370,7 +388,11 @@ def remove(project, expected, *, fixtures=None):
         return dict(verify(project, expected, fixtures=fixtures), changed=True, restart=selected)
 
 
-def recover(project):
+def recover(project, cache=None):
     project = project_root(project)
-    with locked(project / ".guidance"):
-        return {"recovered": tx.recover(project), "restart": "restart selected clients after recovery"}
+    cache = checked_path(cache or project / ".guidance/cache")
+    if cache == project / ".guidance":
+        raise GuidanceError("cache cannot share the project writer-lock directory")
+    with locked(project / ".guidance", operation="recover", reclaim=True):
+        with locked(cache, operation="recover", reclaim=True):
+            return {"recovered": tx.recover(project), "restart": "restart selected clients after recovery"}
