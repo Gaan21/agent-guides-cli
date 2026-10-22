@@ -111,9 +111,9 @@ Keep common guidance separate from each product bundle. WorkTracker's initial
 connection selects its approved common technology/topic bundles plus the private
 WorkTracker bundle; routine startup/updates preserve that selection without another
 profile activation. Other products select their own private bundle, not WorkTracker
-architecture as a generic default. The existing private repository is currently
-named `worktracker-architecture-guides`; its catalog layout is product-separated.
-Renaming that remote or changing a consumer requires separate authorization.
+architecture as a generic default. The private repository is named
+`agent-guides-private-projects` (renamed 2026-10-21, ADR 0003); its catalog layout is
+product-separated. Changing a consumer requires separate authorization.
 
 Project-local instructions and exceptions retain authority. Bundling WorkTracker
 architecture does not authorize copying private product details into the public

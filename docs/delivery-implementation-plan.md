@@ -129,8 +129,8 @@ and project architecture together.
 Initial connection selects approved common technology/topic bundles plus the correct
 private product bundle where applicable, in one selection. No extra architecture
 profile activation. Owner clarification (2026-10-21) makes the existing private
-`worktracker-architecture-guides` repository a product catalog, retaining its name
-for now. Product bundle paths and reviewed extraction remain execution inputs.
+repository a product catalog, since renamed `agent-guides-private-projects`
+(ADR 0003). Product bundle paths and reviewed extraction remain execution inputs.
 Use synthetic fixtures
 until the real source is available and reviewed. Do not publish product content
 or relabel the current `profiles/architecture.md` wholesale as WorkTracker.
@@ -349,7 +349,7 @@ test portability; they do not prove a second physical machine or another OS.
 
 ## 7. Execution inputs and design risks
 
-The private source decision is settled: the existing `worktracker-architecture-guides`
+The private source decision is settled: the existing `agent-guides-private-projects`
 repository is a product-separated catalog (owner clarification 2026-10-21), not a
 universal WorkTracker profile. Preserve all guidance and retain doubtful material
 privately for its product or as unresolved evidence. Reviewed extraction and exact

@@ -29,7 +29,7 @@ Existing package usage docs describe live implementations, not the replacement.
   install/update, exact recorded selection on restore. Git-only v1.
 - Self-contained Markdown bundles: short authored entry, local detail, inventory
   and notices. Reading instructions live beside content, not in the engine.
-- Common guidance separate from private `worktracker-architecture-guides` in its
+- Common guidance separate from private `agent-guides-private-projects` in its
   own new repository. Preserve every rule; uncertainty means WorkTracker.
 - Select both bundles in one project connection; no extra architecture profile.
 - No delivery hooks/daemon, leases, mandatory end/rebaseline, AI retrieval,
@@ -43,7 +43,7 @@ Existing package usage docs describe live implementations, not the replacement.
 | --- | --- | --- |
 | `agent-guides-cli` (this one) | public | Tool, task board and decisions. No authored guidance. |
 | `agent-guides` | public | Common guidance catalog; T05 prepares all existing stack/topic bundles. |
-| `worktracker-architecture-guides` | private | Product catalog: independently selected product bundles plus private T05 evidence; name retained for now. |
+| `agent-guides-private-projects` | private | Product catalog: independently selected product bundles plus private T05 evidence; renamed from `worktracker-architecture-guides` 2026-10-21. |
 | `flutter-agent-guidelines` | public | Legacy runtime and current Flutter payload; WorkTracker still uses it. |
 | `dev-guidelines` | private | Deprecated archive; several non-Flutter consumers still load it. |
 
@@ -347,3 +347,12 @@ repositories; see [publication outcome](T05-acceptance.md#subsequent-authorized-
 This does not authorize future publication or consumer activation.
 Retain T05's [deferred follow-up links](T05-content-split.md#handoff)
 and the private evidence index as low-priority improvements, not T05 gates.
+
+## Private catalog rename — 2026-10-21
+
+The owner authorized renaming the private product catalog from
+`worktracker-architecture-guides` to `agent-guides-private-projects`; GitHub and
+the sibling checkout now use the new name
+([ADR 0003](../decisions/0003-tool-and-guides-repositories.md)).
+Historical records, T05's sealed selection and local seals keep the old source name.
+T06 records its own selection with the new name. No consumer or task status changed.

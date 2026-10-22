@@ -14,9 +14,9 @@ decisions are unchanged.
   topic (for example a Flutter bundle). The current common Flutter payload in
   [flutter-agent-guidelines](https://github.com/Gaan21/flutter-agent-guidelines)
   is the input for that bundle.
-- **WorkTracker architecture:** unchanged, the separate private
-  `worktracker-architecture-guides` repository. Product-specific and uncertain
-  content never goes into the public guides repository.
+- **Product guides:** the separate private `agent-guides-private-projects` repository
+  (named `worktracker-architecture-guides` until 2026-10-21). Product-specific and
+  uncertain content never goes into the public guides repository.
 
 ## Why
 
@@ -33,8 +33,8 @@ consumer migration. Owner-controlled original catalog content may be adapted und
 Apache-2.0 after classification/provenance review; third-party rights stay separate.
 
 Further owner clarification: the existing private repository becomes one catalog
-with separate selectable product bundles. Keep its current name for now; no remote
-rename or automatic cross-product activation. WorkTracker is one product bundle,
+with separate selectable product bundles. Its name was kept at that point; no
+automatic cross-product activation. WorkTracker is one product bundle,
 not the policy namespace for every other product. Common/public placement is unchanged.
 
 - One source has one recorded commit. Bundles selected from `agent-guides` move
@@ -49,5 +49,10 @@ not the policy namespace for every other product. Common/public placement is unc
 - T03/T04 client and platform evidence remains tied to the pre-rename engine
   identity. The rename is mechanical and re-verified by package and distribution
   tests; installed-client trials were not repeated for it.
+- Owner-authorized rename, 2026-10-21: the private product catalog is now
+  `agent-guides-private-projects`, because it holds several product bundles. GitHub
+  redirects the old name; current documents use the new one. T05 records, its
+  sealed selection and seals keep the source name they executed; T06 records its
+  own selection with the new name. No consumer referenced the private source.
 - Legacy delivery in flutter-agent-guidelines stays intact until authorized T06
   migration. Its forwarding pointers need a separate authorized update.
