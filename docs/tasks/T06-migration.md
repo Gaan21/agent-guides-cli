@@ -1,6 +1,6 @@
 # T06 — WorkTracker acceptance and explicit migration
 
-Status: in_progress (clone pilot run). Depends on: T03 + T04 + T05.
+Status: in_progress (pilot 002 corrections and disposable-clone rerun). Depends on: T03 + T04 + T05.
 Executor: WorkTracker agent with owner-authorized client and migration access.
 Read [handoff](README.md), preceding evidence and current consumer instructions.
 
@@ -123,3 +123,53 @@ evidence `FOLLOW-UP.md`. In short:
 - Consumer/factory: owner review of the instruction patch and of a production MCP
   enabled by default; factory mirrors and deploy key.
 - Re-run with the missing checks listed above.
+
+## Pilot 002 continuation — 2026-10-22
+
+Owner authorized development fixes, independent review, a second disposable-clone
+pilot with both clients, and scoped develop uploads in the three guidance
+repositories. Live migration, production access and factory changes are not
+authorized. Detailed identities, expectations, policies and traces stay private.
+
+- Engine E1–E5 corrections received bounded independent acceptance after corrective
+  passes: process-identity lock recovery, source/mirror diagnostics, receipt-path
+  prevention, syntax-based registration inspection and neutral index measurement.
+- An exact archived source tree produced the retained wheel/sdist; distribution
+  checks and all 102 installed-wheel tests pass on macOS/Python 3.15.0, with the same
+  wheel passing 102 tests each on Python 3.13.9, 3.12.12 and 3.11.14. Python 3.14
+  was unavailable. These establish package/host behavior only.
+- C1–C4 content corrections received independent preservation/privacy/lint-impact
+  review. Clear routes, actual-text rereads, conditional reading and optional sibling
+  locations preserve substantive rules; no lint or architecture policy was relaxed.
+- Disposable host checks pass for changed/stale mirror updates, no recorded mirror
+  path, explicit recovery after resolution/fetch/write cuts without manual lock
+  deletion, offline use, edited-config refusal and exact tracked-tree rollback.
+  Fresh-root portability is not a physical second-machine trial. The legacy tools
+  environment was not used or changed by this continuation.
+- Installed OpenCode's local-provider initial-request diagnostic observes the exact
+  native index once. This is loading evidence, not remote-model compliance.
+
+Owner requested a pause for the session's remaining budget; **pilot 002 is partial,
+not accepted**. Both native TUIs completed a first task; OpenCode also resumed for
+a layer switch. Claude's client-generated context report lists one index; detailed
+trace/application review is incomplete. Failed harness attempts remain preserved.
+
+New acceptance blockers: actual OpenCode guard plugins fail to load (legacy plugin
+API), despite passing smoke tests; focused product tests stop before assertions on
+missing disposable assets, and one edited test set fails the required local lint
+checkpoint despite a passing final gate. No guard port, suppression or live-consumer
+change was made. Obtain guard-owner disposition before more OpenCode model turns.
+
+Pilot-specific additive coverage proof reconciles changed Flutter destinations and
+native policy availability, but full compound/native/external requirement coverage
+is still unproved. Historical expectations and their failures remain unchanged.
+Detailed counts, logs, identities, exact pending turns and commands are retained in
+the private pilot-002 `HANDOFF.md`; do not recreate seals or resolve newer sources
+for its review. No model processes were left running.
+
+Pending: native compaction/post-loss, remaining client turns, full trace/detail/local
+authority/application review, product validation fixes, complete coverage, other-owner
+mirrors/Linux (Docker unavailable), guard-owner acceptance, daily use, physical second
+machine and separately authorized/reviewed live migration. T06 stays
+`in_progress`; T07/T08 status and task order are unchanged. T05's
+[deferred follow-ups](T05-content-split.md#handoff) remain low priority.

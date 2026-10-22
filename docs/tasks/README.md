@@ -65,7 +65,7 @@ lifecycle/connection tooling. Content split and consumer integration remain sepa
 | T03 | [Native loading feasibility](T03-native-loading.md) | done | Independent bounded macOS/Linux reviews and owner acceptance; root-start conditions in the acceptance record. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | done | Independent corrective and bounded closure review accepted; see [acceptance](T04-acceptance.md). |
 | T05 | [Lossless common/private content split](T05-content-split.md) | done | Bounded local content acceptance after independent R1–R5 corrections; see [acceptance](T05-acceptance.md). |
-| T06 | [WorkTracker acceptance and migration](T06-migration.md) | in_progress | T03 + T04 + T05; consumer agent and owner. Clone pilot run; live migration not authorized. |
+| T06 | [WorkTracker acceptance and migration](T06-migration.md) | in_progress | T03 + T04 + T05; consumer agent and owner. Pilot 002 partial; paused with private handoff. Guard loading, product checks and coverage unresolved. Live migration not authorized. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
 | T08 | [Lightweight selective-reading observation](T08-lightweight-observation.md) | pending | T03 acceptance + authorized T06 clone pilot; client/consumer agent and reviewer. Not a T04/T06/T07 dependency. |
 
@@ -123,10 +123,10 @@ generated configuration, or a model's claim of compliance.
 
 ## Prompt for the next agent
 
-Current handoff (2026-10-21): T05 is done for bounded local content preparation
+Current handoff (2026-10-22): T05 is done for bounded local content preparation
 across the existing technologies/topics. Read [T05 acceptance](T05-acceptance.md).
-**Next: T06**, with its own consumer access, retained identity and explicit pilot/
-migration authorization. It remains pending; closure does not start it automatically.
+**Continue T06**, currently in progress under disposable-clone authorization, with
+retained identity and separately authorized live migration still pending.
 The T05 prompt and assignments below are historical, not the current work queue.
 Deferred improvement proposals remain separate, not new acceptance gates.
 
@@ -368,3 +368,21 @@ checks passed; interrupted operations need manual lock removal before recovery, 
 selective reading was mixed. Independent evidence review: accepted with corrections.
 See the [T06 checkpoint](T06-migration.md#clone-pilot-checkpoint--2026-10-22). Live migration,
 engine commit/push and T08 sampling need their own authorization. T07/T08 pending.
+
+## T06 pilot 002 pause — 2026-10-22
+
+Engine/content corrections received independent bounded review and authorized
+develop upload. Exact retained wheel: 102 installed tests pass on each available
+supported Python 3.11/3.12/3.13/3.15; distribution and disposable host recovery,
+offline/rollback checks pass. Both native TUIs reached a first task; one client also
+resumed. Initial-request/context evidence is retained separately from behavior.
+
+Owner requested a budget-conscious pause, not acceptance. Actual client guard
+loading fails despite passing smoke tests; focused product tests are blocked by
+missing disposable assets, one edited test set fails local lint, and complete
+effective requirement coverage remains unproved. Native compaction/post-loss and
+remaining client turns are pending. See [T06 continuation](T06-migration.md#pilot-002-continuation--2026-10-22)
+and the private pilot-002 handoff before resuming; obtain renewed authorizations.
+No live checkout, legacy-tools environment, factory or release was changed.
+T06 stays `in_progress`; T07/T08 unchanged; [T05 deferred links](T05-content-split.md#handoff)
+remain low-priority, non-gating improvements.
