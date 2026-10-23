@@ -1,6 +1,6 @@
 # agent-guides-cli: start here
 
-Status: T01/T02/T03/T04/T05 done; T06 in_progress; T07/T08 pending (2026-10-22).
+Status: T01/T02/T03/T04/T05 done; T06 in_progress; T07/T08 pending (2026-10-23).
 Canonical board in Gaan21/agent-guides-cli.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -65,7 +65,7 @@ lifecycle/connection tooling. Content split and consumer integration remain sepa
 | T03 | [Native loading feasibility](T03-native-loading.md) | done | Independent bounded macOS/Linux reviews and owner acceptance; root-start conditions in the acceptance record. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | done | Independent corrective and bounded closure review accepted; see [acceptance](T04-acceptance.md). |
 | T05 | [Lossless common/private content split](T05-content-split.md) | done | Bounded local content acceptance after independent R1–R5 corrections; see [acceptance](T05-acceptance.md). |
-| T06 | [WorkTracker acceptance and migration](T06-migration.md) | in_progress | T03 + T04 + T05; consumer agent and owner. Pilot 002 partial; paused with private handoff. Guard loading, product checks and coverage unresolved. Live migration not authorized. |
+| T06 | [WorkTracker acceptance and migration](T06-migration.md) | in_progress | T03 + T04 + T05; consumer agent and owner. Current-client disposable guard/loading checks pass; independent review, full client/product/coverage acceptance remain pending. Live migration not authorized. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
 | T08 | [Lightweight selective-reading observation](T08-lightweight-observation.md) | pending | T03 acceptance + authorized T06 clone pilot; client/consumer agent and reviewer. Not a T04/T06/T07 dependency. |
 
@@ -123,10 +123,12 @@ generated configuration, or a model's claim of compliance.
 
 ## Prompt for the next agent
 
-Current handoff (2026-10-22): T05 is done for bounded local content preparation
+Current handoff (2026-10-23): T05 is done for bounded local content preparation
 across the existing technologies/topics. Read [T05 acceptance](T05-acceptance.md).
 **Continue T06**, currently in progress under disposable-clone authorization, with
 retained identity and separately authorized live migration still pending.
+The [current-client checkpoint](T06-migration.md#current-client-continuation--2026-10-23)
+records the isolated guard continuation; original pilot evidence is not replaced.
 The T05 prompt and assignments below are historical, not the current work queue.
 Deferred improvement proposals remain separate, not new acceptance gates.
 
@@ -386,3 +388,33 @@ and the private pilot-002 handoff before resuming; obtain renewed authorizations
 No live checkout, legacy-tools environment, factory or release was changed.
 T06 stays `in_progress`; T07/T08 unchanged; [T05 deferred links](T05-content-split.md#handoff)
 remain low-priority, non-gating improvements.
+
+## T06 current-client continuation — 2026-10-23
+
+Owner approved isolated reconstruction and consumer-guard adaptation, not live
+consumer/factory changes or publication. Current installed OpenCode V2 2.1.4 and
+Claude Code 2.1.309 match the official channels consulted. An isolated Python 3.15.1
+environment includes patched pip/certificates; the exact retained wheel passes
+102 installed tests there. No global runtime or old evidence environment was updated.
+
+Disposable diagnostics in macOS and an offline Linux arm64 container observe
+OpenCode's adapted guards and Claude's existing native hooks blocking forbidden
+operations and allowing safe controls. Each client receives one retained native
+index; Claude trims terminal whitespace, so its attachment is not byte-exact.
+Dangerous commands/services use inert local fixtures, not production. These are
+local-provider execution/loading results, not real-model compliance or factory proof.
+
+See [T06's current checkpoint](T06-migration.md#current-client-continuation--2026-10-23)
+and the [post-update procedure](../client-compatibility.md). Independent review,
+real TUI/model/product/coverage checks and the actual managed factory remain pending.
+The owner started Docker after its initial unavailability; Flutter/product validation
+was deferred under the subsequent client-only scope. Historical failures and seals
+remain unchanged. T06 stays in_progress;
+T07/T08 and [T05 deferred follow-ups](T05-content-split.md#handoff) retain their order.
+
+Owner then requested session closure, not another review/model run. Continue from
+the private pilot-003 `PAUSE.md` and `HANDOFF.md`; independent review is still
+pending. No staging, commit, push, publication or live activation was performed at
+that pause. The owner subsequently authorized scoped commits/pushes of this session's
+CLI documentation and private pilot evidence only; this does not approve a release,
+independent acceptance or consumer/factory activation.

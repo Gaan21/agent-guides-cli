@@ -1,6 +1,6 @@
 # T06 — WorkTracker acceptance and explicit migration
 
-Status: in_progress (pilot 002 corrections and disposable-clone rerun). Depends on: T03 + T04 + T05.
+Status: in_progress (current-client isolated continuation; full acceptance pending). Depends on: T03 + T04 + T05.
 Executor: WorkTracker agent with owner-authorized client and migration access.
 Read [handoff](README.md), preceding evidence and current consumer instructions.
 
@@ -173,3 +173,56 @@ mirrors/Linux (Docker unavailable), guard-owner acceptance, daily use, physical 
 machine and separately authorized/reviewed live migration. T06 stays
 `in_progress`; T07/T08 status and task order are unchanged. T05's
 [deferred follow-ups](T05-content-split.md#handoff) remain low priority.
+
+## Current-client continuation — 2026-10-23
+
+Owner approved disposable reconstruction and guard adaptation before a separately
+scoped factory trial. No live consumer/factory change, credentials or release is
+authorized. Source upload was initially outside scope; the owner subsequently
+authorized scoped commits/pushes of this session's CLI documentation and private
+pilot evidence. The prior temporary workspace is absent; new evidence
+is a continuation, not a resumed original session or replacement of prior seals.
+
+- Official-channel checks match installed OpenCode V2 **2.1.4**, Claude Code
+  **2.1.309** and patched Node **24.22.1 LTS**. Python **3.15.1** was installed in
+  isolation with pip **26.2.2** / certifi **2026.10.19**. Global Python and historical
+  environments remain untouched; their certificate remediation is not claimed.
+- The exact retained wheel passes **10 targeted + 102 full installed tests** on
+  macOS/Python 3.15.1. Existing consumer helper suites pass **36 OpenCode + 40 Claude**
+  checks; three new V2 boundary unit tests pass. No new distribution rebuild or
+  Linux package-suite result is inferred.
+- Disposable consumer guards adapt the supported V2 registration, tool names and
+  argument shapes while retaining the original policy helpers. Actual native
+  diagnostics list both guards active and reject forbidden edits/commands/MCP
+  writes while allowing clean edits, inert reads and existing generated exceptions.
+  With guidance connected, two OpenCode tool profiles observe the exact short
+  index once. The recorded source/content selection is unchanged; local guard/mock
+  policy has a new independently retained task identity.
+- Claude Code **2.1.309** also passes ten native print-mode hook/tool actions with
+  a local Messages API fixture. Its full index text appears once after terminal
+  whitespace normalization; the byte-exact attachment assertion remains a recorded
+  failure, not silently relabeled passing. Native guards block forbidden writes,
+  edits, shell and MCP calls; positive controls execute.
+- After the owner started Docker, both official Linux arm64 clients passed the
+  same **13 OpenCode + 10 Claude** native actions in a read-only, capability-dropped
+  container with `--network none`, synthetic services and separate Linux identity.
+  Official artifact SRI/checksums and the image identity are retained privately.
+  This is not the managed x86_64 factory or a physical second-machine trial.
+- Native calls come from deterministic local providers. They prove loading and
+  execution mechanics, **not** real-model compliance, complete bypass resistance,
+  TUI/compaction or a production-factory gate.
+- Earlier harness failures remain retained. Independent review of this port is
+  pending. No factory run or product-test/lint correction was performed. The owner
+  subsequently restricted continuation to clients: Flutter SDK/dependency updates
+  and product validation are deferred. The temporary Linux container was removed;
+  no production service was used.
+
+Private resume: the product catalog's `evidence/T06/pilot-003/PAUSE.md`, then
+`HANDOFF.md`. Owner requested session closure at this checkpoint; the offered
+independent-agent review was not started or approved by that pause. Keep the
+original pilot-002 results/expectations unchanged. Next: review the guard candidate,
+complete the outstanding native client turns, and obtain renewed scope for product
+validation/coverage and actual factory prerequisites. Obtain authorization before factory/live
+changes. [Current-client checks](../client-compatibility.md) treat version records
+as per-trial evidence, not a permanent client freeze; repeat relevant checks after
+updates. T06 remains in_progress; T07/T08 and T05 follow-up priority are unchanged.
