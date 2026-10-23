@@ -127,11 +127,16 @@ was static. Options to analyse with the owner:
    the same without guides. Against: cheap-model controls regressed; loses common
    rules for the factory's mixed model roster.
 
-Suggested next measurement before deciding (needs authorization): an ablation arm
-"index entries only, no topic files" vs current vs control, repeated (≥3 per cell)
-on the cheap and middle tiers of both clients, plus compile/test/lint of the diffs
-in T06 step 4. Keep sealed expectations and blind review. Do not count a read as
-compliance, and keep guard and coverage checks separate from reading results.
+Owner direction for the next measurement (2026-10-23; needs its own authorization):
+keep this pilot's approach — sealed expectations, guided/control arms, blind review,
+**one pass per model tier** — and run it as a **complete factory cycle** on the
+managed factory, adding an "index entries only, no topic files" arm. Measure the
+factory's deterministic lint/test/build/i18n results on the first candidate, rounds
+to green, reviewer findings and consumption per arm. Linters cannot see every rule
+(behaviour, naming conventions), so keep the blind review alongside them; the result
+also shows which guide rules the linters already enforce. Prerequisites are tracked
+in the factory repository. Do not count a read as compliance, and keep guard and
+coverage checks separate from reading results.
 
 ## Pending for T06
 
