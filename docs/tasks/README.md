@@ -65,7 +65,7 @@ lifecycle/connection tooling. Content split and consumer integration remain sepa
 | T03 | [Native loading feasibility](T03-native-loading.md) | done | Independent bounded macOS/Linux reviews and owner acceptance; root-start conditions in the acceptance record. |
 | T04 | [Complete lifecycle and recovery](T04-lifecycle.md) | done | Independent corrective and bounded closure review accepted; see [acceptance](T04-acceptance.md). |
 | T05 | [Lossless common/private content split](T05-content-split.md) | done | Bounded local content acceptance after independent R1–R5 corrections; see [acceptance](T05-acceptance.md). |
-| T06 | [WorkTracker acceptance and migration](T06-migration.md) | in_progress | T03 + T04 + T05; consumer agent and owner. Current-client disposable guard/loading checks pass; independent review, full client/product/coverage acceptance remain pending. Live migration not authorized. |
+| T06 | [WorkTracker acceptance and migration](T06-migration.md) | in_progress | T03 + T04 + T05; consumer agent and owner. Guard reviews and a guided/control real-model ladder are recorded ([findings](T06-pilot-004-findings.md)); product tests/lint, coverage, factory trial and acceptance remain pending. Live migration not authorized. |
 | T07 | [Release readiness and authorized publication](T07-release.md) | pending | T06; release maintainer and owner. |
 | T08 | [Lightweight selective-reading observation](T08-lightweight-observation.md) | pending | T03 acceptance + authorized T06 clone pilot; client/consumer agent and reviewer. Not a T04/T06/T07 dependency. |
 
@@ -418,3 +418,15 @@ pending. No staging, commit, push, publication or live activation was performed 
 that pause. The owner subsequently authorized scoped commits/pushes of this session's
 CLI documentation and private pilot evidence only; this does not approve a release,
 independent acceptance or consumer/factory activation.
+
+## T06 model ladder pause — 2026-10-23
+
+Owner requested a pause to analyse this session with future agents. Read
+[pilot-004 findings](T06-pilot-004-findings.md) first: versions, guard reviews and
+decision, factory inventory summary, reading and blind-review tables, harness
+lessons and the **open** question whether to keep, shrink or remove guide topics.
+That question is deliberately undecided; propose analysis or a measured ablation,
+not a content change. Private detail: the product catalog's
+`evidence/T06/pilot-004/HANDOFF.md`. The owner reserved T06 step 4 (product
+tests/lint, effective coverage) and authorized this session's commit/push only.
+T06 stays in_progress; T07/T08 and T05 deferred follow-ups keep their order.

@@ -226,3 +226,26 @@ validation/coverage and actual factory prerequisites. Obtain authorization befor
 changes. [Current-client checks](../client-compatibility.md) treat version records
 as per-trial evidence, not a permanent client freeze; repeat relevant checks after
 updates. T06 remains in_progress; T07/T08 and T05 follow-up priority are unchanged.
+
+## Model ladder checkpoint — 2026-10-23
+
+Owner authorized independent guard reviews, a read-only factory inventory and
+real-model native TUI sessions in disposable clones (three Claude and two OpenAI
+models, each with a guided and a no-guides control arm), then scoped commit/push.
+Results, limits and the open keep/shrink/remove question are in
+[pilot-004 findings](T06-pilot-004-findings.md); private detail starts at the
+product catalog's `evidence/T06/pilot-004/HANDOFF.md`.
+
+- Guard: review 001 accepted the port as a diagnostic with a HIGH `patch` grammar
+  finding; candidate 002 was rejected as complete. Owner kept blocking plus a
+  review-time new-ignore check over resulting files (consumer adoption pending).
+- Ten valid sessions completed first task, resume, native compaction, post-loss and
+  Supabase tasks. Claude models opened no detail topics; one OpenCode model did,
+  including rereads after compaction. Blind static review: all guided arms 8/8;
+  cheap-model controls 7/8 and 6/8; middle/high controls 8/8.
+- No guard fired, no Supabase call, no new lint ignore. Harness defects are retained
+  and two invalidated control sessions were repeated from fresh clones.
+
+This is evidence for analysis, not acceptance. Step 4 (product tests/lint and
+effective coverage) is reserved by the owner; the factory controlled trial, consumer
+check adoption and live migration still need specific authorization.
