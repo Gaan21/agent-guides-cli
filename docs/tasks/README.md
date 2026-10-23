@@ -75,6 +75,35 @@ its number does not require waiting for T07 or introduce an observation release 
 Do not assign concurrent agents the same task or shared mutable selection.
 Use independent implementation/review against one retained task identity.
 
+## Current state and open work — 2026-10-23 (start here)
+
+This repository is **the delivery tool the factory installs**: `agent-guides-cli`
+from `develop` (development wheel `0.1.0.dev1`; no PyPI/release until T07). It
+connects the common catalog `agent-guides` and the private product catalog
+`agent-guides-private-projects` through operator-maintained local mirrors
+(`--mirror`; the engine carries no credentials). Usage: [lifecycle](../lifecycle.md);
+client checks after updates: [client compatibility](../client-compatibility.md).
+
+Verified: installed-wheel suites on Python 3.11–3.15 (macOS), native loading and
+guards in macOS and an offline Linux arm64 container, real-model TUI sessions with
+Claude Code 2.1.309 / OpenCode 2.1.4 ([pilot-004 findings](T06-pilot-004-findings.md)).
+Both guides repositories are clean, have no open issues and their `develop` content
+equals the selection tested in pilot 004; only low-priority deferred improvements
+remain there. Not verified: the factory VM (x86_64, Python 3.13), its users/mirrors.
+
+| Area | Open item | Blocks the factory guidance trial? |
+| --- | --- | --- |
+| This tool | E6: install/update from a mirror owned by another user (Git `safe.directory`), and the installed suite on the factory's Linux x86_64/Python | Yes — test there before relying on it |
+| This tool | T07 release; until then install the exact recorded development wheel/commit | No |
+| Consumer | An authorized WorkTracker branch with the reviewed instruction patch, V2 guard port (pilot-004 candidate 002), review-time new-ignore check and lock; variants for control/index-only arms | Yes — consumer change needs owner authorization |
+| Content | Index-only arm: removing topic files breaks selection integrity by design; needs an authored content variant or another owner-approved method (no engine bypass) | Yes, for that arm only |
+| Factory | CLI install, read-only deploy key, coordinator-readable mirrors without keys, same selection for implementer/reviewer, `jq` for role users, Flutter dependency/check setup, OpenCode MCP issue review, admission. Project config is disabled there, so the host-controlled OpenCode `instructions` route (recorded before this CLI, pointing at root `AGENTS.md`) must be rechecked against the CLI-generated index and authorized | Yes — tracked in the factory repository's `docs/STATUS.md` |
+| Owner | T06 step 4 (product tests/lint, effective coverage); guard residual risk; keep/shrink/remove guides (open; the trial informs it) | Step 4 precedes acceptance, not the trial design |
+
+Live migration, legacy retirement and T07 stay behind T06 acceptance and their own
+authorizations. Claude opening no detail topics is an open analysis item, not a
+delivery defect: the full index loads natively.
+
 ## Execution boundaries
 
 - T01 must obtain the actual owner and approved workspace and check repository/
