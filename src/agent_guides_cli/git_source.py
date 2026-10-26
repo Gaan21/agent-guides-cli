@@ -7,6 +7,7 @@ git_source.py (Apache-2.0, see NOTICE). Resolution and acquisition are separate.
 import os
 from pathlib import Path
 import re
+import shlex
 import stat
 import subprocess
 import tempfile
@@ -94,6 +95,22 @@ def mirror_options(value, fixtures):
     return ()
 
 
+def mirror_reader(value, fixtures):
+    """Scope trust inside the local upload-pack child, not just its Git parent.
+
+    Local transports do not retain the parent's command-scope safe.directory.
+    This executable is fixed by the engine; only an explicitly selected mirror's
+    canonical path is substituted, shell-quoted as one argument. Never persist
+    this command/path in configuration, locks or prepared guidance.
+    """
+    if isinstance(fixtures, Mirrors) and value['id'] in fixtures:
+        path = checked_path(fixtures[value['id']])
+        command = shlex.join(('git', '-c', f'core.hooksPath={os.devnull}',
+                              '-c', f'safe.directory={path}', 'upload-pack'))
+        return ('--upload-pack=' + command,)
+    return ()
+
+
 def locator(value, fixtures):
     if isinstance(fixtures, Mirrors) and value["id"] in fixtures:
         path = checked_path(fixtures[value["id"]])
@@ -123,7 +140,7 @@ def resolve(value, fixtures=None):
     if "revision" in value:
         return value["revision"]
     remote = locator(value, fixtures)
-    rows = git(*mirror_options(value, fixtures), "ls-remote", "--refs", "--", remote,
+    rows = git(*mirror_options(value, fixtures), "ls-remote", *mirror_reader(value, fixtures), "--refs", "--", remote,
                value["ref"]).decode().splitlines()
     matches = [row.split()[0] for row in rows if len(row.split()) == 2 and row.split()[1] == value["ref"]]
     if len(matches) != 1:
@@ -198,7 +215,7 @@ def acquire(value, cache, fixtures=None, *, offline=False):
         objects.parent.mkdir(parents=True, exist_ok=True)
         git("init", "--bare", "--template=", objects)
     git(*mirror_options(value, fixtures), "--git-dir", objects, "fetch", "--no-write-fetch-head", "--no-tags", "--depth=1",
-        "--", remote, revision)
+        *mirror_reader(value, fixtures), "--", remote, revision)
     actual = git("--git-dir", objects, "rev-parse", revision + "^{commit}").decode().strip()
     if actual != revision or git("--git-dir", objects, "cat-file", "-t", revision).strip() != b"commit":
         raise GuidanceError("fetched object differs from recorded commit")

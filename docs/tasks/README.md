@@ -1,6 +1,6 @@
 # agent-guides-cli: start here
 
-Status: T01/T02/T03/T04/T05 done; T06 in_progress; T07/T08 pending (2026-10-23).
+Status: T01/T02/T03/T04/T05 done; T06 in_progress; T07/T08 pending (2026-10-26).
 Canonical board in Gaan21/agent-guides-cli.
 This is a durable handoff, not a release or consumer activation instruction.
 
@@ -75,7 +75,57 @@ its number does not require waiting for T07 or introduce an observation release 
 Do not assign concurrent agents the same task or shared mutable selection.
 Use independent implementation/review against one retained task identity.
 
-## Current state and open work — 2026-10-23 (start here)
+## Other-owner mirror correction — 2026-10-26
+
+A managed Linux trial found an E6 transport failure: direct reads of the pinned
+objects succeed, but local `ls-remote`/fetch starts an upload-pack child that rejects
+the keeper-owned mirror. Parent-only `-c safe.directory=<exact mirror>` does not
+cover that child. Operator read-only queries succeeded when the exception was
+passed inside the reader itself; no global Git configuration or ownership change.
+
+**Development candidate, not operationally activated:** explicit operator
+mirrors now use an engine-constructed upload-pack command for both resolution and
+acquisition, with the exact canonical mirror path shell-quoted as one argument.
+Other locators are unchanged. No arbitrary executable option is exposed, no
+global trust is written and mirror paths remain absent from retained guidance.
+
+Clean sdist → wheel → fresh installed-wheel validation on macOS/Python 3.15.1:
+**106 tests run, 105 passed, one skipped**, plus distribution checks passed. The
+skip is Git's unavailable simulated-other-owner test switch on that machine; it
+is not actual cross-user acceptance. New checks cover both transfer commands,
+unselected/HTTPS/fixture routes, literal shell metacharacters and retained-path
+absence. Engine and artifacts are retained privately, separately from the old
+wheel. Version remains a development candidate, not a release.
+
+An owner-executed isolated Linux x86_64 / Python 3.13.5 / Git 2.47.3 trial then
+completed with the exact candidate wheel: install and pinned update from actual
+other-owner mirrors, all selected entries present, external cache, and matching
+retained task identity in separate copies owned by both role users. Mirror
+inventories were unchanged. This is bounded E6 evidence, not the real privileged
+delivery/collection pipeline or installed-client loading. The old operational
+tool and real host configuration were not replaced. Detailed evidence remains
+private; no raw logs or guidance are included here.
+
+An owner-authorized independent read-only review of the reader/source-test delta
+reported **no blockers in that scope**: exact mirror selection, shell quoting,
+fixed engine-selected executable, no persistent/global trust, unchanged HTTPS and
+fixture routes. It did not rerun tests or independently inspect the built wheel;
+the reported platform results were context, not reproduced evidence.
+
+Pending: the candidate's full Linux installed suite, actual
+integration and all other T06 acceptance. The managed read-only configuration
+contract also needs explicit integration disposition. No live consumer, legacy
+delivery, source publication or release changed. T06/T07/T08 statuses and T05
+follow-ups remain.
+
+Session closure: the owner authorized committing/pushing this scoped source fix
+and sanitized board update. This publishes source only, not a stable release,
+registry package or consumer activation. The exact trial wheel remains separately
+retained; rebuilding source need not reproduce its artifact hash. Continue with
+explicitly approved operational incorporation and the remaining acceptance, not
+another general review or an automatic rerun of the completed bounded E6 trial.
+
+## Current state and open work — 2026-10-23 (baseline; E6 update above)
 
 This repository is **the delivery tool the factory installs**: `agent-guides-cli`
 from `develop` (development wheel `0.1.0.dev1`; no PyPI/release until T07). It
@@ -93,7 +143,7 @@ remain there. Not verified: the factory VM (x86_64, Python 3.13), its users/mirr
 
 | Area | Open item | Blocks the factory guidance trial? |
 | --- | --- | --- |
-| This tool | E6: install/update from a mirror owned by another user (Git `safe.directory`), and the installed suite on the factory's Linux x86_64/Python | Yes — test there before relying on it |
+| This tool | E6: candidate passed bounded Linux cross-user install/update and shared role identity; focused reader-delta review found no blockers (2026-10-26, above). Full candidate Linux suite and operational integration pending | Bounded E6 passed; remaining acceptance still applies |
 | This tool | T07 release; until then install the exact recorded development wheel/commit | No |
 | Consumer | An authorized WorkTracker branch with the reviewed instruction patch, V2 guard port (pilot-004 candidate 002), review-time new-ignore check and lock; variants for control/index-only arms | Yes — consumer change needs owner authorization |
 | Content | Index-only arm: removing topic files breaks selection integrity by design; needs an authored content variant or another owner-approved method (no engine bypass) | Yes, for that arm only |

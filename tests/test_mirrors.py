@@ -2,6 +2,7 @@
 
 import json
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -135,6 +136,68 @@ class MirrorTests(GitFixture):
                             fixtures=git_source.Mirrors(alpha=self.mirrors["alpha"]))
         result = preparation.prepare(self.project, full, self.cache, fixtures=self.mirrors)
         self.assertEqual(len(preparation.read_lock(self.read_lock(), result["selection"])["sources"]), 2)
+
+    def test_exact_reader_is_used_for_resolution_and_acquisition_only(self):
+        with patch.object(git_source, "git", wraps=git_source.git) as run:
+            preparation.candidate(self.request, self.cache, fixtures=self.mirrors)
+        transfers = [c.args for c in run.call_args_list if "ls-remote" in c.args or "fetch" in c.args]
+        self.assertEqual(len(transfers), 4)
+        for args in transfers:
+            readers = [a for a in args if isinstance(a, str) and a.startswith("--upload-pack=")]
+            self.assertEqual(len(readers), 1)
+            command = shlex.split(readers[0].split("=", 1)[1])
+            self.assertEqual(command[:4], ["git", "-c", "core.hooksPath=" + os.devnull, "-c"])
+            self.assertEqual(command[-1], "upload-pack")
+            self.assertIn(command[4], [f"safe.directory={p}" for p in self.mirrors.values()])
+        self.assert_no_mirror_path()
+
+    def test_reader_is_not_enabled_for_https_or_test_fixture_locators(self):
+        source = self.request["sources"][0]
+        for mapping in (None, {}, self.fixtures, git_source.Mirrors(beta=self.mirrors["beta"])):
+            self.assertEqual(git_source.mirror_reader(source, mapping), ())
+
+    def test_shell_metacharacters_in_mirror_path_are_literal(self):
+        original = self.mirrors["alpha"]
+        unusual = self.root / "mirror ' ; touch UNEXPECTED ; #.git"
+        original.rename(unusual)
+        self.mirrors["alpha"] = unusual
+        source = self.request["sources"][0]
+        reader = git_source.mirror_reader(source, self.mirrors)[0].split("=", 1)[1]
+        self.assertEqual(shlex.split(reader)[4], f"safe.directory={unusual}")
+        real_run = subprocess.run
+
+        def in_disposable_root(*args, **kwargs):
+            kwargs['cwd'] = self.root
+            return real_run(*args, **kwargs)
+
+        with patch.object(git_source.subprocess, 'run', side_effect=in_disposable_root):
+            preparation.candidate(self.request, self.cache, fixtures=self.mirrors)
+        self.assertFalse((self.root / "UNEXPECTED").exists())
+        self.assert_no_mirror_path()
+
+    def test_child_ownership_check_is_not_satisfied_by_parent_option(self):
+        # Git's own test switch exercises the ownership check without chown/root.
+        # Actual cross-user platform acceptance remains a separate check.
+        mirror = self.mirrors["alpha"]
+        env = dict(os.environ, GIT_TEST_ASSUME_DIFFERENT_OWNER="1",
+                   GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull)
+        control = subprocess.run(["git", "-c", f"safe.directory={mirror}",
+                                  "ls-remote", "--refs", "--", str(mirror), "refs/heads/develop"],
+                                 cwd=self.root, env=env, capture_output=True, timeout=30)
+        if control.returncode == 0:
+            self.skipTest("installed Git does not expose the ownership-test switch")
+        self.assertIn(b"dubious ownership", control.stderr)
+        real_run = subprocess.run
+
+        def other_owner(*args, **kwargs):
+            kwargs["env"] = dict(kwargs["env"], GIT_TEST_ASSUME_DIFFERENT_OWNER="1")
+            kwargs["cwd"] = self.root
+            return real_run(*args, **kwargs)
+
+        with patch.object(git_source.subprocess, "run", side_effect=other_owner):
+            result = preparation.candidate(self.request, self.cache, fixtures=self.mirrors)
+        self.assertEqual({s["id"]: s["commit"] for s in result["sources"]}, self.commits)
+        self.assert_no_mirror_path()
 
     def test_rejects_swapped_nonbare_symlinked_missing_or_unselected_mirrors(self):
         link = self.root / "link.git"
