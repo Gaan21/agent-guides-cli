@@ -35,8 +35,10 @@ class LifecycleTests(GitFixture):
         expected = result["selection"]
         self.assertEqual(result["status"], "installed")
         self.assertEqual(result["restart"], ["claude", "opencode"])
-        self.assertEqual((self.project / "CLAUDE.md").read_bytes(), original + native.block(b"\r\n"))
+        # Project route: tracked CLAUDE.md is byte-identical; the block lives in CLAUDE.local.md.
+        self.assertEqual((self.project / "CLAUDE.md").read_bytes(), original)
         self.assertEqual((self.project / "CLAUDE.md").stat().st_mode & 0o777, 0o640)
+        self.assertEqual((self.project / native.CLAUDE_LOCAL).read_bytes(), native.block())
         entry = (self.project / native.ENTRY).read_text()
         for scope in (".", "mobile", "web"):
             self.assertIn(f"scope `{scope}`", entry)
@@ -67,7 +69,7 @@ class LifecycleTests(GitFixture):
     def test_update_resolves_once_preserves_bytes_and_restores_exact_old_selection(self):
         first = self.install()
         old_raw = self.read_lock()
-        claude = self.project / "CLAUDE.md"
+        claude = self.project / native.CLAUDE_LOCAL
         claude.write_bytes(b"User prefix.\n" + claude.read_bytes() + b"User suffix.\n")
         self.write("alpha", "one/detail/topic.md", b"Changed guide.\n")
         new_commit = self.commit("alpha")
@@ -97,10 +99,10 @@ class LifecycleTests(GitFixture):
         self.assertEqual(lock["connection"]["revisions"], {"alpha": self.commits["alpha"]})
 
     def test_remove_preserves_user_edits_lock_retained_versions_and_empty_preexisting_file(self):
-        (self.project / "CLAUDE.md").write_bytes(b"")
+        (self.project / native.CLAUDE_LOCAL).write_bytes(b"")
         first = self.install()
         raw_lock = self.read_lock()
-        claude = self.project / "CLAUDE.md"
+        claude = self.project / native.CLAUDE_LOCAL
         claude.write_bytes(b"Before.\n" + claude.read_bytes() + b"After.\n")
         removed = lifecycle.remove(self.project, first["selection"], fixtures=self.fixtures)
         self.assertEqual(removed["status"], "removed")
@@ -119,11 +121,30 @@ class LifecycleTests(GitFixture):
     def test_remove_deletes_only_new_empty_owned_claude_file(self):
         result = self.install(["claude"])
         lifecycle.remove(self.project, result["selection"], fixtures=self.fixtures)
-        self.assertFalse((self.project / "CLAUDE.md").exists())
-        (self.project / "CLAUDE.md").write_bytes(b"")
+        self.assertFalse((self.project / native.CLAUDE_LOCAL).exists())
+        (self.project / native.CLAUDE_LOCAL).write_bytes(b"")
         lifecycle.restore(self.project, self.read_lock(), result["selection"], self.cache, fixtures=self.fixtures)
         lifecycle.remove(self.project, result["selection"], fixtures=self.fixtures)
-        self.assertEqual((self.project / "CLAUDE.md").read_bytes(), b"")
+        self.assertEqual((self.project / native.CLAUDE_LOCAL).read_bytes(), b"")
+        self.assertFalse((self.project / "CLAUDE.md").exists())
+
+    def test_project_route_never_writes_tracked_claude_md(self):
+        tracked = b"@AGENTS.md\n"
+        (self.project / "CLAUDE.md").write_bytes(tracked)
+        result = self.install(["claude"])
+        self.assertEqual((self.project / "CLAUDE.md").read_bytes(), tracked)
+        self.assertEqual((self.project / native.CLAUDE_LOCAL).read_bytes(), native.block())
+        lifecycle.remove(self.project, result["selection"], fixtures=self.fixtures)
+        self.assertEqual((self.project / "CLAUDE.md").read_bytes(), tracked)
+        self.assertFalse((self.project / native.CLAUDE_LOCAL).exists())
+
+    def test_project_route_rejects_guidance_block_left_in_tracked_claude_md(self):
+        stale = b"@AGENTS.md\n" + native.block()
+        (self.project / "CLAUDE.md").write_bytes(stale)
+        with self.assertRaisesRegex(GuidanceError, "tracked CLAUDE.md"):
+            self.install(["claude"])
+        self.assertEqual((self.project / "CLAUDE.md").read_bytes(), stale)
+        self.assertFalse((self.project / native.CLAUDE_LOCAL).exists())
 
     def test_changed_owned_material_refuses_verify_update_and_remove(self):
         result = self.install()
@@ -139,7 +160,7 @@ class LifecycleTests(GitFixture):
 
     def test_modified_claude_block_preserved_and_rejected(self):
         result = self.install(["claude"])
-        path = self.project / "CLAUDE.md"
+        path = self.project / native.CLAUDE_LOCAL
         path.write_bytes(path.read_bytes().replace(native.IMPORT, b"@./user.md"))
         raw = path.read_bytes()
         with self.assertRaisesRegex(GuidanceError, "modified owned"):

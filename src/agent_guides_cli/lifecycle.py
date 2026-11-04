@@ -62,6 +62,13 @@ def mutation(project, cache=None, *, operation="install"):
             yield project, cache
 
 
+def project_claude_clean(project):
+    """Project route: the tracked CLAUDE.md must carry no guidance registration."""
+    raw = tx.read(project, native.CLAUDE) or b""
+    if native.BEGIN in raw or native.END in raw or any(native.entry_registration(p) for p in native.markdown_imports(raw)):
+        raise GuidanceError("guidance registration in tracked CLAUDE.md; project route uses CLAUDE.local.md, remove it explicitly")
+
+
 def connection_state(project, value, expected):
     raw = tx.read(project, native.STATE)
     if raw is None:
@@ -87,7 +94,8 @@ def connection_state(project, value, expected):
 
 def surfaces(selected, route):
     return [name for name in tx.SURFACES
-            if (name != native.CLAUDE or "claude" in selected) and
+            if (name not in (native.CLAUDE, native.CLAUDE_LOCAL) or
+                ("claude" in selected and name == native.claude_surface(route))) and
                (name != native.AGENTS or route["route"] == "managed") and
                (name not in (native.CONFIG, native.ROOT_CONFIG) or name == route["config"])]
 
@@ -138,9 +146,10 @@ def verify(project, expected, *, fixtures=None, _transaction=False):
         if tx.read(project, native.ENTRY) is not None:
             raise GuidanceError("unowned generated entry; inspect ownership")
         if "claude" in selected:
-            raw = tx.read(project, native.CLAUDE) or b""
-            if native.BEGIN in raw or native.IMPORT in raw:
-                raise GuidanceError("unowned Claude registration")
+            for name in (native.CLAUDE, native.CLAUDE_LOCAL):
+                raw = tx.read(project, name) or b""
+                if native.BEGIN in raw or native.IMPORT in raw:
+                    raise GuidanceError("unowned Claude registration")
         if route["route"] == "managed":
             if native.BEGIN in (tx.read(project, native.AGENTS) or b""):
                 raise GuidanceError("unowned managed AGENTS.md registration")
@@ -155,7 +164,9 @@ def verify(project, expected, *, fixtures=None, _transaction=False):
             if not native.imports_agents(tx.read(project, native.CLAUDE) or b""):
                 raise GuidanceError("existing Claude AGENTS.md import is missing")
         else:
-            native.edit_block(tx.read(project, native.CLAUDE) or b"", block, block)
+            native.edit_block(tx.read(project, native.claude_surface(route)) or b"", block, block)
+            if route["route"] != "managed":
+                project_claude_clean(project)
     if route["route"] == "managed":
         root_entry = rendition(project, value, result, root=True)
         block = tx.decode(state.get("agents"))
@@ -222,7 +233,9 @@ def preflight(project, selected, expected, fixtures, *, route=None, host_config=
         if before[native.ENTRY] is not None:
             raise GuidanceError("unowned generated entry collision")
         if "claude" in selected and not (route["route"] == "managed" and native.imports_agents(before[native.CLAUDE] or b"")):
-            native.edit_block(before[native.CLAUDE] or b"", None, native.block())
+            native.edit_block(before[native.claude_surface(route)] or b"", None, native.block())
+            if route["route"] != "managed":
+                project_claude_clean(project)
         if route["route"] == "managed":
             native.edit_agents(before[native.AGENTS] or b"", None, b"")
         elif route["config"]:
@@ -265,15 +278,16 @@ def activate(project, value, cache, selected, state, before, fixtures, route, re
         new_state["agents"] = tx.encode(block)
         new_state["agents_created"] = state["agents_created"] if state else before[native.AGENTS] is None
     if "claude" in selected:
-        raw = before[native.CLAUDE] or b""
+        surface = native.claude_surface(route)
+        raw = before[surface] or b""
         if route["route"] == "managed" and (state or {}).get("claude_via_agents", native.imports_agents(raw)):
             new_state["claude_via_agents"] = True
         else:
             old_block = tx.decode(state["block"]) if state else None
             block = old_block or native.block(b"\r\n" if b"\r\n" in raw else b"\n")
-            after[native.CLAUDE] = native.edit_block(raw, old_block, block)
+            after[surface] = native.edit_block(raw, old_block, block)
             new_state["block"] = tx.encode(block)
-            new_state["claude_created"] = state["claude_created"] if state else before[native.CLAUDE] is None
+            new_state["claude_created"] = state["claude_created"] if state else before[surface] is None
     if route["config"]:
         after[route["config"]] = native.configuration()
     after[native.STATE] = canonical(new_state)
@@ -379,8 +393,9 @@ def remove(project, expected, *, fixtures=None):
             raw = native.edit_agents(before[native.AGENTS], tx.decode(state["agents"]), b"")
             after[native.AGENTS] = None if state["agents_created"] and not raw else raw
         if "claude" in selected and not state.get("claude_via_agents"):
-            raw = native.edit_block(before[native.CLAUDE], tx.decode(state["block"]), b"")
-            after[native.CLAUDE] = None if state["claude_created"] and not raw else raw
+            surface = native.claude_surface(route)
+            raw = native.edit_block(before[surface], tx.decode(state["block"]), b"")
+            after[surface] = None if state["claude_created"] and not raw else raw
         if route["config"]:
             after[route["config"]] = None
         tx.apply(project, before.plan(after),

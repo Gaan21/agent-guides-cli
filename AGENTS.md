@@ -18,8 +18,9 @@
   dumps or internal revision pins in public documentation. Detailed classification
   and migration evidence stay in the private owner's repository. Uncertain content
   classification belongs in the private WorkTracker bundle; preserve every rule.
-- No automatic staging, commits, pushes, releases, registry publishing or consumer
-  activation. Each needs explicit authorization. Repository creation is separate
+- Commit and push finished, validated changes to the current branch without asking
+  each time. Releases, registry publishing and consumer activation need explicit
+  authorization. Repository creation is separate
   from source upload/publication. No implicit hooks, global configuration,
   credentials or product-command execution.
 - Native loading needs installed-version evidence. Verify host integrity, observed

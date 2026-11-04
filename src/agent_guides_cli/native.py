@@ -19,9 +19,16 @@ ROOT_CONFIG = "opencode.json"
 AGENTS = "AGENTS.md"
 STATE = ".guidance/connection.json"
 CLAUDE = "CLAUDE.md"
+# Project route: the owned Claude block lives in the personal, ignored local file so
+# the tracked CLAUDE.md never changes. Managed hosts keep CLAUDE.md semantics.
+CLAUDE_LOCAL = "CLAUDE.local.md"
 BEGIN = b"<!-- agent-guides-cli:begin -->"
 END = b"<!-- agent-guides-cli:end -->"
 IMPORT = b"@./.guidance/entry.md"
+
+
+def claude_surface(route):
+    return CLAUDE if route["route"] == "managed" else CLAUDE_LOCAL
 
 
 def clients(value):
@@ -291,7 +298,7 @@ def inspect(project, selected, *, owned=()):
     """
     names = []
     if "claude" in selected:
-        names += ["CLAUDE.md", "AGENTS.md", ".claude/settings.json", ".claude/settings.local.json"]
+        names += ["CLAUDE.md", CLAUDE_LOCAL, "AGENTS.md", ".claude/settings.json", ".claude/settings.local.json"]
     if "opencode" in selected:
         names += ["AGENTS.md", "opencode.json", "opencode.jsonc",
                   CONFIG, ".opencode/opencode.jsonc"]
@@ -304,7 +311,7 @@ def inspect(project, selected, *, owned=()):
                           for token in ("flutter-agent-guidelines", "flutter_agent_guidelines"))
             competing = any(entry_registration(text, project) for text in registrations)
             markers = BEGIN in raw or END in raw
-            if name == CLAUDE:
+            if name in (CLAUDE, CLAUDE_LOCAL):
                 outside = raw.replace(block(), b"").replace(block(b"\r\n"), b"")
                 if any(entry_registration(p, project) for p in markdown_imports(outside)):
                     raise GuidanceError("competing Claude import outside owned block")
@@ -312,7 +319,7 @@ def inspect(project, selected, *, owned=()):
                 raise GuidanceError("competing AGENTS.md import")
             if legacy or competing or markers:
                 # Owned surfaces are separately validated against the retained lock.
-                if name not in (CLAUDE, *owned):
+                if name not in (CLAUDE, CLAUDE_LOCAL, *owned):
                     raise GuidanceError(f"competing guidance registration: {name}")
                 if legacy:
                     raise GuidanceError(f"legacy guidance registration: {name}; migrate explicitly")

@@ -7,7 +7,7 @@ from agent_guides_cli import lifecycle, native, transactions as tx
 from agent_guides_cli.integrity import GuidanceError, canonical, digest
 from fixtures import GitFixture
 
-PROJECT_SURFACES = (native.ENTRY, native.CLAUDE, native.CONFIG, native.STATE, "guidance.lock.json")
+PROJECT_SURFACES = (native.ENTRY, native.CLAUDE_LOCAL, native.CONFIG, native.STATE, "guidance.lock.json")
 
 class TransactionTests(GitFixture):
     def setUp(self):
@@ -77,7 +77,7 @@ class TransactionTests(GitFixture):
     def test_unknown_user_edits_stop_recovery_before_any_rollback(self):
         with self.fault("write:" + native.CONFIG), self.assertRaises(OSError):
             self.install_at(self.project)
-        path = self.project / "CLAUDE.md"
+        path = self.project / native.CLAUDE_LOCAL
         path.write_bytes(path.read_bytes() + b"User changed this during interruption.\n")
         before = {n: tx.read(self.project, n) for n in tx.SURFACES}
         with self.assertRaisesRegex(GuidanceError, "recovery conflict"):
@@ -171,12 +171,12 @@ class TransactionTests(GitFixture):
         original = lifecycle.retain_lock
         def concurrent_edit(project, raw):
             result = original(project, raw)
-            (project / "CLAUDE.md").write_bytes(b"Concurrent user policy.\n")
+            (project / native.CLAUDE_LOCAL).write_bytes(b"Concurrent user policy.\n")
             return result
         with patch.object(lifecycle, "retain_lock", side_effect=concurrent_edit):
             with self.assertRaisesRegex(GuidanceError, "preimage changed"):
                 self.install_at(self.project)
-        self.assertEqual((self.project / "CLAUDE.md").read_bytes(), b"Concurrent user policy.\n")
+        self.assertEqual((self.project / native.CLAUDE_LOCAL).read_bytes(), b"Concurrent user policy.\n")
         self.assertFalse((self.project / tx.JOURNAL).exists())
         self.assertFalse((self.project / "guidance.lock.json").exists())
 

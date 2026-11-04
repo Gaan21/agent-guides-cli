@@ -24,8 +24,10 @@ The candidate owns:
 - `.guidance/entry.md`: selected authored short entries labeled by scope, with
   Markdown links relocated into immutable selections. Original source/topic bytes
   remain intact. No topic bodies or selector engine are injected.
-- A marker-delimited native import in root `CLAUDE.md` for selected Claude Code.
-  Outside bytes, CRLF/LF style and existing file permissions are preserved.
+- A marker-delimited native import for selected Claude Code: in root
+  `CLAUDE.local.md` (project route; the tracked `CLAUDE.md` is never written, see
+  [ADR 0004](decisions/0004-claude-local-import.md)) or root `CLAUDE.md` (managed
+  route). Outside bytes, CRLF/LF style and existing file permissions are preserved.
 - A new `.opencode/opencode.json` for selected OpenCode, or direct `opencode.json`
   when the `.opencode` slot is occupied, with native `instructions` pointing to the
   short entry. Existing documents are never edited. The selected path is recorded.
@@ -127,7 +129,7 @@ advisory guard. Interrupted candidate/retirement cleanup may leave inert debris,
 an empty active lock. Arbitrary network filesystem locking is not verified.
 
 Remove deletes only verified owned integration, retaining locks, cached objects,
-prior selections and unrelated user bytes. A newly created `CLAUDE.md` disappears
+prior selections and unrelated user bytes. A newly created `CLAUDE.local.md` disappears
 only when no unrelated bytes remain; a preexisting empty file remains. Cache cleanup
 and legacy migration are separate. Task-pin/join additionally retain selected-client
 project settings and ownership identity in the independent host record. Nested/host

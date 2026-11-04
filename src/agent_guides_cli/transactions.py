@@ -10,11 +10,11 @@ import stat
 from .integrity import (GuidanceError, MAX_TOTAL, canonical, checked_path, digest, fields,
                         parse_json, regular_bytes, require_digest)
 from .storage import make_directory, save_bytes, sync_directory
-from .native import AGENTS, CLAUDE, CONFIG, ROOT_CONFIG, ENTRY, STATE
+from .native import AGENTS, CLAUDE, CLAUDE_LOCAL, CONFIG, ROOT_CONFIG, ENTRY, STATE
 from .preparation import LOCK
 
 JOURNAL = ".guidance/transaction.json"
-SURFACES = (ENTRY, AGENTS, CLAUDE, CONFIG, ROOT_CONFIG, STATE, LOCK)
+SURFACES = (ENTRY, AGENTS, CLAUDE, CLAUDE_LOCAL, CONFIG, ROOT_CONFIG, STATE, LOCK)
 
 
 def encode(raw):
