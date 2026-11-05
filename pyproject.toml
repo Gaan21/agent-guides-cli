@@ -17,6 +17,7 @@ Repository = "https://github.com/Gaan21/agent-guides-cli"
 
 [project.scripts]
 agent-guides-cli = "agent_guides_cli.cli:main"
+refresh-guides = "agent_guides_cli.cli:refresh_guides"
 
 [tool.setuptools.packages.find]
 where = ["src"]

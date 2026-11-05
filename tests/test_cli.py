@@ -1,9 +1,17 @@
 """Public CLI contract, also run against a clean wheel outside the checkout."""
 
+import contextlib
+import io
+import os
 import subprocess
 import sys
+import tempfile
 import unittest
 from importlib.metadata import version
+from pathlib import Path
+from unittest.mock import patch
+
+from agent_guides_cli import cli, refresh
 
 
 class CliTests(unittest.TestCase):
@@ -30,6 +38,28 @@ class CliTests(unittest.TestCase):
                 )
                 self.assertEqual(result.returncode, 2)
                 self.assertIn("required", result.stderr)
+
+    def test_refresh_guides_targets_the_enclosing_git_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            (root / ".git").mkdir()
+            (root / "a" / "b").mkdir(parents=True)
+            previous = Path.cwd()
+            self.addCleanup(os.chdir, previous)
+            os.chdir(root / "a" / "b")
+            with patch.object(refresh, "run", return_value={"freshness": "checked"}) as run, \
+                    contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(cli.refresh_guides([]), 0)
+            project, settings = run.call_args.args
+            self.assertEqual(project, root)
+            self.assertEqual(settings.name, root.name + ".refresh.json")
+            self.assertIn('"freshness":"checked"', output.getvalue())
+            (root / ".git").rmdir()
+            with patch.object(refresh, "run") as run, \
+                    contextlib.redirect_stderr(io.StringIO()) as errors:
+                self.assertEqual(cli.refresh_guides([]), 1)
+            run.assert_not_called()
+            self.assertIn("not inside a Git project", errors.getvalue())
 
 
 if __name__ == "__main__":

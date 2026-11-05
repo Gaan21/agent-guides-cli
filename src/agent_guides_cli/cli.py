@@ -113,6 +113,21 @@ def main(argv: Sequence[str] | None = None) -> int:
     return 0
 
 
+def refresh_guides(argv: Sequence[str] | None = None) -> int:
+    """Short alias: `refresh` for the Git root containing the working directory."""
+    parser = argparse.ArgumentParser(
+        prog="refresh-guides",
+        description="Run `agent-guides-cli refresh` for the project containing the current directory.",
+    )
+    parser.parse_args(argv)
+    here = Path.cwd().absolute()
+    root = next((p for p in (here, *here.parents) if (p / ".git").exists()), None)
+    if root is None:
+        print("refresh-guides: not inside a Git project", file=sys.stderr)
+        return 1
+    return main(["refresh", "--project", str(root)])
+
+
 def _mirrors(values):
     """Parse repeated SOURCE=PATH; None keeps the default HTTPS transport."""
     if not values:

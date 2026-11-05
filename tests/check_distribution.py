@@ -84,6 +84,7 @@ class DistributionTests(unittest.TestCase):
             run(str(python), "-I", "-m", "pip", "install", "--no-deps", str(wheel), cwd=work)
             run(str(environment / "bin/agent-guides-cli"), "--help", cwd=work)
             run(str(environment / "bin/agent-guides-cli"), "--version", cwd=work)
+            run(str(environment / "bin/refresh-guides"), "--help", cwd=work)
             # The tests come from the sdist; isolated Python imports only the installed wheel.
             run(str(python), "-I", "-m", "unittest", "discover", "-s",
                 str(source / "tests"), "-p", "test_*.py", "-v", cwd=work)

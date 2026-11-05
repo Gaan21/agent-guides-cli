@@ -7,6 +7,10 @@ project root **before** opening Claude Code or OpenCode:
 agent-guides-cli refresh
 ```
 
+`refresh-guides`, installed with the package, is the same command for the Git root
+containing the current directory, so it also works from a subdirectory. Expose it
+on `PATH` explicitly if the tool lives in a private virtual environment.
+
 This fetches the approved branch of each selected source into operator-owned
 mirrors, runs the existing journaled update and advances the separately retained
 expected selection. No hooks, launchers, daemon, credentials or global config are
