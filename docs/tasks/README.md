@@ -4,6 +4,26 @@ Status: T01/T02/T03/T04/T05 done; T06 in_progress; T07/T08 pending (2026-10-26).
 Canonical board in Gaan21/agent-guides-cli.
 This is a durable handoff, not a release or consumer activation instruction.
 
+## Explicit pre-session refresh — 2026-11-04
+
+The owner requested one explicit guide-refresh command before opening the normal
+client in direct work. [ADR 0005](../decisions/0005-explicit-pre-session-refresh.md)
+records the choice and its native-loading reason; [usage](../refresh.md) describes
+external opt-in, intact-copy fallback and interrupted expectation publication.
+This does not install hooks, change managed preparation or approve a release.
+The historical T06/T07/T08 acceptance queues below are not reopened by this scoped
+development addition. Detailed consumer acceptance stays with each consumer.
+
+Validation on macOS / Python 3.15.2: clean sdist-to-wheel installation, **125 tests
+run, 124 passed, one skipped** (Git's unavailable simulated-other-owner switch),
+plus distribution checks. The 17 refresh tests also pass against the installed
+editable tool. The new tool-update regression fails against the original validator
+and passes with the provenance correction; local content tampering and task-role
+engine drift still fail verification. Owner-authorized refresh of three existing
+project connections fetched their selected branches, advanced independent
+expectations, verified installed status and left tracked diffs unchanged. This is
+host evidence, not model compliance, managed-host activation or release approval.
+
 ## Read first
 
 1. The working repository's maintainer instructions and current Git status/diff.
@@ -200,29 +220,9 @@ refs in authorized execution evidence, not public source-report dumps. Report
 remaining authorization requirements. Do not mark acceptance passed from intent,
 generated configuration, or a model's claim of compliance.
 
-## Prompt for the next agent
+## Retained corrective-review evidence
 
-Current handoff (2026-10-23): T05 is done for bounded local content preparation
-across the existing technologies/topics. Read [T05 acceptance](T05-acceptance.md).
-**Continue T06**, currently in progress under disposable-clone authorization, with
-retained identity and separately authorized live migration still pending.
-The [current-client checkpoint](T06-migration.md#current-client-continuation--2026-10-23)
-records the isolated guard continuation; original pilot evidence is not replaced.
-The T05 prompt and assignments below are historical, not the current work queue.
-Deferred improvement proposals remain separate, not new acceptance gates.
-
-> Read the working repository's maintainer instructions, inspect status/diff,
-> then read docs/tasks/README.md (including its repository map), its agreed-scope
-> link, ADR 0001, ADR 0003 and T04-acceptance.md. T01–T04 are complete. Continue
-> T05 as described in T05-content-split.md: the public `agent-guides` and private
-> `worktracker-architecture-guides` repositories exist and are cloned as siblings;
-> the private README lists exact inputs. Keep detailed classification/preservation
-> evidence in that private repository's `evidence/`. Read only the
-> relevant technical-plan sections and dependency results. Preserve existing work
-> and content. Do not reopen closed decisions, activate a consumer, publish or
-> perform Git publication actions without authorization. If blocked, record the
-> precise missing input rather than guessing. Finish by updating the task board
-> and completion record with evidence and the next handoff.
+Retired assignment prompts remain in Git history; the evidence records are unchanged.
 
 Corrective review evidence: `.git/T02-fix-start.json`, `.git/T02-fix-identity.json`,
 exact artifacts in `.git/T02-fix-artifacts/`, `.git/T02-fix-results.md` and
@@ -230,22 +230,6 @@ exact artifacts in `.git/T02-fix-artifacts/`, `.git/T02-fix-results.md` and
 the corrected candidate; never rerun capture scripts or replace expectations.
 Original T01/T02 evidence/artifacts remain preserved. Both corrected roles share
 one retained identity over the original exact source commits/bundles.
-
-Historical T04-to-T05 assignment: **T05 — lossless common/private content split**, in a
-separately owned workspace with private access. Read [T04 acceptance](T04-acceptance.md)
-for the delivered neutral tooling, recorded checks and limits; do not resume its
-historical implementation checkpoints or earlier T03 feasibility queues.
-Routine sessions start at the project or selected-worktree root. Claude imports the
-short index; OpenCode uses native `instructions`, with an explicitly host-controlled
-route when project discovery is disabled. The managed Linux candidate depends on
-correct `PWD`; production launcher binding/registration is not yet applied or verified.
-Preserve isolation, existing guards and all retained failures. Do not reopen strict
-automatic injection, subdirectory startup or Linux Claude TUI as feasibility gates.
-T06 remains pending T05. T08 still requires an authorized T06 pilot. Task readiness
-does not authorize live managed configuration changes, migration or activation.
-Repositories for T05 already exist (see the repository map). Authorization status
-is recorded in [T05](T05-content-split.md#workspace-destinations-and-authorization);
-production changes and releases need their own authorization. Preserve legacy delivery and every rule until authorized T06 migration.
 
 T02 closed after independent corrective acceptance and the refreshed four-job
 macOS/Linux × Python 3.11/3.15 matrix; see its final completion record and linked CI.

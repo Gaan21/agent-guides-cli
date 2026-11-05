@@ -44,8 +44,8 @@ class TaskIdentityTests(GitFixture):
                 path.unlink()
             else:
                 path.write_bytes(before)
-        with patch.object(preparation, "engine_identity", return_value={"version": "changed", "digest": "0" * 64}):
-            with self.assertRaisesRegex(GuidanceError, "engine identity mismatch"):
+        with patch.object(task_identity, "engine_identity", return_value={"version": "changed", "digest": "0" * 64}):
+            with self.assertRaisesRegex(GuidanceError, "task engine/policy"):
                 task_identity.join(self.project, self.raw, self.expected, fixtures=self.fixtures)
 
     def test_expected_task_evidence_and_generated_storage_rejection(self):

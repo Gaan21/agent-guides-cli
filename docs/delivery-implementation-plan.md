@@ -210,8 +210,8 @@ One operation uses these stages:
 | --- | --- |
 | Install | Take explicit sources/selections/scopes/clients, prepare and connect together; reject unowned collisions. No consumer wrapper or separate registration script. |
 | Update | Preserve selections, policy and scope choices; resolve each approved source once, create a new candidate, journal switch, retain old content. Engine acquisition is separate if compatibility requires it. |
-| Restore | Require recorded engine identity, lock and exact objects or authenticated access to exact commits. Recreate equivalent integration with local paths excluded from portable identity; do not upgrade schemas or branch tips implicitly. |
-| Verify/status | Offline comparison against an explicitly retained expected lock/task digest; validate selected files, generated renditions, registration ownership, engine and policy/overlay/config evidence as applicable. Report version mismatch, do not repair or repin it. |
+| Restore | Require the exact recorded lock and objects or authenticated access to exact commits. Preserve engine provenance; a compatible current tool validates schema, content and connection rather than requiring the old executable (ADR 0005). Do not upgrade schemas or branch tips implicitly. |
+| Verify/status | Offline comparison against an explicitly retained expected lock/task digest; validate selected files, generated renditions, registration ownership and policy/overlay/config evidence as applicable. Engine provenance does not freeze the executable; shared task-role evidence still compares the executing engine. Never repair or repin drift silently. |
 | Remove | Journal removal of exactly owned blocks/files. Preserve lock, retained versions and unrelated user edits; refuse altered owned material and show manual resolution choices. Restart clients. Cache deletion is a separate explicit cleanup. |
 
 For user-modified files, record exact marker-delimited block bytes and surrounding

@@ -134,8 +134,10 @@ Both roles join the same record; neither resolves latest or repins drift.
 `guidance.lock.json` is the single portable selection: schema, exact sources,
 bundles/bindings/snapshot digests and engine version/byte digest. Its canonical JSON
 SHA-256 is the selection identity. It contains no cache/interpreter/root paths.
-The executable remains versioned independently of bundle schema/content; restore
-requires its recorded engine. A development version label is not byte identity.
+The executable remains versioned independently of bundle schema/content. Recorded
+engine identity is preparation provenance: a compatible current tool verifies and
+restores the exact selection without requiring the historical executable (ADR 0005).
+Task-role evidence independently compares the executing engine for that task.
 
 Default cache: `PROJECT/.guidance/cache`; explicit `--cache` permits reuse in another
 temporary/project root. Cache contains bare exact Git objects and verified bundle

@@ -56,8 +56,14 @@ def validate_lock(value, fixtures=None):
     fields(value, ("schema", "sources", "bundles", "engine"), ("connection",))
     if type(value["schema"]) is not int or value["schema"] != 1:
         raise GuidanceError("unsupported selection schema")
-    if value["engine"] != engine_identity():
-        raise GuidanceError("engine identity mismatch; restore needs recorded engine")
+    # Preparation provenance is retained, not a requirement to keep an old tool
+    # installed. Compatibility is established by the current schema, snapshot and
+    # connection checks below. Shared role evidence still binds the executing
+    # engine independently in task_identity.capture/join.
+    fields(value["engine"], ("version", "digest"))
+    if not isinstance(value["engine"]["version"], str) or not value["engine"]["version"]:
+        raise GuidanceError("invalid recorded engine version")
+    require_digest(value["engine"]["digest"])
     if not isinstance(value["sources"], list) or not isinstance(value["bundles"], list):
         raise GuidanceError("invalid selection lists")
     for item in value["sources"]:

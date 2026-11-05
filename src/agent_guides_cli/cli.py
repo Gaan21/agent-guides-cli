@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 from .integrity import GuidanceError, canonical, identifier, parse_json, regular_bytes
-from . import git_source, lifecycle, preparation, task_identity
+from . import git_source, lifecycle, preparation, refresh, task_identity
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -44,6 +44,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     for command in (prepare, install, update):
         command.add_argument("--mirror", action="append", default=[], metavar="SOURCE=PATH",
                              help="resolve/fetch that source from an operator-maintained local Git copy")
+    startup = commands.add_parser("refresh", help="explicit pre-session mirror refresh and update; intact offline fallback")
+    startup.add_argument("--project", type=Path, default=Path.cwd())
+    startup.add_argument("--settings", type=Path,
+                         help="external operator settings; defaults to ~/.local/share/agent-guides-cli/<project>.refresh.json")
     remove = commands.add_parser("remove", help="remove only owned integration; retain lock and content")
     status = commands.add_parser("status", help="offline integrity and connection status; no repair")
     recovery = commands.add_parser("recover", help="recover interrupted writes without overwriting unknown edits")
@@ -85,6 +89,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                                        fixtures=mirrors)
         elif args.command == "update":
             result = lifecycle.update(args.project, args.expected, args.cache, fixtures=mirrors)
+        elif args.command == "refresh":
+            settings = args.settings or (Path.home() / ".local/share/agent-guides-cli" /
+                                         (args.project.absolute().name + ".refresh.json"))
+            result = refresh.run(args.project, settings)
         elif args.command == "remove":
             result = lifecycle.remove(args.project, args.expected)
         elif args.command == "recover":

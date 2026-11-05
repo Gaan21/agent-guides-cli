@@ -237,9 +237,9 @@ class LifecycleTests(GitFixture):
         with self.assertRaisesRegex(GuidanceError, "expected selection"):
             lifecycle.remove(self.project, "0" * 64, fixtures=self.fixtures)
         value = parse_json(raw)
-        value["engine"]["digest"] = "0" * 64
+        value["engine"]["digest"] = "not-a-digest"
         bad = canonical(value)
-        with self.assertRaisesRegex(GuidanceError, "engine"):
+        with self.assertRaisesRegex(GuidanceError, "SHA-256"):
             lifecycle.restore(self.project, bad, digest(bad), self.cache, fixtures=self.fixtures)
         (self.project / ".git").mkdir()
         nested = self.project / "nested"

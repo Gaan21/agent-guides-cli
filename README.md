@@ -13,6 +13,10 @@ Managed hosts use an explicitly approved read-only configuration; the package ne
 changes the host or existing JSONC. [T04 acceptance](docs/tasks/T04-acceptance.md)
 records tested versions, root-started behavior and limits; this is not a stable release.
 
+An opt-in [`refresh`](docs/refresh.md) command refreshes explicitly selected mirrors
+and updates an already connected direct-work project before opening a client.
+It installs no hooks or launchers; an intact offline copy is reported with a warning.
+
 This repository is the tool only. Common authored guidance lives in
 [agent-guides](https://github.com/Gaan21/agent-guides)
 ([ADR 0003](docs/decisions/0003-tool-and-guides-repositories.md)).

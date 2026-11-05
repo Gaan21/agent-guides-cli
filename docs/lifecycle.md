@@ -102,8 +102,10 @@ evidence. Diagnostics do not enter selection identity.
 Immutable selections and exact portable lock copies are retained before activation.
 JSON's `record` names `.guidance/records/SELECTION_SHA256.json`; prior successful
 locks remain there for explicit restore. Unactivated candidates may remain after
-failure. Nothing is automatically collected. Retain reviewed engine wheels separately;
-restore requires the recorded engine byte identity, not merely its version label.
+failure. Nothing is automatically collected. Recorded engine identity is provenance,
+not a freeze on the executable: a compatible current tool verifies the supported
+schema, independent expectation, snapshots and connection when restoring (ADR 0005).
+Task-role engine equality remains a separate comparison for one retained task.
 
 The fsynced `.guidance/transaction.json` retains a transaction identity, old/new
 selection identities, before/after bytes and modes before native writes. Each

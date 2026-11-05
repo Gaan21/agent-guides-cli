@@ -64,7 +64,7 @@ class DistributionTests(unittest.TestCase):
                     *(f"agent_guides_cli/{name}.py" for name in (
                         "__init__", "__main__", "cli", "integrity", "storage",
                         "git_source", "bundles", "preparation", "task_identity",
-                        "native", "transactions", "lifecycle", "host",
+                        "native", "transactions", "lifecycle", "host", "refresh",
                     )),
                     *(f"{metadata}/{name}" for name in (
                         "METADATA", "WHEEL", "entry_points.txt", "top_level.txt", "RECORD",
